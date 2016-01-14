@@ -1,5 +1,10 @@
 #include "eecs230.h"
 
 int main() {
-    cout << "Hello world!\n";
+    double a, b;
+
+    cin >> a >> b;
+    if (!cin) simple_error("Could not read input.");
+
+    cout << sqrt(a * a + b * b) << '\n';
 }
