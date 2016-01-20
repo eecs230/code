@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.3)
+project(lec05 CXX)
+include(.idea/eecs230/CMakeCommon.txt)
+
+add_program(lec05 src/lec05.cpp)
