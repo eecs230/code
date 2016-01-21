@@ -1,70 +1,83 @@
 #include "eecs230.h"
 
-// Sums the elements of a vector.
+// Strategies you have available:
 //
-// Example:
+// generative iteration: a loop that produces something of arbitrary
+// size
 //
-//   sum({}) == 0
+// structural iteration: a loop that traverses a data structure, e.g. a
+// for-each loop over a vector
 //
-//   sum({ 1, 2, 3, 4 }) == 10
-//
-// Strategy: structural iteration
-double sum(vector<double> grades)
-{
-    double result = 0.0;
+// function composition: solving a problem by combining other functions
 
-    for (double grade : grades) result += grade;
+//
+// WISHLIST:
+//
 
-    return result;
-}
-
-// Computes the average of a vector of grades.
+// Reads a vector of grades from cin, stopping with -1.
 //
-// Example:
+// Examples:
 //
-//   average_grade({}) throws runtime_error
-//
-//   average_grade({80, 90}) == 95
-//
-// Strategy: function composition
-double average_grade(vector<double> grades)
-{
-    if (grades.empty()) error("No grades entered");
-
-    return sum(grades) / grades.size();
-}
-
-// Reads a vector of doubles from stdin, stopping when it reads `sentinel`
-//
-// Example:
-//
-//   If call is read_doubles_until(0) and user inputs "3 4\n5 0 8\n", result
-//   is vector<double>{3, 4, 5}
+// If the user enters "5 6 8 -1\n", result is {5, 6, 8}
+// If the user enters "5 6\n8 -1\n", result is {5, 6, 8}
+// If the user enters "-1\n", result is {}
 //
 // Strategy: generative iteration
-vector<double> read_doubles_until(double sentinel)
+vector<double> read_grades()
 {
     vector<double> result;
+    double grade = 0;
 
-    for (;;) {
-        double d;
-        if (! (cin >> d)) error("IO error");
-
-        if (d == -1) break;
-
-        result.push_back(d);
+    cin >> grade;
+    while (grade != -1) {
+        if (!cin) error("Could not read grade");
+        result.push_back(grade);
+        cin >> grade;
     }
 
     return result;
 }
 
+// Sums a vector of doubles.
+//
+// Examples:
+//
+//   sum({}) == 0
+//   sum({1, 2, 3, 4}) == 10
+//
+// Strategy: structural iteration
+double sum(vector<double> doubles)
+{
+    double result = 0;
+
+    for (double d : doubles) result += d;
+
+    return result;
+}
+
+// Averages a vector of grades.
+//
+// Examples:
+//
+//   average_grades({}) throw runtime_error
+//   average_grades({80, 90}) == 85
+//
+// Strategy: function composition
+double average_grades(vector<double> grades)
+{
+    if (grades.size() == 0) error("No grades to average");
+    return sum(grades) / grades.size();
+}
+
+// END WISHLIST
+
 // Reads grades from the user and prints the average
 int main()
 try
 {
-    cout << "Please enter grades (-1 to stop):\n> ";
-    vector<double> grades = read_doubles_until(-1);
-    cout << "Average grade is " << average_grade(grades) << "\n";
+    cout << "Please enter grades (-1 to stop)\n> ";
+    vector<double> grades = read_grades();
+    cout << "Average grade is " << average_grades(grades) << "\n";
 }
 
 catch (runtime_error& e) {
