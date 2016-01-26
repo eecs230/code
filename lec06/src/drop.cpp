@@ -81,8 +81,11 @@ int find_best_drop(vector<double> grades, vector<double> weights)
     double best_average = 0.0;
 
     for (int i = 0; i < grades.size(); ++i) {
-        if (compute_grade_without(i, grades, weights) > best_average)
-            best_index = i;
+        double average = compute_grade_without(i, grades, weights)
+        if (average > best_average) {
+            best_index   = i;
+            best_average = average;
+        }
     }
 
     if (best_index == -1) error("find_best_drop: no best grade found");
