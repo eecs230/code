@@ -1,0 +1,3 @@
+[submodule "lec08/.eecs230/lib/googletest"]
+	path = lec08/.eecs230/lib/googletest
+	url = https://github.com/google/googletest
