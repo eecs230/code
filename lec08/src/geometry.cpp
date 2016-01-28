@@ -1,5 +1,7 @@
-#include "eecs230.h"
+// src/geometry.cpp
+
 #include "geometry.h"
+#include "eecs230.h"
 
 namespace lec08 {
 
@@ -11,18 +13,21 @@ double distance(const Posn& p, const Posn& q)
     return sqrt(sqr(p.x - q.x) + sqr(p.y - q.y));
 }
 
+// Is the given point within the given circle?
 // Strategy: domain knowledge
 bool is_within(const Posn& p, const Circle& c)
 {
     return distance(p, c.center) < c.radius;
 }
 
+// Is circle `inner` within circle `outer`?
 // Strategy: domain knowledge
 bool is_within(const Circle& inner, const Circle& outer)
 {
     return distance(inner.center, outer.center) < outer.radius - inner.radius;
 }
 
+// Are the two circles tangent to one another?
 // Strategy: domain knowledge
 bool are_tangent(const Circle& c1, const Circle& c2)
 {
@@ -30,4 +35,3 @@ bool are_tangent(const Circle& c1, const Circle& c2)
 }
 
 } // end namespace lec08
-

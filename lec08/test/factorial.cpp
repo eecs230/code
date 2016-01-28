@@ -1,5 +1,7 @@
-#include "eecs230.h"
+// test/factorial.cpp
+
 #include "factorial.h"
+#include "eecs230.h"
 
 TEST(Factorial, Zero)
 {
@@ -11,7 +13,7 @@ TEST(Factorial, One)
     EXPECT_EQ(1, factorial(1));
 }
 
-TEST(Factorial, TwoThreeFourFive)
+TEST(Factorial, TwoThroughFive)
 {
     EXPECT_EQ(2, factorial(2));
     EXPECT_EQ(6, factorial(3));

@@ -1,24 +1,29 @@
+// src/geometry.h
+
 #pragma once
+
+#include "eecs230.h"
 
 namespace lec08 {
 
-// Represents the point (x, y)
+// Represent the point (x, y)
 struct Posn
 {
-    double x, y;
+    double x;
+    double y;
 };
 
-// Computes the distance between two points
-double distance(const Posn&, const Posn&);
-
-// Represents a circle with the given center and radius
+// Represents the circle with center and radius
 struct Circle
 {
-    Posn   center;
+    Posn center;
     double radius;
 };
 
-// Is the given position within the given circle?
+// Computes the distance between two points.
+double distance(const Posn&, const Posn&);
+
+// Is the given point within the given circle?
 bool is_within(const Posn&, const Circle&);
 
 // Is circle `inner` within circle `outer`?
