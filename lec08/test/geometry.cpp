@@ -1,7 +1,7 @@
 #include "eecs230.h"
 #include "geometry.h"
 
-using namespace geometry;
+using namespace lec08;
 
 TEST(Posn, Fields)
 {

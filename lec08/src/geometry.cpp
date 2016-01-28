@@ -1,7 +1,7 @@
 #include "eecs230.h"
 #include "geometry.h"
 
-namespace geometry {
+namespace lec08 {
 
 double sqr(double x) { return x * x; }
 
@@ -29,5 +29,5 @@ bool are_tangent(const Circle& c1, const Circle& c2)
     return distance(c1.center, c2.center) == c1.radius + c2.radius;
 }
 
-} // end namespace geometry
+} // end namespace lec08
 

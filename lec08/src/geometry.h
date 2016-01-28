@@ -1,6 +1,6 @@
 #pragma once
 
-namespace geometry {
+namespace lec08 {
 
 // Represents the point (x, y)
 struct Posn
@@ -27,12 +27,4 @@ bool is_within(const Circle& inner, const Circle& outer);
 // Are the two circles tangent to one another?
 bool are_tangent(const Circle&, const Circle&);
 
-// Represents a rectangle with its upper-left vertex at the given position,
-// and the given dimensions
-struct Rectangle
-{
-    Posn   upper_left;
-    double width, height;
-};
-
-} // end namespace geometry
+} // end namespace lec08
