@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Time_of_day::Time_of_day() : ssm_{0}
+Time_of_day::Time_of_day() : hours_{0}, minutes_{0}, seconds_{0}
 { }
 
 Time_of_day::Time_of_day(int h, int m, int s)
@@ -16,15 +16,36 @@ Time_of_day::Time_of_day(int h, int m, int s)
 }
 
 int Time_of_day::hours() const {
-    return ssm_ / 3600;
+    return hours_;
 }
 
 int Time_of_day::minutes() const {
-    return (ssm_ / 60) % 60;
+    return minutes_;
 }
 
 int Time_of_day::seconds() const {
-    return ssm_ % 60;
+    return seconds_;
+}
+
+void Time_of_day::hours(int h)
+{
+    if (h < 0 || h >= 24) throw Bad_time{};
+
+    hours_ = h;
+}
+
+void Time_of_day::minutes(int m)
+{
+    if (m < 0 || m >= 60) throw Bad_time{};
+
+    minutes_ = m;
+}
+
+void Time_of_day::seconds(int s)
+{
+    if (s < 0 || s >= 60) throw Bad_time{};
+
+    seconds_ = s;
 }
 
 bool operator==(const Time_of_day& t1, const Time_of_day& t2)
@@ -56,32 +77,3 @@ int operator-(const Time_of_day& t1, const Time_of_day& t2)
 {
     return seconds_since_midnight(t1) - seconds_since_midnight(t2);
 }
-
-void Time_of_day::hours(int h)
-{
-    if (h < 0 || h >= 24) throw Bad_time{};
-
-    int m = minutes();
-    int s = seconds();
-    ssm_ = 3600 * h + 60 * m + s;
-}
-
-void Time_of_day::minutes(int m)
-{
-    if (m < 0 || m >= 60) throw Bad_time{};
-
-    int h = hours();
-    int s = seconds();
-    ssm_ = 3600 * h + 60 * m + s;
-}
-
-void Time_of_day::seconds(int s)
-{
-    if (s < 0 || s >= 60) throw Bad_time{};
-
-    int h = hours();
-    int m = minutes();
-    ssm_ = 3600 * h + 60 * m + s;
-
-}
-

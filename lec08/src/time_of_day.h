@@ -22,7 +22,9 @@ public:
     void seconds(int);
 
 private:
-    int ssm_;
+    int hours_;
+    int minutes_;
+    int seconds_;
 };
 
 // Determines whether two `Time_of_day`s are equal.
