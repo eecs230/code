@@ -5,7 +5,7 @@ enable_testing()
 include_directories(.eecs230/include)
 include_directories(src)
 
-# Google Test
+# UnitTest++
 set(UNITTESTCPP_ROOT .eecs230/lib/unittest-cpp)
 add_subdirectory(${UNITTESTCPP_ROOT})
 include_directories(${UNITTESTCPP_ROOT})
