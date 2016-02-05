@@ -6,9 +6,9 @@ include_directories(.eecs230/include)
 include_directories(src)
 
 # Google Test
-set(GTEST_ROOT .eecs230/lib/googletest/googletest)
-add_subdirectory(${GTEST_ROOT})
-include_directories(${GTEST_ROOT}/include)
+set(UNITTESTCPP_ROOT .eecs230/lib/unittest-cpp)
+add_subdirectory(${UNITTESTCPP_ROOT})
+include_directories(${UNITTESTCPP_ROOT})
 
 # Adds a program with the given name and source files, and sets the
 # language to C++ 11
@@ -20,8 +20,8 @@ endmacro (add_program)
 
 # Adds a test program with the given name and source files
 macro (add_test_program name)
-    add_program(${name} ${ARGN})
-    target_link_libraries(${name} gtest_main)
+    add_program(${name} .eecs230/lib/unittest-main.cpp ${ARGN})
+    target_link_libraries(${name} UnitTest++)
     add_test(Test_${name} ${name})
 endmacro (add_test_program)
 

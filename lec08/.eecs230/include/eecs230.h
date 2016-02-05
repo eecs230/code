@@ -24,6 +24,8 @@
     Revised Jan. 5, 2016: EECS230 version.
 
     Revised Jan. 27, 2016: added gtest include
+
+    Revised Feb. 5, 2016: changed gtest to UnitTest++
 */
 
 #pragma once
@@ -45,7 +47,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "gtest/gtest.h"
+#include "UnitTest++/UnitTest++.h"
 
 namespace eecs230 {
 

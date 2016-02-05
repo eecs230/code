@@ -3,20 +3,20 @@
 #include "factorial.h"
 #include "eecs230.h"
 
-TEST(Factorial, Zero)
+TEST(FactorialZero)
 {
-    EXPECT_EQ(1, factorial(0));
+    CHECK_EQUAL(1, factorial(0));
 }
 
-TEST(Factorial, One)
+TEST(FactorialOne)
 {
-    EXPECT_EQ(1, factorial(1));
+    CHECK_EQUAL(1, factorial(1));
 }
 
-TEST(Factorial, TwoThroughFive)
+TEST(FactorialTwoThroughFive)
 {
-    EXPECT_EQ(2, factorial(2));
-    EXPECT_EQ(6, factorial(3));
-    EXPECT_EQ(24, factorial(4));
-    EXPECT_EQ(120, factorial(5));
+    CHECK_EQUAL(2, factorial(2));
+    CHECK_EQUAL(6, factorial(3));
+    CHECK_EQUAL(24, factorial(4));
+    CHECK_EQUAL(120, factorial(5));
 }

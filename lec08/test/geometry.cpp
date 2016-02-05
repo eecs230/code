@@ -3,34 +3,34 @@
 
 using namespace lec08;
 
-TEST(Posn, X)
+TEST(PosnX)
 {
     Posn p;
     p.x = 4;
-    EXPECT_EQ(4, p.x);
+    CHECK_EQUAL(4, p.x);
 }
 
-TEST(Posn, Initialize)
+TEST(PosnInitialize)
 {
     Posn p{3, 4};
-    EXPECT_EQ(3, p.x);
-    EXPECT_EQ(4, p.y);
+    CHECK_EQUAL(3, p.x);
+    CHECK_EQUAL(4, p.y);
 }
 
-TEST(Posn, Distance)
+TEST(PosnDistance)
 {
-    EXPECT_EQ(13, distance(Posn{3, 9}, Posn{8, 21}));
+    CHECK_EQUAL(13, distance(Posn{3, 9}, Posn{8, 21}));
 }
 
-TEST(Circle, PosnWithin)
+TEST(CirclePosnWithin)
 {
     Circle c{Posn{3, 5}, 2};
 
-    EXPECT_TRUE(is_within(Posn{3, 5}, c));
-    EXPECT_TRUE(is_within(Posn{3, 6}, c));
-    EXPECT_TRUE(is_within(Posn{4, 6}, c));
-    EXPECT_FALSE(is_within(Posn{3, 7}, c));
-    EXPECT_FALSE(is_within(Posn{4, 7}, c));
+    CHECK_EQUAL(true, is_within(Posn{3, 5}, c));
+    CHECK_EQUAL(true, is_within(Posn{3, 6}, c));
+    CHECK_EQUAL(true, is_within(Posn{4, 6}, c));
+    CHECK_EQUAL(false, is_within(Posn{3, 7}, c));
+    CHECK_EQUAL(false, is_within(Posn{4, 7}, c));
 }
 
 

@@ -1,0 +1,3 @@
+[submodule "lec08/.eecs230/lib/unittest-cpp"]
+	path = lec08/.eecs230/lib/unittest-cpp
+	url = https://github.com/eecs230/unittest-cpp
