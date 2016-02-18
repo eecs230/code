@@ -10,6 +10,6 @@ add_test_program(Cons_list_tests
         test/Cons_list_tests.cpp
         src/Cons_list.cpp src/Cons_list.h)
 
-add_test_program(String_list_tests
-        test/String_list_tests.cpp
-        src/String_list.cpp src/String_list.h)
+#add_test_program(String_list_tests
+#        test/String_list_tests.cpp
+#        src/String_list.cpp src/String_list.h)

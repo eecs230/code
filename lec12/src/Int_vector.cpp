@@ -72,7 +72,6 @@ void Int_vector::ensure_capacity_(size_t req_capacity)
 
 Int_vector::~Int_vector()
 {
-    // std::cout << "goodbye\n";
     delete[] data_;
 }
 
@@ -84,4 +83,18 @@ Int_vector::Int_vector(const Int_vector& old)
     for (size_t i = 0; i < old.size(); ++i) {
         *(data_ + i) = *(old.data_ + i);
     }
+}
+
+Int_vector& Int_vector::operator=(const Int_vector& other)
+{
+    delete[] data_;
+    capacity_ = other.capacity_;
+    size_     = other.size_;
+    data_     = new int[capacity_];
+
+    for (size_t i = 0; i < size_; ++i) {
+        *(data_ + i) = *(other.data_ + i);
+    }
+
+    return *this;
 }

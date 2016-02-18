@@ -37,7 +37,7 @@ void print_vector(Int_vector w) {
     for (int i = 0; i < w.size(); ++i) {
         std::cout << w[i] << '\n';
     }
-}
+} // destructor for w runs here
 
 TEST(Copying)
 {
@@ -56,4 +56,7 @@ TEST(Copying)
     u.push_back(18);
 
     print_vector(v);
-}
+
+    v = u;
+    print_vector(v);
+} // destructors for v and u run here

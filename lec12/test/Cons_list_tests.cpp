@@ -4,52 +4,47 @@ using namespace cons_list;
 
 #include <UnitTest++/UnitTest++.h>
 
-TEST(ConstructEmpty)
+TEST(ConstructPair)
 {
-    Cons_list mt;
+    auto lst = cons("hello", nullptr);
 }
 
-TEST(EmptyTrue)
+TEST(ConsFirstRest)
 {
-    Cons_list mt;
-    CHECK_EQUAL(true, mt == nullptr);
+    auto lst = cons("hello", cons("world", nullptr));
+    CHECK_EQUAL("hello", first(lst));
+    CHECK_EQUAL("world", first(rest(lst)));
+    CHECK_EQUAL(true, rest(rest(lst)) == nullptr);
 }
 
-//TEST(ConstructPair)
-//{
-//    Cons_list lst{"hello", empty};
-//}
-//
-//TEST(EmptyFalse)
-//{
-//    String_list lst{"hello", empty};
-//    CHECK_EQUAL(false, lst.is_empty());
-//}
-//
-//TEST(ConsFirstRest)
-//{
-//    auto lst = cons("hello", cons("world", empty));
-//    CHECK_EQUAL("hello", lst.first());
-//    CHECK_EQUAL("world", lst.rest().first());
-//    CHECK_EQUAL(true, lst.rest().rest().is_empty());
-//}
-//
-//TEST(Length)
-//{
-//    auto lst = cons("a", cons("b", cons("c", empty)));
-//    CHECK_EQUAL(3, length(lst));
-//    CHECK_EQUAL(2, length(lst.rest()));
-//    CHECK_EQUAL(1, length(lst.rest().rest()));
-//    CHECK_EQUAL(0, length(lst.rest().rest().rest()));
-//}
-//
-//TEST(Sharing)
-//{
-//    auto a = cons("common", cons("tail", empty));
-//    auto b = cons("three", cons("more", cons("nodes", a)));
-//    auto c = cons("three total nodes", a);
-//
-//    CHECK_EQUAL(2, length(a));
-//    CHECK_EQUAL(5, length(b));
-//    CHECK_EQUAL(3, length(c));
-//}
+TEST(Sharing)
+{
+    auto a = cons("common", cons("tail", nullptr));
+    auto b = cons("three", cons("more", cons("nodes", a)));
+    auto c = cons("three total nodes", a);
+
+    CHECK_EQUAL(2, length(a));
+    CHECK_EQUAL(5, length(b));
+    CHECK_EQUAL(3, length(c));
+
+    auto d = append(a, b);
+    CHECK_EQUAL("common", first(d));
+    CHECK_EQUAL("tail", first(rest(d)));
+    CHECK_EQUAL("three", first(rest(rest(d))));
+    CHECK_EQUAL("more", first(rest(rest(rest(d)))));
+    CHECK_EQUAL("nodes", first(rest(rest(rest(rest(d))))));
+    CHECK_EQUAL("common", first(rest(rest(rest(rest(rest(d)))))));
+    CHECK_EQUAL("tail", first(rest(rest(rest(rest(rest(rest(d))))))));
+}
+
+TEST(Equality)
+{
+    CHECK_EQUAL(cons("a", cons("b", nullptr)),
+                cons("a", cons("b", nullptr)));
+}
+
+TEST(Reverse)
+{
+    CHECK_EQUAL(cons("c", cons("b", cons("a", nullptr))),
+                reverse(cons("a", cons("b", cons("c", nullptr)))));
+}

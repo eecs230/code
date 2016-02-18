@@ -14,6 +14,7 @@ public:
     Int_vector(size_t initial_capacity);
 
     Int_vector(const Int_vector&);
+    Int_vector& operator=(const Int_vector&);
 
     // Destructor runs when we're done with a vector
     ~Int_vector();
