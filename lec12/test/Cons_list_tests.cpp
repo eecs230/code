@@ -29,12 +29,12 @@ TEST(Sharing)
 
     auto d = append(a, b);
     CHECK_EQUAL("common", first(d));
-    CHECK_EQUAL("tail", first(rest(d)));
-    CHECK_EQUAL("three", first(rest(rest(d))));
-    CHECK_EQUAL("more", first(rest(rest(rest(d)))));
-    CHECK_EQUAL("nodes", first(rest(rest(rest(rest(d))))));
+    CHECK_EQUAL("tail",   first(rest(d)));
+    CHECK_EQUAL("three",  first(rest(rest(d))));
+    CHECK_EQUAL("more",   first(rest(rest(rest(d)))));
+    CHECK_EQUAL("nodes",  first(rest(rest(rest(rest(d))))));
     CHECK_EQUAL("common", first(rest(rest(rest(rest(rest(d)))))));
-    CHECK_EQUAL("tail", first(rest(rest(rest(rest(rest(rest(d))))))));
+    CHECK_EQUAL("tail",   first(rest(rest(rest(rest(rest(rest(d))))))));
 }
 
 TEST(Equality)
