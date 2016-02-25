@@ -1,6 +1,6 @@
-#include "Bst.h"
+#include "Int_bst.h"
 
-struct Bst::Node
+struct Int_bst::Node
 {
     int                   element;
     std::shared_ptr<Node> left;
@@ -10,16 +10,16 @@ struct Bst::Node
             : element{e}, left{l}, right{r} { };
 };
 
-Bst::Bst() : root_{nullptr} { }
+Int_bst::Int_bst() : root_{nullptr} { }
 
 
-bool Bst::is_empty() const
+bool Int_bst::is_empty() const
 {
     return root_ == nullptr;
 }
 
 // Helper to compute the size of a tree starting at some node.
-size_t size_helper(std::shared_ptr<Bst::Node> node)
+size_t size_helper(std::shared_ptr<Int_bst::Node> node)
 {
     if (node == nullptr) return 0;
 
@@ -29,12 +29,12 @@ size_t size_helper(std::shared_ptr<Bst::Node> node)
     return size_left + size_right + 1;
 }
 
-size_t Bst::size() const
+size_t Int_bst::size() const
 {
     return size_helper(root_);
 }
 
-bool Bst::contains(int n) const
+bool Int_bst::contains(int n) const
 {
     std::shared_ptr<Node> current = root_;
 
@@ -51,7 +51,7 @@ bool Bst::contains(int n) const
     return false;
 }
 
-void Bst::insert(int n)
+void Int_bst::insert(int n)
 {
     std::shared_ptr<Node>* current = &root_;
 
@@ -68,4 +68,32 @@ void Bst::insert(int n)
     std::shared_ptr<Node> new_node = std::make_shared<Node>(n, nullptr,
                                                             nullptr);
     *current = new_node;
+}
+
+void Int_bst::remove(int n)
+{
+    std::shared_ptr<Node>* current = &root_;
+
+    while (current != nullptr) {
+        if (n == (*current)->element) {
+            if ((*current)->right == nullptr) {
+                *current = (*current)->left;
+            } else {
+                std::shared_ptr<Node>* succ = &(*current)->right;
+                while ((*succ)->left != nullptr)
+                    succ = &(*succ)->left;
+
+                std::shared_ptr<Node> temp = *succ;
+                *succ = (*succ)->right;
+                temp->left = (*current)->left;
+                temp->right = (*current)->right;
+                *current = temp;
+            }
+        }
+
+        if (n < (*current)->element)
+            current = &(*current)->left;
+        else // n > current->element
+            current = &(*current)->right;
+    }
 }

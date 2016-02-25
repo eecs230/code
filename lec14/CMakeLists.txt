@@ -4,8 +4,8 @@ include(.eecs230/CMakeLists.txt)
 
 add_test_program(Bst_tests
     test/Bst_tests.cpp
-    src/Bst.cpp
-    src/Bst.h)
+        src/Int_bst.cpp
+        src/Int_bst.h)
 
 add_test_program(Int_vector_tests
     test/Int_vector_tests.cpp

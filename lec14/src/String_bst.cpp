@@ -1,44 +1,25 @@
-#pragma once
+#include "String_bst.h"
 
-#include <memory>
-
-template <typename Element>
-class Bst
+struct String_bst::Node
 {
-public:
-    Bst() : root_{nullptr}
-    { }
-
-    bool is_empty() const
-    { return root_ == nullptr; }
-
-    size_t size() const;
-
-    bool contains(const Element&) const;
-    void insert(Element);
-    void remove(const Element&);
-
-private:
-    struct Node;
-    std::shared_ptr<Node> root_;
-
-    static size_t size_helper(std::shared_ptr<Node>);
-};
-
-template <typename Element>
-struct Bst<Element>::Node
-{
-    Element element;
+    std::string           element;
     std::shared_ptr<Node> left;
     std::shared_ptr<Node> right;
 
-    Node(Element e, std::shared_ptr<Node> l, std::shared_ptr<Node> r)
+    Node(std::string e, std::shared_ptr<Node> l, std::shared_ptr<Node> r)
             : element{e}, left{l}, right{r} { };
 };
 
+String_bst::String_bst() : root_{nullptr} { }
+
+
+bool String_bst::is_empty() const
+{
+    return root_ == nullptr;
+}
+
 // Helper to compute the size of a tree starting at some node.
-template <typename Element>
-size_t Bst<Element>::size_helper(std::shared_ptr<Node> node)
+size_t size_helper(std::shared_ptr<String_bst::Node> node)
 {
     if (node == nullptr) return 0;
 
@@ -48,14 +29,12 @@ size_t Bst<Element>::size_helper(std::shared_ptr<Node> node)
     return size_left + size_right + 1;
 }
 
-template <typename Element>
-size_t Bst<Element>::size() const
+size_t String_bst::size() const
 {
     return size_helper(root_);
 }
 
-template <typename Element>
-bool Bst<Element>::contains(const Element& n) const
+bool String_bst::contains(const std::string& n) const
 {
     std::shared_ptr<Node> current = root_;
 
@@ -72,8 +51,7 @@ bool Bst<Element>::contains(const Element& n) const
     return false;
 }
 
-template <typename Element>
-void Bst<Element>::insert(Element n)
+void String_bst::insert(std::string n)
 {
     std::shared_ptr<Node>* current = &root_;
 
@@ -92,12 +70,11 @@ void Bst<Element>::insert(Element n)
     *current = new_node;
 }
 
-template <typename Element>
-void Bst<Element>::remove(const Element& n)
+void String_bst::remove(const std::string& n)
 {
     std::shared_ptr<Node>* current = &root_;
 
-    while (*current != nullptr) {
+    while (current != nullptr) {
         if (n == (*current)->element) {
             if ((*current)->right == nullptr) {
                 *current = (*current)->left;
@@ -112,8 +89,6 @@ void Bst<Element>::remove(const Element& n)
                 temp->right = (*current)->right;
                 *current = temp;
             }
-
-            return;
         }
 
         if (n < (*current)->element)
