@@ -39,9 +39,8 @@ public:
 
     template<typename Boundable>
     bbox(const Boundable& boundable)
-    {
-        return boundable.get_bbox();
-    }
+        : bbox{boundable.get_bbox()}
+    { }
 
     bbox(const T& top, const T& right, const T& bottom, const T& left) noexcept
     {

@@ -2,6 +2,8 @@
 
 #include <graphics.h>
 
+#include <memory>
+
 class Shape
 {
 public:

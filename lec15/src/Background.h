@@ -2,9 +2,9 @@
 
 #include "Shape.h"
 
-class Frame : public Shape
+class Background : public Shape
 {
 public:
-    Frame(color fill = color::white);
+    Background(color fill = color::white);
     bool contains(posn) const;
 };

@@ -17,15 +17,21 @@ set(SHAPES
         src/Rectangle.cpp
         src/Fill.h
         src/Fill.cpp
-        src/Frame.h
-        src/Frame.cpp
+        src/Background.h
+        src/Background.cpp
         src/Overlay.h
         src/Overlay.cpp
+        src/Shape_decorator.h
+        src/Shape_decorator.cpp
         src/Opacity.h
         src/Opacity.cpp
+        src/Transform.h
+        src/Transform.cpp
+        src/Gradient.h
+        src/Gradient.cpp
         src/render.h
         src/render.cpp
         )
 
-add_program(polygon test/integration/polygon.cpp ${SHAPES})
-target_link_libraries(polygon graphics)
+add_program(circles test/integration/circles.cpp ${SHAPES})
+target_link_libraries(circles graphics)
