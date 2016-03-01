@@ -26,7 +26,7 @@ int main()
 
     Circle c2s({500, 225}, 200);
     Gradient c2f(c2s, color{.5, 0, 0}, color::black,
-                 Circular{}, Sinusoid{10, .25});
+                 Circular{}, Sinusoidal{10, .25});
     Opacity c2(c2f, 0.5);
 
     Circle c3s({400, 381}, 200);

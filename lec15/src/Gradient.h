@@ -15,12 +15,12 @@ struct Linear : Modulator
     sample modulate(sample in) const override { return in; }
 };
 
-struct Sinusoid : Modulator
+struct Sinusoidal : Modulator
 {
     double frequency;
     double phase;
 
-    Sinusoid(double frequency = 1, double phase = 0)
+    Sinusoidal(double frequency = 1, double phase = 0)
             : frequency{frequency}
             , phase{phase}
     { }
