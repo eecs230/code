@@ -22,7 +22,11 @@ Shape::color Gradient::color_at(sample x, sample y) const
 
 graphics::color Gradient::color_at(posn point) const
 {
-    sample x = (point.x - get_bbox().left()) / get_bbox().width();
-    sample y = (point.y - get_bbox().top())  / get_bbox().height();
-    return color_at(x, y);
+    if (contains(point)) {
+        sample x = (point.x - get_bbox().left()) / get_bbox().width();
+        sample y = (point.y - get_bbox().top()) / get_bbox().height();
+        return color_at(x, y);
+    } else {
+        return color::transparent;
+    }
 }

@@ -53,7 +53,9 @@ struct Circular : public Shaper
 {
     sample shape(sample x, sample y) const
     {
-        return sqrt((x.value()*x.value() + y.value()*y.value()) / 2);
+        auto dx = x.value() - 0.5;
+        auto dy = y.value() - 0.5;
+        return sqrt(2 * (dx*dx + dy*dy));
     }
 };
 

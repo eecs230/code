@@ -22,7 +22,9 @@ public:
     static constexpr affinity dilation(double c) noexcept;
     static inline affinity rotation(double radians) noexcept;
 
-    affinity inverse() const noexcept;
+    inline affinity inverse() const noexcept;
+    constexpr affinity under(affinity) const noexcept;
+    constexpr affinity centered_on(double x, double y) const noexcept;
 
     constexpr posn<double>
     operator()(posn<double>) const noexcept;
@@ -92,6 +94,16 @@ inline affinity affinity::inverse() const noexcept
 
     return affinity{a, b, -(a * dx_ + b * dy_),
                     c, d, -(c * dx_ + d * dy_)};
+}
+
+constexpr affinity affinity::under(affinity other) const noexcept
+{
+    return other(apply(other.inverse()));
+}
+
+constexpr affinity affinity::centered_on(double x, double y) const noexcept
+{
+    return under(translation(x, y));
 }
 
 constexpr posn<double>
