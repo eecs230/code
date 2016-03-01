@@ -36,7 +36,7 @@ public:
     operator()(const affinity&) const noexcept;
 
     template <typename T>
-    T operator()(const T& t) const noexcept(noexcept(t.transform(*this)))
+    T operator()(const T& t) const
     {
         return t.transform(*this);
     }

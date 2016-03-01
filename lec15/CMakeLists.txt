@@ -6,7 +6,6 @@ add_program(red test/integration/red.cpp)
 target_link_libraries(red graphics)
 
 set(SHAPES
-        src/Coord.h
         src/Shape.h
         src/Shape.cpp
         src/Circle.h
