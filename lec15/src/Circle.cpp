@@ -14,5 +14,5 @@ Circle::Circle(posn center, double radius)
 
 bool Circle::contains(posn point) const
 {
-    return graphics::distance(center_, point) <= radius_;
+    return distance(center_, point) <= radius_;
 }

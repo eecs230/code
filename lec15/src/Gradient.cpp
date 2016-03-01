@@ -1,12 +1,12 @@
 #include "Gradient.h"
 
 Gradient::Gradient(const Shape& base, color start, color end,
-                   const Shaper& shaper,
+                   const Projector& shaper,
                    const Modulator& modulator)
         : Shape_decorator{base}
         , start_{start}
         , end_{end}
-        , shaper_{shaper}
+        , projector_{shaper}
         , modulator_{modulator}
 { }
 
@@ -17,7 +17,7 @@ Shape::color Gradient::color_at(sample weight) const
 
 Shape::color Gradient::color_at(sample x, sample y) const
 {
-    return color_at(shaper_.shape(x, y));
+    return color_at(projector_.project(x, y));
 }
 
 graphics::color Gradient::color_at(posn point) const

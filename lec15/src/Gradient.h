@@ -31,27 +31,27 @@ struct Sinusoidal : Modulator
     }
 };
 
-struct Shaper
+struct Projector
 {
     using sample = graphics::sample;
-    virtual sample shape(sample x, sample y) const = 0;
+    virtual sample project(sample x, sample y) const = 0;
 };
 
-struct Horizontal : public Shaper
+struct Horizontal : public Projector
 {
-    sample shape(sample x, sample) const
+    sample project(sample x, sample) const
     { return x; }
 };
 
-struct Vertical : public Shaper
+struct Vertical : public Projector
 {
-    sample shape(sample, sample y) const
+    sample project(sample, sample y) const
     { return y; }
 };
 
-struct Circular : public Shaper
+struct Circular : public Projector
 {
-    sample shape(sample x, sample y) const
+    sample project(sample x, sample y) const
     {
         auto dx = x.value() - 0.5;
         auto dy = y.value() - 0.5;
@@ -63,7 +63,7 @@ class Gradient : public Shape_decorator
 {
 public:
     Gradient(const Shape&, color start, color end,
-             const Shaper& = Horizontal{},
+             const Projector& = Horizontal{},
              const Modulator& = Linear{});
 
     using sample = graphics::sample;
@@ -77,6 +77,6 @@ protected:
     color            start_;
     color            end_;
     const Modulator& modulator_;
-    const Shaper&    shaper_;
+    const Projector& projector_;
 };
 
