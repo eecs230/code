@@ -13,16 +13,10 @@ const std::vector<posn>& Polygon::get_vertices() const
 
 bool has_crossing(posn previous, posn p, posn current)
 {
-    if (current.y <= p.y && p.y < previous.y) {
-        double y = p.y - current.y;
-        double x = p.x - current.x;
+    if (current.y < previous.y)
+        std::swap(current, previous);
 
-        double dy = previous.y - current.y;
-        double dx = previous.x - current.x;
-
-        return y * dx > dy * x;
-    }
-    else if (previous.y <= p.y && p.y < current.y) {
+    if (previous.y <= p.y && p.y < current.y) {
         double y = p.y - previous.y;
         double x = p.x - previous.x;
 
