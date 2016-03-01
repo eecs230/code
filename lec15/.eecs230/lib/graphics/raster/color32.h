@@ -2,10 +2,10 @@
 
 #include <cstdint>
 
-namespace raster
+namespace graphics
 {
 
-struct color
+struct color32
 {
     uint32_t value;
 
@@ -13,17 +13,17 @@ struct color
 
     static constexpr byte BYTE_MAX = 255;
 
-    color(byte red, byte green, byte blue, byte alpha = BYTE_MAX) noexcept;
+    color32(byte red, byte green, byte blue, byte alpha = BYTE_MAX) noexcept;
     // color(const fcolor&) noexcept;
 
     // constructs transparent by default
-    color() noexcept;
+    color32() noexcept;
 
-    explicit color(uint32_t argb) noexcept;
+    explicit color32(uint32_t argb) noexcept;
 
-    static color const transparent;
-    static color const white;
-    static color const black;
+    static color32 const transparent;
+    static color32 const white;
+    static color32 const black;
 
     byte red()   const noexcept;
     byte green() const noexcept;

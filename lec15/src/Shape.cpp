@@ -1,20 +1,20 @@
 #include "Shape.h"
 
-Shape::Shape(const B_box& box, const Shape::color& color)
-        : bounding_box_ (box), color_{color}
+Shape::Shape(const bbox& box, const Shape::color& color)
+        : bbox_(box), color_{color}
 { }
 
-const B_box& Shape::get_bounding_box() const
+const Shape::bbox& Shape::get_bbox() const
 {
-    return bounding_box_;
+    return bbox_;
 }
 
-Shape::color Shape::color_at(Point point) const
+Shape::color Shape::color_at(posn point) const
 {
     if (contains(point))
         return color_;
     else
-        return graphics::F_color::transparent;
+        return graphics::color::transparent;
 }
 
 Shape::~Shape() { }

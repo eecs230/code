@@ -1,36 +1,36 @@
-#include "Color_blender.h"
+#include "color_blender.h"
 
 namespace graphics
 {
 
-Color_blender::Color_blender() noexcept
+color_blender::color_blender() noexcept
 { }
 
-Color_blender& Color_blender::add(double weight, const F_color& color) noexcept
+color_blender& color_blender::add(double weight, const color& color) noexcept
 {
-    double alpha = weight * color.alpha();
+    double alpha = weight * double(color.alpha());
 
-    red_    += alpha * color.red();
-    green_  += alpha * color.green();
-    blue_   += alpha * color.blue();
+    red_    += alpha * double(color.red());
+    green_  += alpha * double(color.green());
+    blue_   += alpha * double(color.blue());
     alpha_  += alpha;
     weight_ += weight;
 
     return *this;
 }
 
-Color_blender& operator<<(Color_blender& cb, const F_color& color) noexcept
+color_blender& operator<<(color_blender& cb, const color& color) noexcept
 {
     cb.add(1, color);
     return cb;
 }
 
-Color_blender::operator F_color() const noexcept
+color color_blender::get() const noexcept
 {
     if (weight_ == 0)
-        return F_color::transparent;
+        return color::transparent;
     else
-        return F_color{red_ / alpha_, green_ / alpha_, blue_ / alpha_,
+        return color{red_ / alpha_, green_ / alpha_, blue_ / alpha_,
                        alpha_ / weight_};
 }
 

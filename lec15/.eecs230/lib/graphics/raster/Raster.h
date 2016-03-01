@@ -1,25 +1,25 @@
 #pragma once
 
-#include "color.h"
+#include "color32.h"
 
 #include <string>
 #include <vector>
 
-namespace raster
+namespace graphics
 {
 
-class Raster
+class raster
 {
 public:
-    Raster(size_t width, size_t height);
-    Raster(size_t width, size_t height, color fill);
+    raster(size_t width, size_t height);
+    raster(size_t width, size_t height, color32 fill);
 
     // forward declaration
     class const_row_ref;
     class row_ref;
 
-    color& at(size_t x, size_t y);
-    const color& at(size_t x, size_t y) const;
+    color32      & at(size_t x, size_t y);
+    const color32& at(size_t x, size_t y) const;
 
     const_row_ref operator[](size_t) const;
     row_ref operator[](size_t);
@@ -35,29 +35,29 @@ public:
     class const_row_ref
     {
     public:
-        const color& operator[](size_t) const;
+        const color32& operator[](size_t) const;
 
     private:
-        friend class Raster;
-        const_row_ref(const Raster&, size_t y);
+        friend class raster;
+        const_row_ref(const raster&, size_t y);
 
-        const Raster& raster_;
+        const raster& raster_;
         const size_t y_;
     };
 
     class row_ref : const_row_ref
     {
     public:
-        color& operator[](size_t);
+        color32& operator[](size_t);
 
     private:
-        friend class Raster;
-        row_ref(Raster&, size_t y);
+        friend class raster;
+        row_ref(raster&, size_t y);
     };
 
 private:
-    size_t width_, height_;
-    std::vector<color> pixels_;
+    size_t               width_, height_;
+    std::vector<color32> pixels_;
 };
 
 } // namespace raster

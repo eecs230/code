@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "bounding_box.h"
+#include "bbox.h"
 #include "posn.h"
 
 #include <cmath>
 
-namespace geometry
+namespace graphics
 {
 
 class affinity
@@ -27,8 +27,8 @@ public:
     constexpr posn<double>
     operator()(posn<double>) const noexcept;
 
-    bounding_box<double>
-    operator()(const bounding_box<double>&) const noexcept;
+    bbox<double>
+    operator()(const bbox<double>&) const noexcept;
 
     constexpr affinity
     operator()(const affinity&) const noexcept;
@@ -100,13 +100,13 @@ affinity::operator()(posn<double> point) const noexcept
     return {a_ * point.x + b_ * point.y + dx_, c_ * point.x + d_ * point.y + dy_};
 }
 
-inline bounding_box<double>
-affinity::operator()(const bounding_box<double>& bb) const noexcept
+inline bbox<double>
+affinity::operator()(const bbox<double>& bb) const noexcept
 {
-    return bound<double>(apply(bb.top_left()),
-                         apply(bb.top_right()),
-                         apply(bb.bottom_left()),
-                         apply(bb.bottom_right()));
+    return bbox<double>{apply(bb.top_left()),
+                        apply(bb.top_right()),
+                        apply(bb.bottom_left()),
+                        apply(bb.bottom_right())};
 }
 
 constexpr affinity

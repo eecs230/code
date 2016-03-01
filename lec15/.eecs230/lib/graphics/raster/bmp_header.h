@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace raster
+namespace graphics
 {
 namespace bmp
 {

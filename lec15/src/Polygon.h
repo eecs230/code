@@ -7,13 +7,13 @@
 class Polygon : public Shape
 {
 public:
-    Polygon(std::initializer_list<Point> vertices);
+    Polygon(std::initializer_list<posn> vertices);
 
-    bool contains(Point p) const override;
+    bool contains(posn p) const override;
 
 protected:
-    const std::vector<Point>& get_vertices() const;
+    const std::vector<posn>& get_vertices() const;
 
 private:
-    std::vector<Point> vertices_;
+    std::vector<posn> vertices_;
 };

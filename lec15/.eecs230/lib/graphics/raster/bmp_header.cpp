@@ -1,6 +1,6 @@
 #include "bmp_header.h"
 
-namespace raster
+namespace graphics
 {
 namespace bmp
 {

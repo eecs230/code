@@ -1,23 +1,24 @@
 #pragma once
 
-#include "Coord.h"
 #include <graphics.h>
 
 class Shape
 {
 public:
-    using color = graphics::F_color;
+    using color = graphics::color;
+    using posn  = graphics::posn<double>;
+    using bbox  = graphics::bbox<double>;
 
-    Shape(const B_box&, const color& = color::black);
+    Shape(const bbox&, const color& = color::black);
 
-    const B_box& get_bounding_box() const;
+    const bbox& get_bbox() const;
 
-    virtual bool contains(Point) const = 0;
-    virtual color color_at(Point) const;
+    virtual bool contains(posn) const = 0;
+    virtual color color_at(posn) const;
 
     virtual ~Shape();
 
 private:
-    B_box bounding_box_;
+    bbox  bbox_;
     color color_;
 };

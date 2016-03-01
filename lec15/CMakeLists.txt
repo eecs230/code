@@ -9,8 +9,20 @@ set(SHAPES
         src/Coord.h
         src/Shape.h
         src/Shape.cpp
+        src/Circle.h
+        src/Circle.cpp
         src/Polygon.h
         src/Polygon.cpp
+        src/Rectangle.h
+        src/Rectangle.cpp
+        src/Fill.h
+        src/Fill.cpp
+        src/Frame.h
+        src/Frame.cpp
+        src/Overlay.h
+        src/Overlay.cpp
+        src/Opacity.h
+        src/Opacity.cpp
         src/render.h
         src/render.cpp
         )

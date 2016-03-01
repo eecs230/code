@@ -1,17 +1,17 @@
 #pragma once
 
-#include "F_color.h"
+#include "color.h"
 
 namespace graphics
 {
 
-class Color_blender
+class color_blender
 {
 public:
-    Color_blender() noexcept;
+    color_blender() noexcept;
 
-    Color_blender& add(double weight, const F_color&) noexcept;
-    operator F_color() const noexcept;
+    color_blender& add(double weight, const color&) noexcept;
+    color get() const noexcept;
 
 private:
     double red_    = 0;
@@ -21,6 +21,6 @@ private:
     double weight_ = 0;
 };
 
-Color_blender& operator<<(Color_blender&, const F_color&) noexcept;
+color_blender& operator<<(color_blender&, const color&) noexcept;
 
 } // end namespace graphics

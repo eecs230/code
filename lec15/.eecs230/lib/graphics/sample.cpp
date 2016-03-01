@@ -22,9 +22,9 @@ sample::sample(double value) noexcept
     : value_{saturate(value)}
 {}
 
-sample interpolate(sample a, double weight, sample b) noexcept
+sample interpolate(sample a, sample weight, sample b) noexcept
 {
-    return sample{(1 - weight) * a + weight * b};
+    return sample{(1 - weight.value()) * a.value() + weight.value() * b.value()};
 }
 
 sample sample::operator*(sample other) const noexcept

@@ -2,26 +2,26 @@
 
 #include <cmath>
 
-namespace geometry
+namespace graphics
 {
 
 // forward declaration
 template <typename T>
-class bounding_box;
+class bbox;
 
 template <typename T>
 struct posn
 {
     T x, y;
 
-    constexpr bounding_box<T> get_bounding_box() const noexcept;
+    constexpr bbox<T> get_bbox() const noexcept;
 };
 
 template <typename T>
-constexpr bounding_box<T>
-posn<T>::get_bounding_box() const noexcept
+constexpr bbox<T>
+posn<T>::get_bbox() const noexcept
 {
-    return bounding_box<T>(y, x, y, x);
+    return bbox<T>(y, x, y, x);
 }
 
 template <typename T>

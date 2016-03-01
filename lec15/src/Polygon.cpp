@@ -1,15 +1,17 @@
 #include "Polygon.h"
 
-Polygon::Polygon(std::initializer_list<Point> vertices)
+using posn = Polygon::posn;
+
+Polygon::Polygon(std::initializer_list<posn> vertices)
         : Shape{vertices}, vertices_{vertices}
 { }
 
-const std::vector<Point>& Polygon::get_vertices() const
+const std::vector<posn>& Polygon::get_vertices() const
 {
     return vertices_;
 }
 
-bool has_crossing(Point previous, Point p, Point current)
+bool has_crossing(posn previous, posn p, posn current)
 {
     if (current.y <= p.y && p.y < previous.y) {
         double y = p.y - current.y;
@@ -33,15 +35,15 @@ bool has_crossing(Point previous, Point p, Point current)
     }
 }
 
-bool Polygon::contains(Point p) const
+bool Polygon::contains(posn p) const
 {
     if (vertices_.size() == 0) return false;
 
     size_t crossings = 0;
 
-    Point previous = vertices_.back();
+    posn previous = vertices_.back();
 
-    for (Point current : vertices_) {
+    for (posn current : vertices_) {
         if (has_crossing(previous, p, current))
             ++crossings;
 

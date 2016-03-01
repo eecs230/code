@@ -1,18 +1,17 @@
 add_library(graphics
         geometry/affinity.h
-        geometry/bounding_box.h
+        geometry/bbox.h
         geometry/posn.h
-        geometry.h
         raster/bmp_header.cpp
         raster/bmp_header.h
-        raster/color.cpp
-        raster/color.h
-        raster/graphics.cpp
-        raster/Raster.h
-        Color_blender.cpp
-        Color_blender.h
-        F_color.cpp
-        F_color.h
+        raster/color32.cpp
+        raster/color32.h
+        raster/raster.cpp
+        raster/raster.h
+        color_blender.cpp
+        color_blender.h
+        color.cpp
+        color.h
         sample.cpp
         sample.h
         )

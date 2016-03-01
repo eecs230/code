@@ -1,10 +1,10 @@
-#include "raster/Raster.h"
+#include "graphics.h"
 
-using namespace raster;
+using namespace graphics;
 
 int main()
 {
-    Raster r(800, 600, color{255, 0, 0});
+    raster r(800, 600, color{255, 0, 0});
     r.write_bmp("/Users/tov/Desktop/red.bmp");
 }
 

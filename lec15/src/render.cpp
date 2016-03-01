@@ -1,12 +1,31 @@
 #include "render.h"
 
-void render(const Shape& shape, raster::Raster& raster, size_t antialias)
+#include <graphics.h>
+
+void simple_render(const Shape& shape, graphics::raster& raster)
 {
-    for (int y = 0; y < raster.height(); ++y) {
-        for (int x = 0; x < raster.width(); ++x) {
-            if (shape.contains({(double)x, (double)y})) {
-                raster.at(x, y) = raster::color::black;
+    for (size_t y = 0; y < raster.height(); ++y) {
+        for (size_t x = 0; x < raster.width(); ++x) {
+            raster.at(x, y) = shape.color_at({x + .5, y + .5});
+        }
+    }
+}
+
+void render(const Shape& shape, graphics::raster& raster, size_t antialias)
+{
+    for (size_t y = 0; y < raster.height(); ++y) {
+        for (size_t x = 0; x < raster.width(); ++x) {
+            graphics::color_blender cb;
+
+            for (size_t i = 0; i < antialias; ++i) {
+                for (size_t j = 0; j < antialias; ++j) {
+                    Shape::posn point{x + (i + 0.5) / antialias,
+                                      y + (j + 0.5) / antialias};
+                    cb << shape.color_at(point);
+                }
             }
+
+            raster.at(x, y) = cb.get();
         }
     }
 }
