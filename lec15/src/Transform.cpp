@@ -1,7 +1,7 @@
 #include "Transform.h"
 
 Transform::Transform(const Shape& base, const graphics::affinity& transform)
-        : Shape{transform(bbox(base))}
+        : Shape{transform(bbox{base})}
         , base_{base}
         , inv_{transform.inverse()}
 { }

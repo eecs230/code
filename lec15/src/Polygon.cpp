@@ -6,6 +6,12 @@ Polygon::Polygon(std::initializer_list<posn> vertices)
         : Shape{vertices}, vertices_{vertices}
 { }
 
+template<typename Sequence>
+Polygon::Polygon(const Sequence& sequence)
+        : Shape{bbox(sequence)}
+        , vertices_{sequence}
+{ }
+
 const std::vector<posn>& Polygon::get_vertices() const
 {
     return vertices_;
@@ -47,3 +53,16 @@ bool Polygon::contains(posn p) const
     return crossings % 2 == 1;
 }
 
+Polygon regular_polygon(Polygon::posn center, double radius, size_t sides)
+{
+    std::vector<posn> vertices;
+
+    for (size_t i = 0; i < sides; ++i) {
+        double angle = M_PI / 2 + (2 * M_PI * i) / sides;
+        double x = center.x + radius * cos(angle);
+        double y = center.y - radius * sin(angle);
+        vertices.push_back({x, y});
+    }
+
+    return Polygon(vertices);
+}

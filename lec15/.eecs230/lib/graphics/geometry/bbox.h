@@ -37,11 +37,6 @@ public:
         return bbox(-inf, inf, inf, -inf);
     }
 
-    template<typename Boundable>
-    bbox(const Boundable& boundable)
-        : bbox{boundable.get_bbox()}
-    { }
-
     bbox(const T& top, const T& right, const T& bottom, const T& left) noexcept
     {
         if (top > bottom || left > right) {
@@ -59,6 +54,13 @@ public:
     {
         for (const auto& boundable : boundables)
             *this = *this + boundable.get_bbox();
+    }
+
+    template <typename Collection>
+    bbox(const Collection& collection) : bbox()
+    {
+        for (const auto& each : collection)
+            *this = *this + each.get_bbox();
     }
 
     const T& top()    const noexcept { return top_; }
