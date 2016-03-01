@@ -38,7 +38,7 @@ int main()
     Overlay a(c1, c2);
     Overlay b(c3, a);
 
-    simple_render(Overlay(b, Background(color::white)), raster);
+    simple_render(Overlay(b, Bacckground(color::black)), raster);
 
     raster.write_bmp("circles.bmp");
     system("open circles.bmp");
