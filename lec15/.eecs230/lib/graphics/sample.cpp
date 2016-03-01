@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace raster
+namespace graphics
 {
 
 namespace
@@ -11,11 +11,6 @@ namespace
 double saturate(double value) noexcept
 {
     return std::min(1.0, std::max(0.0, value));
-}
-
-double& saturate_assign(double& target, double value) noexcept
-{
-    target = saturate(value);
 }
 
 }
@@ -69,4 +64,4 @@ sample& operator/=(sample& target, sample other) noexcept {
     return target = target / other;
 }
 
-} // namespace raster
+} // namespace graphics

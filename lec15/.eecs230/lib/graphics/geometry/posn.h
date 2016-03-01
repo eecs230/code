@@ -21,7 +21,7 @@ template <typename T>
 constexpr bounding_box<T>
 posn<T>::get_bounding_box() const noexcept
 {
-    return { y, x, y, x };
+    return bounding_box<T>(y, x, y, x);
 }
 
 template <typename T>

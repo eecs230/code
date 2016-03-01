@@ -2,7 +2,7 @@
 
 #include "F_color.h"
 
-namespace raster
+namespace graphics
 {
 
 class Color_blender
@@ -23,4 +23,4 @@ private:
 
 Color_blender& operator<<(Color_blender&, const F_color&) noexcept;
 
-} // end namespace raster
+} // end namespace graphics

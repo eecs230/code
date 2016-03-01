@@ -20,22 +20,35 @@ public:
         }
     };
 
+    bounding_box()
+    {
+        if (std::numeric_limits<T>::has_infinity) {
+            top_    = left_   = std::numeric_limits<T>::infinity();
+            bottom_ = right_  = -top_;
+        } else {
+            throw invalid_exception{};
+        }
+    }
+
     bounding_box(const T& top, const T& right, const T& bottom,
-                           const T& left) noexcept
+                 const T& left) noexcept
     {
         if (top > bottom || left > right) {
-            if (std::numeric_limits<T>::has_infinity) {
-                top_    = left_   = std::numeric_limits<T>::infinity();
-                bottom_ = right_  = -top_;
-            } else {
-                throw invalid_exception{};
-            }
+            bounding_box();
         } else {
             top_    = top;
             right_  = right;
             bottom_ = bottom;
             left_   = left;
         }
+    }
+
+    template <typename Boundable>
+    bounding_box(std::initializer_list<Boundable> boundables)
+            : bounding_box()
+    {
+        for (const auto& boundable : boundables)
+            *this = *this + boundable.get_bounding_box();
     }
 
     const T& top()    const noexcept { return top_; }
@@ -70,10 +83,10 @@ template <typename T>
 bounding_box<T>
 operator+(const bounding_box<T>& bb1, const bounding_box<T>& bb2)
 {
-    return {std::min(bb1.top(), bb2.top()),
-            std::max(bb1.right(), bb2.right()),
-            std::max(bb1.bottom(), bb2.bottom()),
-            std::min(bb1.left(), bb2.left())};
+    return bounding_box<T>(std::min(bb1.top(), bb2.top()),
+                           std::max(bb1.right(), bb2.right()),
+                           std::max(bb1.bottom(), bb2.bottom()),
+                           std::min(bb1.left(), bb2.left()));
 }
 
 // Intersection
@@ -81,10 +94,10 @@ template <typename T>
 bounding_box<T>
 operator*(const bounding_box<T>& bb1, const bounding_box<T>& bb2)
 {
-    return {std::max(bb1.top(), bb2.top()),
-            std::min(bb1.right(), bb2.right()),
-            std::min(bb1.bottom(), bb2.bottom()),
-            std::max(bb1.left(), bb2.left())};
+    return bounding_box<T>(std::max(bb1.top(), bb2.top()),
+                           std::min(bb1.right(), bb2.right()),
+                           std::min(bb1.bottom(), bb2.bottom()),
+                           std::max(bb1.left(), bb2.left()));
 }
 
 template <typename T, typename Boundable>

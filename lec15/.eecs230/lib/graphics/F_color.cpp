@@ -1,7 +1,9 @@
 #include "F_color.h"
 
-namespace raster
+namespace graphics
 {
+
+using raster::color;
 
 F_color::F_color() noexcept : F_color{0, 0, 0, 0}
 { }
@@ -16,9 +18,9 @@ F_color::F_color(double red, double green, double blue, double alpha) noexcept
         : F_color{sample{red}, sample{green}, sample{blue}, sample{alpha}}
 { }
 
-static sample to_sample(byte b) noexcept
+static sample to_sample(color::byte b) noexcept
 {
-    return sample{b / static_cast<double>(BYTE_MAX)};
+    return sample{b / static_cast<double>(color::BYTE_MAX)};
 }
 
 F_color::F_color(color c) noexcept
@@ -28,9 +30,9 @@ F_color::F_color(color c) noexcept
                  to_sample(c.alpha())}
 { }
 
-static byte to_byte(sample s) noexcept
+static color::byte to_byte(sample s) noexcept
 {
-    return static_cast<byte>(BYTE_MAX * s.value());
+    return static_cast<color::byte>(color::BYTE_MAX * s.value());
 }
 
 F_color::operator color() noexcept
@@ -40,8 +42,6 @@ F_color::operator color() noexcept
                  to_byte(blue()),
                  to_byte(alpha())};
 }
-
-operator color() noexcept;
 
 F_color const F_color::transparent{0, 0, 0, 0};
 F_color const F_color::white{1, 1, 1};
@@ -86,4 +86,4 @@ noexcept
             new_alpha};
 }
 
-} // end namespace raster
+} // end namespace graphics

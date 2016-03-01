@@ -1,6 +1,6 @@
 #pragma once
 
-namespace raster
+namespace graphics
 {
 
 // A floating-point sample in the range 0.0 to 1.0.
@@ -31,22 +31,22 @@ private:
 
 sample interpolate(sample a, double weight, sample b) noexcept;
 
-bool operator==(sample a, sample b) noexcept
+inline bool operator==(sample a, sample b) noexcept
 { return a.value() == b.value(); }
 
-bool operator!=(sample a, sample b) noexcept
+inline bool operator!=(sample a, sample b) noexcept
 { return a.value() != b.value(); }
 
-bool operator<(sample a, sample b) noexcept
+inline bool operator<(sample a, sample b) noexcept
 { return a.value() < b.value(); }
 
-bool operator<=(sample a, sample b) noexcept
+inline bool operator<=(sample a, sample b) noexcept
 { return a.value() <= b.value(); }
 
-bool operator>(sample a, sample b) noexcept
+inline bool operator>(sample a, sample b) noexcept
 { return a.value() > b.value(); }
 
-bool operator>=(sample a, sample b) noexcept
+inline bool operator>=(sample a, sample b) noexcept
 { return a.value() >= b.value(); }
 
 sample operator+(sample, sample) noexcept;
@@ -58,4 +58,4 @@ sample& operator-=(sample&, sample) noexcept;
 sample operator/(sample, sample) noexcept;
 sample& operator/=(sample&, sample) noexcept;
 
-} // namespace raster
+} // namespace graphics

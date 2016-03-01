@@ -1,11 +1,11 @@
 #pragma once
 
 #include "sample.h"
-#include "color.h"
+#include "raster/color.h"
 
 #include <cstddef>
 
-namespace raster
+namespace graphics
 {
 
 class F_color
@@ -16,8 +16,8 @@ public:
             sample alpha = sample::ONE) noexcept;
     F_color(double red, double green, double blue, double alpha = 1.0) noexcept;
 
-    F_color(color) noexcept;
-    operator color() noexcept;
+    F_color(raster::color) noexcept;
+    operator raster::color() noexcept;
 
     static F_color const transparent;
     static F_color const white;
@@ -36,4 +36,4 @@ F_color grayscale(const F_color&) noexcept;
 F_color overlay(const F_color& foreground, const F_color& background) noexcept;
 F_color interpolate(const F_color& a, double weight, const F_color& b) noexcept;
 
-} // namespace raster
+} // namespace graphics

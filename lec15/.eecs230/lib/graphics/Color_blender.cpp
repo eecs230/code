@@ -1,6 +1,6 @@
 #include "Color_blender.h"
 
-namespace raster
+namespace graphics
 {
 
 Color_blender::Color_blender() noexcept
@@ -34,4 +34,4 @@ Color_blender::operator F_color() const noexcept
                        alpha_ / weight_};
 }
 
-} // end namespace raster
+} // end namespace graphics
