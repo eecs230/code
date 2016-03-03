@@ -21,4 +21,10 @@ private:
     std::vector<posn> vertices_;
 };
 
+template<typename Sequence>
+Polygon::Polygon(const Sequence& sequence)
+        : Shape{bbox(sequence)}
+        , vertices_{sequence}
+{ }
+
 Polygon regular_polygon(Polygon::posn center, double radius, size_t sides);

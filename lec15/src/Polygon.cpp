@@ -6,12 +6,6 @@ Polygon::Polygon(std::initializer_list<posn> vertices)
         : Shape{vertices}, vertices_{vertices}
 { }
 
-template<typename Sequence>
-Polygon::Polygon(const Sequence& sequence)
-        : Shape{bbox(sequence)}
-        , vertices_{sequence}
-{ }
-
 const std::vector<posn>& Polygon::get_vertices() const
 {
     return vertices_;
