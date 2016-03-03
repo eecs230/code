@@ -55,9 +55,8 @@ void raster::write_bmp(const std::string& filename) const
     of.write((char *)&info, sizeof(info));
 
     for (size_t y = height(); y > 0; --y) {
-        auto row = operator[](y - 1);
         for (size_t x = 0; x < width(); ++x) {
-            auto pixel = row[x];
+            auto pixel = at(x, y - 1);
             of << pixel.blue() << pixel.green() << pixel.red();
         }
 
@@ -65,34 +64,6 @@ void raster::write_bmp(const std::string& filename) const
             of << '\0';
         }
     }
-}
-
-raster::const_row_ref::const_row_ref(const raster& raster, size_t y)
-    : raster_{raster}, y_{y}
-{ }
-
-raster::row_ref::row_ref(raster& raster, size_t y)
-    : const_row_ref{raster, y}
-{ }
-
-raster::const_row_ref raster::operator[](size_t y) const {
-    assert(y < height());
-    return raster::const_row_ref{*this, y};
-}
-
-raster::row_ref raster::operator[](size_t y) {
-    assert(y < height());
-    return raster::row_ref{*this, y};
-}
-
-const color32& raster::const_row_ref::operator[](size_t x) const
-{
-    return raster_.at(x, y_);
-}
-
-color32& raster::row_ref::operator[](size_t x)
-{
-    return const_cast<raster&>(raster_).at(x, y_);
 }
 
 } // namespace raster
