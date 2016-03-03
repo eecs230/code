@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 project(lec15 CXX)
 include(.eecs230/CMakeLists.txt)
 
-add_program(red test/integration/red.cpp)
+add_program(red test/red.cpp)
 target_link_libraries(red graphics)
 
 set(SHAPES
@@ -32,5 +32,5 @@ set(SHAPES
         src/render.cpp
         )
 
-add_program(circles test/integration/circles.cpp ${SHAPES})
+add_program(circles test/circles.cpp ${SHAPES})
 target_link_libraries(circles graphics)

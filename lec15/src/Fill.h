@@ -4,6 +4,7 @@
 
 #include <memory>
 
+// Adapts another shape to change its color.
 class Fill : public Shape
 {
 public:

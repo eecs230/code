@@ -1,5 +1,6 @@
 #include "circle.h"
 
+// Computes the bounding box of a circle, given its center and radius.
 static Shape::bbox bbox_of_circle(Shape::posn center, double radius)
 {
         return Shape::bbox(center.y - radius, center.x + radius,

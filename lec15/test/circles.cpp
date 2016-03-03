@@ -1,10 +1,10 @@
+// Example that renders several circles under various transformations.
+
 #include "Background.h"
 #include "Circle.h"
-#include "Fill.h"
 #include "Gradient.h"
 #include "Opacity.h"
 #include "Overlay.h"
-#include "Polygon.h"
 #include "Transform.h"
 
 #include "render.h"

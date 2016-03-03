@@ -2,6 +2,7 @@
 
 #include "Shape_decorator.h"
 
+// Adapts a shape to alter its opacity/transparency.
 class Opacity : public Shape_decorator
 {
 public:
