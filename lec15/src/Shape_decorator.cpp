@@ -1,7 +1,7 @@
 #include "Shape_decorator.h"
 
 Shape_decorator::Shape_decorator(const Shape& base)
-        : Shape_decorator{base, {base}}
+        : Shape_decorator{base, {&base}}
 { }
 
 Shape_decorator::Shape_decorator(const Shape& base, bbox box)

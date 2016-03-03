@@ -1,7 +1,7 @@
-#include "overlay.h"
+#include "Overlay.h"
 
 Overlay::Overlay(const Shape& over, const Shape& under)
-        : Shape{{over, under}}
+        : Shape{{&over, &under}}
         , over_{over}
         , under_{under}
 { }

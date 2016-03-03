@@ -50,6 +50,13 @@ public:
     }
 
     template <typename Boundable>
+    bbox(std::initializer_list<Boundable*> boundables) : bbox()
+    {
+        for (const auto& boundable : boundables)
+            *this = *this + boundable->get_bbox();
+    }
+
+    template <typename Boundable>
     bbox(std::initializer_list<Boundable> boundables) : bbox()
     {
         for (const auto& boundable : boundables)

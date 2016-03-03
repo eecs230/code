@@ -6,7 +6,7 @@
 //     the shape.
 
 Transform::Transform(const Shape& base, const graphics::affinity& transform)
-        : Shape_decorator{base, transform(bbox{base})}
+        : Shape_decorator{base, transform(bbox{&base})}
         , inv_{transform.inverse()}
 { }
 
