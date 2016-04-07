@@ -4,7 +4,7 @@ int main()
 {
     vector<int> v;
 
-    cout << "Enter some numbers, ending with 0> ";
+    cout << "Enter some numbers, ending with 0\n> ";
 
     int n;
     while (cin >> n && n != 0) {
