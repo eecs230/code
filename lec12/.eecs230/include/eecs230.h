@@ -24,6 +24,8 @@
     Revised Jan. 5, 2016: EECS230 version.
 
     Revised Jan. 27, 2016: added gtest include
+
+    Revised Feb. 5, 2016: changed gtest to UnitTest++
 */
 
 #pragma once
@@ -46,6 +48,14 @@
 #include <vector>
 
 #include "UnitTest++/UnitTest++.h"
+
+#define NEW_RUNTIME_ERROR(NAME)                         \
+    struct NAME : runtime_error {                       \
+        NAME(const string& s) : runtime_error{s}    {}  \
+        NAME(const char* s)   : runtime_error{s}    {}  \
+        NAME()                :                         \
+          NAME{static_cast<const char*>( #NAME )}   {}  \
+    }
 
 namespace eecs230 {
 
