@@ -1,4 +1,4 @@
-#include "eecs230.h"
+#include <eecs230.h>
 
 NEW_RUNTIME_ERROR(bad_widget_shape);
 NEW_RUNTIME_ERROR(cannot_open_door);
