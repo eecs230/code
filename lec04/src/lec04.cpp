@@ -13,7 +13,7 @@ int stamp_widget(int shape)
 
 int open_door(int knob_state)
 {
-    if (knob_state == 0)
+    if (! knob_state)
         throw runtime_error{"no knob state provided"};
 
     if (knob_state != 4)
