@@ -1,9 +1,9 @@
-#include "eecs230.h"
+#include <eecs230.h>
 
 // Strategies you have available:
 //
 // generative iteration: a loop that produces something of arbitrary
-// size
+// size (like a vector)
 //
 // structural iteration: a loop that traverses a data structure, e.g. a
 // for-each loop over a vector
@@ -28,12 +28,8 @@ vector<double> read_grades()
     vector<double> result;
     double grade = 0;
 
-    cin >> grade;
-    while (grade != -1) {
-        if (!cin) error("Could not read grade");
+    while (cin >> grade && grade != -1)
         result.push_back(grade);
-        cin >> grade;
-    }
 
     return result;
 }
@@ -50,7 +46,8 @@ double sum(vector<double> doubles)
 {
     double result = 0;
 
-    for (double d : doubles) result += d;
+    for (double d : doubles)
+        result += d;
 
     return result;
 }

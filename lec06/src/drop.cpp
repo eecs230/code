@@ -1,4 +1,4 @@
-#include "eecs230.h"
+#include <eecs230.h>
 
 /*
  * Reads weights and grades from the user; computes the final grade by
@@ -22,25 +22,53 @@ double sum(vector<double> doubles)
     return result;
 }
 
-// Reads a vector of doubles from one line of cin.
+// Computes the dot product of two vectors, multiplying them pointwise and
+// summing.
 //
-// Examples:
+// Example:
+//   sum_of_products({1, 10, 100}, {7, 3, 4}) = 437
 //
-// If user input is "3 4.5 8\n12\n", result {3, 4.5, 8}
+// Strategy: structure iteration
+double sum_of_products(vector<double> xs, vector<double> ys)
+{
+    double result = 0;
+
+    for (int i = 0; i < xs.size(); ++i)
+        result += xs[i] * ys[i];
+
+    return result;
+}
+
+// Breaks a line into a vector of doubles.
+//
+// Example:
+//
+//   If line is "3 4.5 8", result {3, 4.5, 8}
 //
 // Strategy: generative iteration
+vector<double> split_string(string line)
+{
+    istringstream  ss{line};
+    vector<double> result;
+    double         d;
+
+    while (ss >> d) result.push_back(d);
+
+    return result;
+}
+
+// Reads a vector of doubles from one line of cin.
+//
+// Example:
+//
+//   If user input is "3 4.5 8\n12\n", result {3, 4.5, 8}
+//
+// Strategy: function composition
 vector<double> read_double_vector()
 {
     string line;
     getline(cin, line);
-    istreamstream ss{line};
-
-    vector<double> result;
-
-    double d;
-    while (ss >> d) result.push_back(d);
-
-    return result;
+    return split_string(line);
 }
 
 // Ensures that grades and weights have the same length, and they're
@@ -55,15 +83,31 @@ vector<double> read_double_vector()
 // Strategy: decision tree
 void check_input(vector<double> grades, vector<double> weights)
 {
-    if (grades.size() != weights.size()) {
-        cerr << "Grades and weights must be same length";
-        exit(1);
-    }
+    if (grades.size() != weights.size())
+        error("Grades and weights must be same length");
 
-    if (sum(weights) >= 0) {
-        cerr << "Sum of weights must be positive";
-        exit(1);
-    }
+    if (grades.size() < 2)
+        error("Must have at least 2 grades");
+}
+
+// Computes the weighted average, omitting `dropped`
+//
+// Example:
+//
+//   compute_grade_without(2, { .5, .7, 1 }, { 1, 1, 4 }) = 0.6
+//
+// Strategy: function composition
+double compute_grade_without(int dropped,
+                             vector<double> grades,
+                             vector<double> weights)
+{
+    double numerator   = sum_of_products(grades, weights);
+    double denominator = sum(weights);
+
+    numerator   -= grades[dropped] * weights[dropped];
+    denominator -= weights[dropped];
+
+    return numerator / denominator;
 }
 
 // Finds the index of the grade whose omission maximizes the weighted
@@ -81,7 +125,7 @@ int find_best_drop(vector<double> grades, vector<double> weights)
     double best_average = 0.0;
 
     for (int i = 0; i < grades.size(); ++i) {
-        double average = compute_grade_without(i, grades, weights)
+        double average = compute_grade_without(i, grades, weights);
         if (average > best_average) {
             best_index   = i;
             best_average = average;
@@ -92,10 +136,6 @@ int find_best_drop(vector<double> grades, vector<double> weights)
 
     return best_index;
 }
-
-// Computes the weighted average, omitting `dropped`
-double compute_grade_without(int dropped, vector<double> grades,
-                             vector<double> weights);
 
 int main()
 try
@@ -108,7 +148,7 @@ try
 
     check_input(grades, weights);
 
-    int to_drop = find_best_drop(grades, weights);
+    int to_drop  = find_best_drop(grades, weights);
     double grade = compute_grade_without(to_drop, grades, weights);
 
     cout << "Grade: " << grade << ", maximized by dropping assignment "
@@ -116,5 +156,6 @@ try
 }
 
 catch (runtime_error& e) {
-    cerr << "Caught in main: " << e.what() << "\n";
+    cerr << "Caught in main: " << e.what() << endl;
+    exit(1);
 }
