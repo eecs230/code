@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "eecs230.h"
+#include <eecs230.h>
 
 // Computes the factorial of a natural number.
 //

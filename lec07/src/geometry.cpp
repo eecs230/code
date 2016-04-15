@@ -1,9 +1,9 @@
 // src/geometry.cpp
 
+#include <eecs230.h>
 #include "geometry.h"
-#include "eecs230.h"
 
-namespace lec08 {
+namespace lec07 {
 
 double sqr(double x) { return x * x; }
 

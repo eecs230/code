@@ -13,12 +13,12 @@ int factorial(int n)
     return result;
 }
 
-//int main()
-//{
-//    cout << "Enter a number:\n>";
-//
-//    int n;
-//    if (!(cin >> n)) throw runtime_error("didn't enter a number");
-//
-//    cout << n << "! = " << factorial(n) << '\n';
-//}
+int old_main()
+{
+    cout << "Enter a number:\n>";
+
+    int n;
+    if (!(cin >> n)) throw runtime_error("didn't enter a number");
+
+    cout << n << "! = " << factorial(n) << '\n';
+}

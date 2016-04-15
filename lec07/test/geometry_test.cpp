@@ -1,7 +1,7 @@
+#include <eecs230.h>
 #include "geometry.h"
-#include "eecs230.h"
 
-using namespace lec08;
+using namespace lec07;
 
 TEST(PosnX)
 {

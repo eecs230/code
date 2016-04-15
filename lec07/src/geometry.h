@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "eecs230.h"
+#include <eecs230.h>
 
-namespace lec08 {
+namespace lec07 {
 
 // Represent the point (x, y)
 struct Posn
