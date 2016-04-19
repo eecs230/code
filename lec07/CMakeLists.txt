@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.3)
 project(lec08 CXX)
 include(.eecs230/CMakeLists.txt)
 
+add_program(interactive_factorial
+        src/interactive_factorial.cpp src/factorial.h src/factorial.cpp)
+
 add_test_program(factorial_test
         test/factorial_test.cpp src/factorial.h src/factorial.cpp)
 
