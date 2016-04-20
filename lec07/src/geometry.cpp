@@ -34,4 +34,4 @@ bool are_tangent(const Circle& c1, const Circle& c2)
     return distance(c1.center, c2.center) == c1.radius + c2.radius;
 }
 
-} // end namespace lec08
+} // end namespace lec07

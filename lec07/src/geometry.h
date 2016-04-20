@@ -32,4 +32,4 @@ bool is_within(const Circle& inner, const Circle& outer);
 // Are the two circles tangent to one another?
 bool are_tangent(const Circle&, const Circle&);
 
-} // end namespace lec08
+} // end namespace lec07

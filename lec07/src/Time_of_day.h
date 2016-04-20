@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdexcept>
 
+struct Bad_time : std::exception { };
+
 class Time_of_day
 {
 public:
@@ -40,6 +42,4 @@ int seconds_since_midnight(const Time_of_day&);
 // Returns the number of seconds between two times on the same
 // day.
 int operator-(const Time_of_day&, const Time_of_day&);
-
-struct Bad_time : std::exception { };
 
