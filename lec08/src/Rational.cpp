@@ -11,36 +11,6 @@ static long gcd(long a, long b)
     return b;
 }
 
-static long checked_add(long a, long b)
-{
-    if (a > 0 && b > LONG_MAX - a)
-        throw std::overflow_error{"rational overflow"};
-
-    if (a < 0 && b < LONG_MIN - a)
-        throw std::overflow_error{"rational underflow"};
-
-    return a + b;
-}
-
-static long checked_multiply(long a, long b)
-{
-    if (a > 0 && b > LONG_MAX / a)
-        throw std::overflow_error{"rational overflow"};
-
-    if (a < 0 && b < LONG_MIN / a)
-        throw std::overflow_error{"rational underflow"};
-
-    return a * b;
-}
-
-static long checked_negate(long a)
-{
-    if (a == LONG_MIN)
-        throw std::overflow_error{"rational overflow"};
-
-    return -a;
-}
-
 Rational::Rational()
     : num_{0}, den_{1}
 { }
@@ -70,13 +40,7 @@ Rational::Rational(long n, long d)
 
 Rational Rational::reciprocal() const
 {
-    if (den_ == 0)
-        throw std::overflow_error{"Rational::reciprocal(): divide by 0"};
-
-    Rational result;
-    result.num_ = den_;
-    result.den_ = num_;
-    return result;
+    return Rational{den_, num_};
 }
 
 bool operator==(const Rational& a, const Rational& b)
@@ -92,8 +56,8 @@ bool operator!=(const Rational& a, const Rational& b)
 
 bool operator<(const Rational& a, const Rational& b)
 {
-    return checked_multiply(a.get_numerator(), b.get_denominator()) <
-           checked_multiply(b.get_numerator(), a.get_denominator());
+    return a.get_numerator() * b.get_denominator() <
+           b.get_numerator() * a.get_denominator();
 }
 
 bool operator>(const Rational& a, const Rational& b)
@@ -118,7 +82,7 @@ std::ostream& operator<<(std::ostream& o, const Rational& a)
 
 Rational operator-(const Rational& a)
 {
-    return Rational{checked_negate(a.get_numerator()), a.get_denominator()};
+    return Rational{-a.get_numerator(), a.get_denominator()};
 }
 
 Rational operator+(const Rational& a, const Rational& b)
@@ -133,11 +97,11 @@ Rational operator+(const Rational& a, const Rational& b)
     long a_den = a.get_denominator() / divisor;
     long b_den = b.get_denominator() / divisor;
 
-    long a_num = checked_multiply(a.get_numerator(), b_den);
-    long b_num = checked_multiply(b.get_numerator(), a_den);
+    long a_num = a.get_numerator() * b_den;
+    long b_num = b.get_numerator() * a_den;
 
-    long numerator   = checked_add(a_num, b_num);
-    long denominator = checked_multiply(a_den, b.get_denominator());
+    long numerator   = a_num + b_num;
+    long denominator = a_den * b.get_denominator();
 
     return Rational{numerator, denominator};
 }
@@ -157,8 +121,8 @@ Rational operator*(const Rational& a, const Rational& b)
     long a_den = a.get_denominator() / ba_divisor;
     long b_den = b.get_denominator() / ab_divisor;
 
-    long num = checked_multiply(a_num, b_num);
-    long den = checked_multiply(a_den, b_den);
+    long num = a_num * b_num;
+    long den = a_den * b_den;
 
     return Rational{num, den};
 }
