@@ -1,7 +1,5 @@
 #include "Rational.h"
 #include <UnitTest++/UnitTest++.h>
-#include <sstream>
-#include <iostream>
 
 using R = Rational;
 
