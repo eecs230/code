@@ -24,7 +24,7 @@ Rational::Rational(long n, long d)
     if (d == 0)
         throw std::overflow_error{"Rational::Rational: divide by 0"};
 
-    int divisor = gcd(n, d);
+    long divisor = gcd(n, d);
 
     n /= divisor;
     d /= divisor;
