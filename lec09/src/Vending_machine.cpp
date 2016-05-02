@@ -2,17 +2,17 @@
 
 #include <cassert>
 
-const char* Unknown_item::what() const
+const char* Unknown_item::what() const noexcept
 {
     return "Item not found.";
 }
 
-const char* Out_of_stock::what() const
+const char* Out_of_stock::what() const noexcept
 {
     return "Item out of stock.";
 }
 
-const char* Insufficient_funds::what() const
+const char* Insufficient_funds::what() const noexcept
 {
     return "Insufficient funds to purchase item.";
 }
@@ -43,7 +43,7 @@ size_t Vending_machine::select_item(const std::string& item)
         throw Unknown_item{};
     }
 
-    if (*count == 0) {
+    if (count->second == 0) {
         throw Out_of_stock{};
     }
 

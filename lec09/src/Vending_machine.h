@@ -30,16 +30,16 @@ private:
 
 struct Unknown_item : std::exception
 {
-    virtual const char* what() const override;
+    virtual const char* what() const noexcept override;
 };
 
 struct Out_of_stock : std::exception
 {
-    virtual const char* what() const override;
+    virtual const char* what() const noexcept override;
 };
 
 struct Insufficient_funds : std::exception
 {
-    virtual const char* what() const override;
+    virtual const char* what() const noexcept override;
 };
 
