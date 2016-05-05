@@ -28,17 +28,20 @@ private:
     //  - the maps have the same keys
 };
 
-struct Unknown_item : std::exception
+struct Vending_exception : std::exception
+{ };
+
+struct Unknown_item : Vending_exception
 {
     virtual const char* what() const noexcept override;
 };
 
-struct Out_of_stock : std::exception
+struct Out_of_stock : Vending_exception
 {
     virtual const char* what() const noexcept override;
 };
 
-struct Insufficient_funds : std::exception
+struct Insufficient_funds : Vending_exception
 {
     virtual const char* what() const noexcept override;
 };
