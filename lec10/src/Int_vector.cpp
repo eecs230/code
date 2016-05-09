@@ -72,16 +72,75 @@ void Int_vector::ensure_capacity_(size_t req_capacity)
 
 Int_vector::~Int_vector()
 {
-    std::cout << "goodbye\n";
     delete[] data_;
 }
 
-Int_vector::Int_vector(const Int_vector& old)
-        : capacity_{old.capacity_}
-        , size_{old.size_}
-        , data_{new int[old.capacity_]}
+Int_vector::Int_vector(const Int_vector& other)
+        : capacity_{other.capacity_}
+        , size_{other.size_}
+        , data_{new int[other.capacity_]}
 {
-    for (size_t i = 0; i < old.size(); ++i) {
-        *(data_ + i) = *(old.data_ + i);
+    *this = other;
+}
+
+Int_vector& Int_vector::operator=(const Int_vector& other)
+{
+    ensure_capacity_(other.size());
+
+    for (size_t i = 0; i < other.size(); ++i) {
+        *(data_ + i) = *(other.data_ + i);
     }
+
+    return *this;
+}
+
+Int_vector::iterator Int_vector::begin()
+{
+    return data_;
+}
+
+Int_vector::const_iterator Int_vector::begin() const
+{
+    return data_;
+}
+
+Int_vector::iterator Int_vector::end()
+{
+    return data_ + size_;
+}
+
+Int_vector::const_iterator Int_vector::end() const
+{
+    return data_ + size_;
+}
+
+bool operator==(const Int_vector& a, const Int_vector& b)
+{
+    if (a.size() != b.size()) return false;
+
+    for (size_t i = 0; i < a.size(); ++i) {
+        if (a[i] != b[i]) return false;
+    }
+
+    return true;
+}
+
+Int_vector::iterator begin(Int_vector& v)
+{
+    return v.begin();
+}
+
+Int_vector::const_iterator begin(const Int_vector& v)
+{
+    return v.begin();
+}
+
+Int_vector::iterator end(Int_vector& v)
+{
+    return v.end();
+}
+
+Int_vector::const_iterator end(const Int_vector& v)
+{
+    return v.end();
 }
