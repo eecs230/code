@@ -1,8 +1,9 @@
 #include "Cons_list.h"
 
-using namespace cons_list;
-
 #include <UnitTest++/UnitTest++.h>
+#include <vector>
+
+using namespace cons_list;
 
 TEST(ConstructPair)
 {
@@ -47,4 +48,17 @@ TEST(Reverse)
 {
     CHECK_EQUAL(cons("c", cons("b", cons("a", nullptr))),
                 reverse(cons("a", cons("b", cons("c", nullptr)))));
+}
+
+TEST(Iterator)
+{
+    auto a = cons("1", cons("2", cons("3", nullptr)));
+    std::vector<std::string> v;
+
+    for (auto s : a) v.push_back(s);
+
+    CHECK_EQUAL(3, v.size());
+    CHECK_EQUAL("1", v[0]);
+    CHECK_EQUAL("2", v[1]);
+    CHECK_EQUAL("3", v[2]);
 }
