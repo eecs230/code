@@ -3,7 +3,7 @@
 #include <UnitTest++/UnitTest++.h>
 #include <vector>
 
-using namespace cons_list;
+using namespace list;
 
 TEST(ConstructPair)
 {
