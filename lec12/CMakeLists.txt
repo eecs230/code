@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(lec13 CXX)
+project(lec12 CXX)
 include(.eecs230/CMakeLists.txt)
 
 add_test_program(Bst_tests
