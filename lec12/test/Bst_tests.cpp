@@ -1,24 +1,24 @@
-#include "Bst_set.h"
+#include "Bst.h"
 
 #include <UnitTest++/UnitTest++.h>
 #include <sstream>
 
 TEST(Empty)
 {
-    Bst_set set;
+    Bst set;
     CHECK(set.is_empty());
     CHECK_EQUAL(0, set.size());
 }
 
 TEST(ContainsEmpty)
 {
-    Bst_set set;
+    Bst set;
     CHECK(!set.contains(5));
 }
 
 TEST(Insert)
 {
-    Bst_set set;
+    Bst set;
     set.insert(2);
     set.insert(4);
     set.insert(6);
@@ -27,7 +27,7 @@ TEST(Insert)
 
 TEST(Debug1)
 {
-    Bst_set set;
+    Bst set;
     set.insert(4);
     set.insert(2);
     set.insert(6);
@@ -39,7 +39,7 @@ TEST(Debug1)
 
 TEST(Debug2)
 {
-    Bst_set set;
+    Bst set;
     set.insert(2);
     set.insert(4);
     set.insert(6);
@@ -51,7 +51,7 @@ TEST(Debug2)
 
 TEST(InsertContains)
 {
-    Bst_set set;
+    Bst set;
     set.insert(2);
     set.insert(4);
     set.insert(6);
@@ -67,7 +67,7 @@ TEST(InsertContains)
 
 TEST(Reinsert)
 {
-    Bst_set set;
+    Bst set;
 
     set.insert(3);
     CHECK_EQUAL(1, set.size());
@@ -87,7 +87,7 @@ TEST(Reinsert)
 
 TEST(InitializerList)
 {
-    Bst_set set{2, 4, 6, 8};
+    Bst set{2, 4, 6, 8};
 
     CHECK(!set.contains(1));
     CHECK(set.contains(2));
@@ -99,7 +99,7 @@ TEST(InitializerList)
     CHECK(set.contains(8));
     CHECK(!set.contains(9));
 
-    Bst_set set2{4, 2, 1, 3, 6, 5, 7};
+    Bst set2{4, 2, 1, 3, 6, 5, 7};
 
     CHECK(!set.contains(1));
     CHECK(set.contains(2));
@@ -115,7 +115,7 @@ TEST(InitializerList)
 TEST(Remove)
 {
     for (int i = 0; i < 9; ++i) {
-        Bst_set set{4, 2, 1, 3, 6, 5, 7};
+        Bst set{4, 2, 1, 3, 6, 5, 7};
         set.remove(i);
 
         for (int j = 1; j < 8; ++j) {

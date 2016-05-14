@@ -1,6 +1,6 @@
-#include "Bst_set.h"
+#include "Bst.h"
 
-struct Bst_set::Node
+struct Bst::Node
 {
     int    element;
     link_t left;
@@ -48,22 +48,22 @@ struct Bst_set::Node
     }
 };
 
-Bst_set::Bst_set(std::initializer_list<int> elements)
+Bst::Bst(std::initializer_list<int> elements)
 {
     for (int e : elements) insert(e);
 }
 
-bool Bst_set::is_empty() const
+bool Bst::is_empty() const
 {
     return root_ == nullptr;
 }
 
-size_t Bst_set::size() const
+size_t Bst::size() const
 {
     return size_;
 }
 
-bool Bst_set::contains(int n) const
+bool Bst::contains(int n) const
 {
     auto current = root_;
 
@@ -79,7 +79,7 @@ bool Bst_set::contains(int n) const
     return false;
 }
 
-void Bst_set::insert(int n)
+void Bst::insert(int n)
 {
     link_t* current = Node::find(&root_, n);
 
@@ -89,7 +89,7 @@ void Bst_set::insert(int n)
     }
 }
 
-void Bst_set::remove(int n)
+void Bst::remove(int n)
 {
     // First, find the node to remove:
     link_t* current = Node::find(&root_, n);
@@ -123,7 +123,7 @@ void Bst_set::remove(int n)
     }
 }
 
-std::ostream& Bst_set::debug(std::ostream& o)
+std::ostream& Bst::debug(std::ostream& o)
 {
     return root_->debug(o);
 }

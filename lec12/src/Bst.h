@@ -4,11 +4,11 @@
 #include <iostream>
 #include <memory>
 
-class Bst_set
+class Bst
 {
 public:
-    Bst_set() = default;
-    Bst_set(std::initializer_list<int>);
+    Bst() = default;
+    Bst(std::initializer_list<int>);
 
     bool is_empty() const;
     size_t size() const;
