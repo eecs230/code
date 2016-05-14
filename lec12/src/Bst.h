@@ -20,6 +20,7 @@ public:
     std::ostream& debug(std::ostream&);
 
 private:
+    // Pimpl (pointer-to-implementation) idiom here:
     struct Node;
     using link_t = std::shared_ptr<Node>;
 

@@ -1,4 +1,4 @@
-#include "Cons_list.h"
+#include "linked_list.h"
 
 namespace linked_list {
 
@@ -11,7 +11,7 @@ const std::string& List_node::first() const
     return first_;
 }
 
-link_t List_node::rest() const
+List List_node::rest() const
 {
     return rest_;
 }
@@ -103,7 +103,7 @@ List append(List front, List back)
     else return cons(front->first(), append(front->rest(), back));
 }
 
-bool operator==(Cons_list a, Cons_list b)
+bool operator==(List a, List b)
 {
     if (a == nullptr) return b == nullptr;
     else if (b == nullptr) return false;

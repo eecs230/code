@@ -1,9 +1,9 @@
-#include "Cons_list.h"
+#include "linked_list.h"
 
 #include <UnitTest++/UnitTest++.h>
 #include <vector>
 
-using namespace list;
+using namespace linked_list;
 
 TEST(ConstructPair)
 {

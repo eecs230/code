@@ -1,21 +1,21 @@
-#include "Int_vector.h"
+#include "Vector.h"
 
 #include <UnitTest++/UnitTest++.h>
 #include <iostream>
 
 TEST(NewEmpty)
 {
-    Int_vector v;
+    Vector<int> v;
 }
 
 TEST(NewWithCapacity)
 {
-    Int_vector v(16);
+    Vector<int> v(16);
 }
 
 TEST(PushBack)
 {
-    Int_vector v;
+    Vector<int> v;
 
     v.push_back(5);
     v.push_back(6);
@@ -33,7 +33,7 @@ TEST(PushBack)
     CHECK_EQUAL(13, v[8]);
 }
 
-void print_vector(Int_vector w) {
+void print_vector(Vector<int> w) {
     for (int d : w) {
         std::cout << d << '\n';
     }
@@ -41,7 +41,7 @@ void print_vector(Int_vector w) {
 
 TEST(Copying)
 {
-    Int_vector v;
+    Vector<int> v;
     v.push_back(5);
     v.push_back(6);
     v.push_back(7);
@@ -49,7 +49,7 @@ TEST(Copying)
 
     print_vector(v);
 
-    Int_vector u{v};
+    Vector<int> u{v};
     u.push_back(15);
     u.push_back(16);
     u.push_back(17);

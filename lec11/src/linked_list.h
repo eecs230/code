@@ -38,7 +38,6 @@ public:
     };
 
     iterator begin() const;
-
     iterator end() const;
 };
 
