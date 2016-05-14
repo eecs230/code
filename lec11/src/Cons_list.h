@@ -3,57 +3,62 @@
 #include <memory>
 #include <string>
 
-namespace list {
+namespace linked_list {
 
-class String_list_node {
+class List_node
+{
 public:
-    using String_list = std::shared_ptr<String_list_node>;
+    using link_t = std::shared_ptr<List_node>;
 
-    String_list_node(std::string first, String_list rest);
+    List_node(std::string first, link_t rest);
 
     const std::string& first() const;
-    String_list rest() const;
+    link_t rest() const;
 
 private:
     std::string first_;
-    String_list rest_;
+    link_t      rest_;
 
 public:
-    class iterator {
+    class iterator
+    {
     public:
         iterator& operator++();
         iterator operator++(int);
+
         const std::string& operator*() const;
 
-        friend class String_list_node;
+        friend class List_node;
         friend bool operator==(iterator, iterator);
 
     private:
-        iterator(const String_list_node*);
-        const String_list_node* ptr_;
+        iterator(const List_node*);
+
+        const List_node* ptr_;
     };
 
     iterator begin() const;
+
     iterator end() const;
 };
 
-using String_list = String_list_node::String_list;
+using List = List_node::link_t;
 
-bool operator==(String_list_node::iterator, String_list_node::iterator);
-bool operator!=(String_list_node::iterator, String_list_node::iterator);
+List cons(std::string first, List rest);
+const std::string& first(List);
+List rest(List);
 
-String_list cons(std::string first, String_list rest);
-const std::string& first(String_list);
-String_list rest(String_list);
+size_t length(List);
 
-String_list_node::iterator begin(String_list);
-String_list_node::iterator end(String_list);
+List append(List, List);
+List reverse(List);
 
-size_t length(String_list);
+bool operator==(List, List);
 
-String_list append(String_list, String_list);
-String_list reverse(String_list);
+List_node::iterator begin(List);
+List_node::iterator end(List);
 
-bool operator==(String_list, String_list);
+bool operator==(List_node::iterator, List_node::iterator);
+bool operator!=(List_node::iterator, List_node::iterator);
 
 } // end cons_list

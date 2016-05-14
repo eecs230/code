@@ -1,34 +1,34 @@
 #include "Cons_list.h"
 
-namespace list {
+namespace linked_list {
 
-String_list_node::String_list_node(std::string first, String_list rest)
+List_node::List_node(std::string first, link_t rest)
     : first_{first}, rest_{rest}
 { }
 
-const std::string& String_list_node::first() const
+const std::string& List_node::first() const
 {
     return first_;
 }
 
-String_list String_list_node::rest() const
+link_t List_node::rest() const
 {
     return rest_;
 }
 
-using iterator = String_list_node::iterator;
+using iterator = List_node::iterator;
 
-iterator String_list_node::begin() const
+iterator List_node::begin() const
 {
     return iterator{this};
 }
 
-iterator String_list_node::end() const
+iterator List_node::end() const
 {
     return iterator{nullptr};
 }
 
-iterator::iterator(const String_list_node* ptr)
+iterator::iterator(const List_node* ptr)
     : ptr_{ptr}
 { }
 
@@ -60,32 +60,32 @@ bool operator!=(iterator a, iterator b)
     return !(a == b);
 }
 
-String_list cons(std::string first, String_list rest)
+List cons(std::string first, List rest)
 {
-    return std::make_shared<String_list_node>(first, rest);
+    return std::make_shared<List_node>(first, rest);
 }
 
-const std::string& first(String_list lst)
+const std::string& first(List lst)
 {
     return (*lst).first();
 }
 
-String_list rest(String_list lst)
+List rest(List lst)
 {
     return lst->rest();
 }
 
-iterator begin(String_list lst)
+iterator begin(List lst)
 {
     return lst->begin();
 }
 
-iterator end(String_list lst)
+iterator end(List lst)
 {
     return lst->end();
 }
 
-size_t length(String_list lst)
+size_t length(List lst)
 {
     size_t result = 0;
 
@@ -97,7 +97,7 @@ size_t length(String_list lst)
     return result;
 }
 
-String_list append(String_list front, String_list back)
+List append(List front, List back)
 {
     if (front == nullptr) return back;
     else return cons(front->first(), append(front->rest(), back));
@@ -111,9 +111,9 @@ bool operator==(Cons_list a, Cons_list b)
     return a->first() == b->first() && a->rest() == b->rest();
 }
 
-String_list reverse(String_list lst)
+List reverse(List lst)
 {
-    String_list result = nullptr;
+    List result = nullptr;
 
     while (lst != nullptr) {
         result = cons(lst->first(), result);
