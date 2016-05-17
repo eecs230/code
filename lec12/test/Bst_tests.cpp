@@ -124,3 +124,19 @@ TEST(Remove)
     }
 }
 
+// TEST(DebugInteractive)
+// {
+//     std::cout << "Enter elements:\n> ";
+//     std::string line;
+//     if (! getline(std::cin, line)) {
+//         throw std::runtime_error("could not getline");
+//     }
+
+//     std::istringstream input{line};
+//     int n;
+//     Bst set;
+//     while (input >> n) set.insert(n);
+
+//     set.debug(std::cout);
+//     std::cout << '\n';
+// }
