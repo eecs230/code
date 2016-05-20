@@ -52,4 +52,4 @@ byte color32::alpha() const noexcept
     return static_cast<byte>((value >> ALPHA_SHIFT) & 0xFF);
 }
 
-} // namespace raster
+} // namespace graphics

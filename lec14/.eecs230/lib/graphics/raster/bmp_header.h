@@ -107,4 +107,4 @@ struct file_t {
 //}
 
 } // end namespace bmp
-} // end namespace raster
+} // end namespace graphics

@@ -30,4 +30,4 @@ private:
     std::vector<color32> pixels_;
 };
 
-} // namespace raster
+} // namespace graphics

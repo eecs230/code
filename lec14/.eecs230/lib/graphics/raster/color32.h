@@ -31,4 +31,4 @@ struct color32
     byte alpha() const noexcept;
 };
 
-} // end namespace raster
+} // end namespace graphics

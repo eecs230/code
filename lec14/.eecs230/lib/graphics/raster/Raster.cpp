@@ -66,4 +66,4 @@ void raster::write_bmp(const std::string& filename) const
     }
 }
 
-} // namespace raster
+} // namespace graphics

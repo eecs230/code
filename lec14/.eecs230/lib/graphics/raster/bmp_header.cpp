@@ -78,4 +78,4 @@ file_t::file_t(size_t w, size_t h) noexcept
 }
 
 } // end namespace bmp
-} // end namespace raster
+} // end namespace graphics
