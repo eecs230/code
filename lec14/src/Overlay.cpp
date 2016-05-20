@@ -29,3 +29,8 @@ graphics::color Overlay::color_at(posn point) const
             return graphics::color::transparent;
     }
 }
+
+drawing_ptr overlay(drawing_ptr over, drawing_ptr under)
+{
+    return std::make_shared<Overlay>(over, under);
+}

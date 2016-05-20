@@ -13,3 +13,8 @@ Drawing::color Opacity::color_at(posn point) const
                  base_color.blue(),
                  opacity_ * base_color.alpha()};
 }
+
+drawing_ptr opacity(drawing_ptr base, graphics::sample opacity)
+{
+    return std::make_shared<Opacity>(base, opacity);
+}

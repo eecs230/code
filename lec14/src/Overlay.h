@@ -16,3 +16,5 @@ private:
     const drawing_ptr over_;
     const drawing_ptr under_;
 };
+
+drawing_ptr overlay(drawing_ptr over, drawing_ptr under);

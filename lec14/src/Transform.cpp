@@ -17,3 +17,8 @@ bool Transform::contains(posn point) const {
 Drawing::color Transform::color_at(posn point) const {
     return Drawing_decorator::color_at(inv_(point));
 }
+
+drawing_ptr transform(drawing_ptr base, const graphics::affinity& transform)
+{
+    return std::make_shared<Transform>(base, transform);
+}

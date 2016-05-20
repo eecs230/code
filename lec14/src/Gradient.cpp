@@ -36,3 +36,9 @@ graphics::color Gradient::color_at(posn point) const
         return color::transparent;
     }
 }
+
+drawing_ptr gradient(drawing_ptr base, Drawing::color start, Drawing::color end,
+                     const Projector& projector, const Modulator& modulator)
+{
+    return std::make_shared<Gradient>(base, start, end, projector, modulator);
+}

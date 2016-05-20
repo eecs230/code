@@ -19,3 +19,5 @@ private:
     // for explanation.
     graphics::affinity inv_;
 };
+
+drawing_ptr transform(drawing_ptr, const graphics::affinity&);

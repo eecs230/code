@@ -91,3 +91,6 @@ protected:
     const Projector& projector_;
 };
 
+drawing_ptr gradient(drawing_ptr, Drawing::color start, Drawing::color end,
+                     const Projector& = Horizontal{},
+                     const Modulator& = Linear{});

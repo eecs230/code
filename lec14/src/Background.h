@@ -12,3 +12,5 @@ public:
 
     bool contains(posn) const;
 };
+
+drawing_ptr background(Drawing::color fill = Drawing::color::white);

@@ -8,3 +8,7 @@ bool Background::contains(posn) const
     return true;
 }
 
+drawing_ptr background(Drawing::color fill)
+{
+    return std::make_shared<Background>(fill);
+}

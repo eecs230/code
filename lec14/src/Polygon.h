@@ -31,6 +31,14 @@ Polygon::Polygon(const Sequence& sequence)
         , vertices_{sequence}
 { }
 
+drawing_ptr polygon(std::initializer_list<Drawing::posn> vertices);
+
+template <typename Sequence>
+drawing_ptr polygon(const Sequence& sequence)
+{
+    return std::make_shared<Polygon>(sequence);
+}
+
 // Makes a regular polygon with the given center and number of sides, where
 // `radius` is the distance from the center to each vertex.
-Polygon regular_polygon(Polygon::posn center, double radius, size_t sides);
+drawing_ptr regular_polygon(Polygon::posn center, double radius, size_t sides);

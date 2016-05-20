@@ -12,3 +12,5 @@ public:
 private:
     graphics::sample opacity_;
 };
+
+drawing_ptr opacity(drawing_ptr, graphics::sample);

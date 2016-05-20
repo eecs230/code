@@ -15,3 +15,5 @@ private:
     posn center_;
     double radius_;
 };
+
+drawing_ptr circle(Drawing::posn center, double radius);

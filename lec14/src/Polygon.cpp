@@ -47,7 +47,12 @@ bool Polygon::contains(posn p) const
     return crossings % 2 == 1;
 }
 
-Polygon regular_polygon(Polygon::posn center, double radius, size_t sides)
+drawing_ptr polygon(std::initializer_list<Drawing::posn> vertices)
+{
+    return std::make_shared<Polygon>(vertices);
+}
+
+drawing_ptr regular_polygon(Polygon::posn center, double radius, size_t sides)
 {
     std::vector<posn> vertices;
 
@@ -58,5 +63,5 @@ Polygon regular_polygon(Polygon::posn center, double radius, size_t sides)
         vertices.push_back({x, y});
     }
 
-    return Polygon(vertices);
+    return polygon(vertices);
 }

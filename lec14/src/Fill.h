@@ -14,3 +14,5 @@ public:
 private:
     const drawing_ptr base_;
 };
+
+drawing_ptr fill(drawing_ptr, const Drawing::color&);

@@ -21,3 +21,4 @@ public:
     bool contains(posn) const override;
 };
 
+drawing_ptr rectangle(double top, double right, double bottom, double left);
