@@ -1,4 +1,5 @@
 #include "Overlay.h"
+#include "Nothing.h"
 
 Overlay::Overlay(drawing_ptr over, drawing_ptr under)
         : Drawing{{&*over, &*under}}
@@ -33,4 +34,14 @@ graphics::color Overlay::color_at(posn point) const
 drawing_ptr overlay(drawing_ptr over, drawing_ptr under)
 {
     return std::make_shared<Overlay>(over, under);
+}
+
+drawing_ptr overlay(std::initializer_list<drawing_ptr> layers)
+{
+    drawing_ptr result = nothing();
+
+    for (auto layer : layers)
+        result = overlay(result, layer);
+
+    return result;
 }

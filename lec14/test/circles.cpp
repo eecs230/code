@@ -28,12 +28,12 @@ int main()
                        0.5);
 
     auto c3  = transform(opacity(gradient(circle({400, 381}, 200),
-                                          color{0, 0, 6}, color::white,
+                                          color{0, 0, 1}, color::white,
                                           Vertical{}), 0.7),
                          affinity::rotation(10)(affinity::dilation(2, .25))
                                  .centered_on(400, 381));
 
-    auto drawing = overlay(c1, overlay(c2, overlay(c3, background(color::black))));
+    auto drawing = overlay({ c3, c2, c1, background(color::black) });
 
     simple_render(*drawing, raster);
 

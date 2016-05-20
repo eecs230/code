@@ -20,6 +20,8 @@ set(SHAPES
         src/Background.cpp
         src/Overlay.h
         src/Overlay.cpp
+        src/Nothing.h
+        src/Nothing.cpp
         src/Drawing_decorator.h
         src/Drawing_decorator.cpp
         src/Opacity.h

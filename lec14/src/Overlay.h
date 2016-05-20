@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Drawing.h"
+#include <initializer_list>
 
 // Composes two shapes by overlaying one over the other.
 class Overlay : public Drawing
@@ -18,3 +19,5 @@ private:
 };
 
 drawing_ptr overlay(drawing_ptr over, drawing_ptr under);
+
+drawing_ptr overlay(std::initializer_list<drawing_ptr>);
