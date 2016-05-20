@@ -5,23 +5,6 @@
 namespace graphics
 {
 
-namespace
-{
-
-double saturate(double value) noexcept
-{
-    return std::min(1.0, std::max(0.0, value));
-}
-
-}
-
-sample const sample::ZERO {0.0};
-sample const sample::ONE  {1.0};
-
-sample::sample(double value) noexcept
-    : value_{saturate(value)}
-{}
-
 sample interpolate(sample a, sample weight, sample b) noexcept
 {
     return sample{(1 - weight.value()) * a.value() + weight.value() * b.value()};

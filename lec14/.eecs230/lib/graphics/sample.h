@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 namespace graphics
 {
 
@@ -7,15 +9,12 @@ namespace graphics
 class sample
 {
 public:
-    static sample const ZERO;
-    static sample const ONE;
-
     // Constructs a sample, clipping the given value into the correct
     // range.
-    sample(double) noexcept;
+    constexpr sample(double) noexcept;
 
     // Constructs the 0.0 sample
-    sample() noexcept : sample{0.0} {}
+    constexpr sample() noexcept : sample{0.0} {}
 
     // The double value of a sample.
     double value() const noexcept { return value_; }
@@ -57,5 +56,21 @@ sample& operator-=(sample&, sample) noexcept;
 
 sample operator/(sample, sample) noexcept;
 sample& operator/=(sample&, sample) noexcept;
+
+namespace
+{
+
+constexpr double saturate(double value) noexcept
+{
+    if (value < 0.0) return 0.0;
+    if (value > 1.0) return 1.0;
+    return value;
+}
+
+}
+
+constexpr sample::sample(double value) noexcept
+        : value_{saturate(value)}
+{}
 
 } // namespace graphics

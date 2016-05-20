@@ -12,8 +12,7 @@ class color
 {
 public:
     color() noexcept; // transparent
-    color(sample red, sample green, sample blue,
-          sample alpha = sample::ONE) noexcept;
+    color(sample red, sample green, sample blue, sample alpha = 1) noexcept;
 
     color(graphics::color32) noexcept;
     operator graphics::color32() const noexcept;

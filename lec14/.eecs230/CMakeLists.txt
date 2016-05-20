@@ -16,10 +16,10 @@ add_subdirectory(${GRAPHICSCPP_ROOT})
 include_directories(${GRAPHICSCPP_ROOT})
 
 # Adds a program with the given name and source files, and sets the
-# language to C++ 11
+# language to C++ 14
 macro (add_program name)
     add_executable(${name} ${ARGN})
-    set_property(TARGET ${name} PROPERTY CXX_STANDARD 11)
+    set_property(TARGET ${name} PROPERTY CXX_STANDARD 14)
     set_property(TARGET ${name} PROPERTY CXX_STANDARD_REQUIRED On)
 endmacro (add_program)
 

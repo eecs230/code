@@ -16,5 +16,5 @@ add_library(graphics
         sample.cpp
         sample.h
         )
-set_property(TARGET graphics PROPERTY CXX_STANDARD 11)
+set_property(TARGET graphics PROPERTY CXX_STANDARD 14)
 set_property(TARGET graphics PROPERTY CXX_STANDARD_REQUIRED On)

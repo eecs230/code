@@ -11,7 +11,7 @@ color::color() noexcept : color{0, 0, 0, 0}
 color::color(sample red, sample green, sample blue, sample alpha) noexcept
         : red_{red}, green_{green}, blue_{blue}, alpha_{alpha}
 {
-    if (alpha == sample::ZERO) red_ = green_ = blue_ = sample::ZERO;
+    if (alpha == 0) red_ = green_ = blue_ = 0;
 }
 
 static sample to_sample(color32::byte b) noexcept
@@ -45,12 +45,12 @@ color const color::black{0, 0, 0, 1};
 
 bool opaque(const color& c) noexcept
 {
-    return c.alpha() == sample::ONE;
+    return c.alpha() == 1;
 }
 
 bool transparent(const color& c) noexcept
 {
-    return c.alpha() == sample::ZERO;
+    return c.alpha() == 0;
 }
 
 color overlay(const color& fg, const color& bg) noexcept
