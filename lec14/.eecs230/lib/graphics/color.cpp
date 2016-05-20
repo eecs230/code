@@ -76,4 +76,18 @@ noexcept
             new_alpha};
 }
 
+Partial_blend::Partial_blend(color left, sample weight)
+        : left_{left}, weight_{weight}
+{ }
+
+Partial_blend operator<(const color& left, sample factor)
+{
+    return Partial_blend{left, factor};
+}
+
+color operator>(const Partial_blend& pb, const color& right)
+{
+    return interpolate(pb.left_, pb.weight_, right);
+}
+
 } // end namespace graphics

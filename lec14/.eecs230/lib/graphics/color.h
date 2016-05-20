@@ -35,4 +35,18 @@ color grayscale(const color&) noexcept;
 color overlay(const color& foreground, const color& background) noexcept;
 color interpolate(const color& a, sample weight, const color& b) noexcept;
 
+class Partial_blend
+{
+    Partial_blend(color left, sample weight);
+
+    color  left_;
+    sample weight_;
+
+    friend Partial_blend operator<(const color&, sample);
+    friend color operator>(const Partial_blend&, const color&);
+};
+
+Partial_blend operator<(const color&, sample);
+color operator>(const Partial_blend&, const color&);
+
 } // namespace graphics
