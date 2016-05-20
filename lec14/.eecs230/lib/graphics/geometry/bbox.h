@@ -20,24 +20,24 @@ public:
         }
     };
 
-    bbox()
+    constexpr bbox()
     {
         top_    = left_   = infinity();
         bottom_ = right_  = -infinity();
     }
 
-    static bbox nothing()
+    constexpr static bbox nothing()
     {
         return bbox{};
     }
 
-    static bbox everything()
+    constexpr static bbox everything()
     {
         auto inf = infinity();
         return bbox(-inf, inf, inf, -inf);
     }
 
-    bbox(const T& top, const T& right, const T& bottom, const T& left) noexcept
+    constexpr bbox(const T& top, const T& right, const T& bottom, const T& left) noexcept
     {
         if (top > bottom || left > right) {
             bbox();
@@ -50,45 +50,45 @@ public:
     }
 
     template <typename Boundable>
-    bbox(std::initializer_list<Boundable*> boundables) : bbox()
+    constexpr bbox(std::initializer_list<Boundable*> boundables) : bbox()
     {
         for (const auto& boundable : boundables)
             *this = *this + boundable->get_bbox();
     }
 
     template <typename Boundable>
-    bbox(std::initializer_list<Boundable> boundables) : bbox()
+    constexpr bbox(std::initializer_list<Boundable> boundables) : bbox()
     {
         for (const auto& boundable : boundables)
             *this = *this + boundable.get_bbox();
     }
 
     template <typename Collection>
-    bbox(const Collection& collection) : bbox()
+    constexpr bbox(const Collection& collection) : bbox()
     {
         for (const auto& each : collection)
             *this = *this + each.get_bbox();
     }
 
-    const T& top()    const noexcept { return top_; }
-    const T& right()  const noexcept { return right_; }
-    const T& bottom() const noexcept { return bottom_; }
-    const T& left()   const noexcept { return left_; }
+    constexpr const T& top()    const noexcept { return top_; }
+    constexpr const T& right()  const noexcept { return right_; }
+    constexpr const T& bottom() const noexcept { return bottom_; }
+    constexpr const T& left()   const noexcept { return left_; }
 
-    posn<T> top_left()     const noexcept { return {left(), top()}; }
-    posn<T> top_right()    const noexcept { return {right(), top()}; }
-    posn<T> bottom_left()  const noexcept { return {left(), bottom()}; }
-    posn<T> bottom_right() const noexcept { return {right(), bottom()}; }
+    constexpr posn<T> top_left()     const noexcept { return {left(), top()}; }
+    constexpr posn<T> top_right()    const noexcept { return {right(), top()}; }
+    constexpr posn<T> bottom_left()  const noexcept { return {left(), bottom()}; }
+    constexpr posn<T> bottom_right() const noexcept { return {right(), bottom()}; }
 
-    T height() const noexcept { return bottom() - top(); }
-    T width()  const noexcept { return right() - left(); }
+    constexpr T height() const noexcept { return bottom() - top(); }
+    constexpr T width()  const noexcept { return right() - left(); }
 
-    bool contains(const posn<T>& p) const noexcept
+    constexpr bool contains(const posn<T>& p) const noexcept
     {
         return p.x >= left() && p.x < right() && p.y >= top() && p.y < bottom();
     }
 
-    inline const bbox& get_bbox() const
+    constexpr const bbox& get_bbox() const
     {
         return *this;
     }
@@ -96,7 +96,7 @@ public:
 private:
     T top_, right_, bottom_, left_;
 
-    static inline T infinity()
+    static constexpr T infinity()
     {
         if (std::numeric_limits<T>::has_infinity)
             return std::numeric_limits<T>::infinity();
@@ -107,7 +107,7 @@ private:
 
 // Union
 template <typename T>
-bbox<T>
+constexpr bbox<T>
 operator+(const bbox<T>& bb1, const bbox<T>& bb2)
 {
     return bbox<T>(std::min(bb1.top(), bb2.top()),
@@ -118,7 +118,7 @@ operator+(const bbox<T>& bb1, const bbox<T>& bb2)
 
 // Intersection
 template <typename T>
-bbox<T>
+constexpr bbox<T>
 operator*(const bbox<T>& bb1, const bbox<T>& bb2)
 {
     return bbox<T>(std::max(bb1.top(), bb2.top()),

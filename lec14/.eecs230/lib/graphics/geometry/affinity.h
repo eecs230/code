@@ -20,29 +20,29 @@ public:
     static constexpr affinity translation(double dx, double dy) noexcept;
     static constexpr affinity dilation(double cx, double cy) noexcept;
     static constexpr affinity dilation(double c) noexcept;
-    static inline affinity rotation(double radians) noexcept;
+    static inline    affinity rotation(double radians) noexcept;
 
-    inline affinity inverse() const noexcept;
-    inline affinity under(affinity) const noexcept;
-    inline affinity centered_on(double x, double y) const noexcept;
+    constexpr affinity inverse() const noexcept;
+    constexpr affinity under(affinity) const noexcept;
+    constexpr affinity centered_on(double x, double y) const noexcept;
 
     constexpr posn<double>
     operator()(posn<double>) const noexcept;
 
-    bbox<double>
+    constexpr bbox<double>
     operator()(const bbox<double>&) const noexcept;
 
     constexpr affinity
     operator()(const affinity&) const noexcept;
 
     template <typename T>
-    T operator()(const T& t) const
+    constexpr T operator()(const T& t) const
     {
         return t.transform(*this);
     }
 
     template <typename T>
-    constexpr inline T apply(const T& obj) const noexcept
+    constexpr T apply(const T& obj) const noexcept
     {
         return operator()(obj);
     }
@@ -83,7 +83,8 @@ affinity::rotation(double radians) noexcept
                      sin(radians),  cos(radians), 0.0 };
 }
 
-inline affinity affinity::inverse() const noexcept
+constexpr affinity
+affinity::inverse() const noexcept
 {
     auto det = a_ * d_ - b_ * c_;
 
@@ -96,12 +97,14 @@ inline affinity affinity::inverse() const noexcept
                     c, d, -(c * dx_ + d * dy_)};
 }
 
-inline affinity affinity::under(affinity other) const noexcept
+constexpr affinity
+affinity::under(affinity other) const noexcept
 {
     return other(apply(other.inverse()));
 }
 
-inline affinity affinity::centered_on(double x, double y) const noexcept
+constexpr affinity
+affinity::centered_on(double x, double y) const noexcept
 {
     return under(translation(x, y));
 }
@@ -112,7 +115,7 @@ affinity::operator()(posn<double> point) const noexcept
     return {a_ * point.x + b_ * point.y + dx_, c_ * point.x + d_ * point.y + dy_};
 }
 
-inline bbox<double>
+constexpr bbox<double>
 affinity::operator()(const bbox<double>& bb) const noexcept
 {
     return bbox<double>{apply(bb.top_left()),

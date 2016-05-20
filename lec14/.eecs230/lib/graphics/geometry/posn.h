@@ -72,7 +72,7 @@ interpolate(const posn<T>& p1, double weight, const posn<T>& p2)
 }
 
 template <typename T>
-double magnitude(const posn<T>& p)
+inline double magnitude(const posn<T>& p)
 {
     auto x = static_cast<double>(p.x);
     auto y = static_cast<double>(p.y);

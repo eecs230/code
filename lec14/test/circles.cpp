@@ -45,5 +45,5 @@ int main()
     render(*drawing, raster);
 
     raster.write_bmp("circles.bmp");
-    system("open circles.bmp");
+//    system("open circles.bmp");
 }
