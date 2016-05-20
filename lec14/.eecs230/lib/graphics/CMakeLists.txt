@@ -13,7 +13,6 @@ add_library(graphics
         color_blender.h
         color.cpp
         color.h
-        sample.cpp
         sample.h
         )
 set_property(TARGET graphics PROPERTY CXX_STANDARD 14)

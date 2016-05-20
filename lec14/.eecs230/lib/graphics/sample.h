@@ -17,45 +17,34 @@ public:
     constexpr sample() noexcept : sample{0.0} {}
 
     // The double value of a sample.
-    double value() const noexcept { return value_; }
-    explicit operator double() const noexcept { return value_; }
+    constexpr double value() const noexcept { return value_; }
+    explicit constexpr operator double() const noexcept { return value_; }
 
-    sample operator*(sample other) const noexcept;
-    sample& operator*=(sample) noexcept;
+    constexpr sample operator*(sample other) const noexcept;
+    constexpr sample& operator*=(sample) noexcept;
 
 private:
     double value_;
     // INVARIANT: 0.0 ≤ value_ ≤ 1.0
 };
 
-sample interpolate(sample a, sample weight, sample b) noexcept;
+constexpr sample interpolate(sample a, sample weight, sample b) noexcept;
 
-inline bool operator==(sample a, sample b) noexcept
-{ return a.value() == b.value(); }
+constexpr bool operator==(sample a, sample b) noexcept;
+constexpr bool operator!=(sample a, sample b) noexcept;
+constexpr bool operator<(sample a, sample b) noexcept;
+constexpr bool operator<=(sample a, sample b) noexcept;
+constexpr bool operator>(sample a, sample b) noexcept;
+constexpr bool operator>=(sample a, sample b) noexcept;
 
-inline bool operator!=(sample a, sample b) noexcept
-{ return a.value() != b.value(); }
+constexpr sample operator+(sample, sample) noexcept;
+constexpr sample& operator+=(sample&, sample) noexcept;
 
-inline bool operator<(sample a, sample b) noexcept
-{ return a.value() < b.value(); }
+constexpr sample operator-(sample, sample) noexcept;
+constexpr sample& operator-=(sample&, sample) noexcept;
 
-inline bool operator<=(sample a, sample b) noexcept
-{ return a.value() <= b.value(); }
-
-inline bool operator>(sample a, sample b) noexcept
-{ return a.value() > b.value(); }
-
-inline bool operator>=(sample a, sample b) noexcept
-{ return a.value() >= b.value(); }
-
-sample operator+(sample, sample) noexcept;
-sample& operator+=(sample&, sample) noexcept;
-
-sample operator-(sample, sample) noexcept;
-sample& operator-=(sample&, sample) noexcept;
-
-sample operator/(sample, sample) noexcept;
-sample& operator/=(sample&, sample) noexcept;
+constexpr sample operator/(sample, sample) noexcept;
+constexpr sample& operator/=(sample&, sample) noexcept;
 
 namespace
 {
@@ -73,4 +62,63 @@ constexpr sample::sample(double value) noexcept
         : value_{saturate(value)}
 {}
 
+constexpr sample interpolate(sample a, sample weight, sample b) noexcept
+{
+    return sample{(1 - weight.value()) * a.value() + weight.value() * b.value()};
+}
+
+constexpr sample sample::operator*(sample other) const noexcept
+{
+    sample result;
+    result.value_ = value() * other.value(); // can't overflow
+    return result;
+}
+
+constexpr sample& sample::operator*=(sample other) noexcept
+{
+    value_ *= other.value(); // cannot overflow
+    return *this;
+}
+
+constexpr sample operator+(sample a, sample b) noexcept {
+    return sample{a.value() + b.value()};
+}
+
+constexpr sample& operator+=(sample& target, sample other) noexcept {
+    return target = target + other;
+}
+
+constexpr sample operator-(sample a, sample b) noexcept {
+    return sample{a.value() - b.value()};
+}
+
+constexpr sample& operator-=(sample& target, sample other) noexcept {
+    return target = target - other;
+}
+
+constexpr sample operator/(sample a, sample b) noexcept {
+    return sample{a.value() / b.value()};
+}
+
+constexpr sample& operator/=(sample& target, sample other) noexcept {
+    return target = target / other;
+}
+
+constexpr bool operator==(sample a, sample b) noexcept
+{ return a.value() == b.value(); }
+
+constexpr bool operator!=(sample a, sample b) noexcept
+{ return a.value() != b.value(); }
+
+constexpr bool operator<(sample a, sample b) noexcept
+{ return a.value() < b.value(); }
+
+constexpr bool operator<=(sample a, sample b) noexcept
+{ return a.value() <= b.value(); }
+
+constexpr bool operator>(sample a, sample b) noexcept
+{ return a.value() > b.value(); }
+
+constexpr bool operator>=(sample a, sample b) noexcept
+{ return a.value() >= b.value(); }
 } // namespace graphics
