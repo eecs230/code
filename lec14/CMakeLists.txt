@@ -36,3 +36,6 @@ set(SHAPES
 
 add_program(circles test/circles.cpp ${SHAPES})
 target_link_libraries(circles graphics)
+
+add_program(box test/box.cpp ${SHAPES})
+target_link_libraries(box graphics)
