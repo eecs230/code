@@ -1,3 +1,5 @@
+*.bmp
+
 # CMake build directories:
 build
 build.*
