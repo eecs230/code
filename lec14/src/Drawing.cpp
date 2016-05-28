@@ -1,7 +1,7 @@
 #include "Drawing.h"
 
-Drawing::Drawing(const bbox& box, const Drawing::color& color)
-        : bbox_(box), color_{color}
+Drawing::Drawing(const bbox& box)
+        : bbox_(box)
 { }
 
 const Drawing::bbox& Drawing::get_bbox() const
@@ -12,9 +12,9 @@ const Drawing::bbox& Drawing::get_bbox() const
 Drawing::color Drawing::color_at(posn point) const
 {
     if (contains(point))
-        return color_;
+        return color::black;
     else
-        return graphics::color::transparent;
+        return color::transparent;
 }
 
 Drawing::~Drawing() { }

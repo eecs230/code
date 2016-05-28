@@ -30,6 +30,10 @@ set(SHAPES
         src/Transform.cpp
         src/Gradient.h
         src/Gradient.cpp
+        src/Intersection.h
+        src/Intersection.cpp
+        src/Difference.h
+        src/Difference.cpp
         src/render.h
         src/render.cpp
         )

@@ -12,8 +12,8 @@ public:
     using posn  = graphics::posn<double>;
     using bbox  = graphics::bbox<double>;
 
-    // Constructs a drawing with the given bounding box and color.
-    Drawing(const bbox&, const color& = color::black);
+    // Constructs a drawing with the given bounding box.
+    Drawing(const bbox&);
 
     // Gets the bounding box of the drawing.
     const bbox& get_bbox() const;
@@ -32,7 +32,6 @@ public:
 
 private:
     bbox  bbox_;
-    color color_;
 };
 
 using drawing_ptr = std::shared_ptr<Drawing>;
