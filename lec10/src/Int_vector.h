@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <initializer_list>
+#include <iterator>
 
 // A vector of `int`s.
 class Int_vector
@@ -55,10 +56,10 @@ private:
 
 public:
     // Forward iterators are pointers to `int`:
-    using iterator       = int*;
-    using const_iterator = const int*;
-    class reverse_iterator;
-    class const_reverse_iterator;
+    using iterator               = int*;
+    using const_iterator         = const int*;
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
     iterator begin();
     const_iterator begin() const;
@@ -87,168 +88,3 @@ bool operator<=(const Int_vector&, const Int_vector&);
 bool operator> (const Int_vector&, const Int_vector&);
 bool operator>=(const Int_vector&, const Int_vector&);
 
-/*
- * Below this pointer are the implementations of reverse iterators.
- */
-
-class Int_vector::reverse_iterator
-{
-public:
-    reverse_iterator() : ptr_(nullptr)
-    { }
-
-    int& operator*() const
-    { return *operator->(); }
-
-    int* operator->() const
-    { return ptr_ - 1; }
-
-    int& operator[](ssize_t offset) const
-    { return *(ptr_ - 1 - offset); }
-
-    reverse_iterator& operator++()
-    { --ptr_; return *this; }
-
-    reverse_iterator operator++(int)
-    { return reverse_iterator{ptr_--}; }
-
-    reverse_iterator& operator+=(ssize_t offset)
-    { ptr_ -= offset; return *this; }
-
-    reverse_iterator operator+(ssize_t offset)
-    { return reverse_iterator{ptr_ - offset}; }
-
-    reverse_iterator& operator--()
-    { ++ptr_; return *this; }
-
-    reverse_iterator operator--(int)
-    { return reverse_iterator{ptr_++}; }
-
-    reverse_iterator operator-(ssize_t offset)
-    { return reverse_iterator{ptr_ + offset}; }
-
-private:
-    int* ptr_;
-    explicit reverse_iterator(int* p) : ptr_(p) {}
-
-    friend class Int_vector;
-    friend class Int_vector::const_reverse_iterator;
-};
-
-inline bool
-operator==(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a == &*b; }
-
-inline bool
-operator!=(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a != &*b; }
-
-inline bool
-operator<(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a > &*b; }
-
-inline bool
-operator<=(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a >= &*b; }
-
-inline bool
-operator>(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a < &*b; }
-
-inline bool
-operator>=(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{ return &*a <= &*b; }
-
-inline Int_vector::reverse_iterator
-operator+(ssize_t offset, Int_vector::reverse_iterator iter)
-{ return iter + offset; }
-
-inline ssize_t
-operator-(Int_vector::reverse_iterator a, Int_vector::reverse_iterator b)
-{
-    return &*b - &*a;
-}
-
-class Int_vector::const_reverse_iterator
-{
-public:
-    const_reverse_iterator() : ptr_(nullptr)
-    { }
-
-    const_reverse_iterator(reverse_iterator other)
-            : ptr_(other.ptr_)
-    { }
-
-    const int& operator*() const
-    { return *operator->(); }
-
-    const int* operator->() const
-    { return ptr_ - 1; }
-
-    const int& operator[](ssize_t offset) const
-    { return *(ptr_ - 1 - offset); }
-
-    const_reverse_iterator& operator++()
-    { --ptr_; return *this; }
-
-    const_reverse_iterator operator++(int)
-    { return const_reverse_iterator{ptr_--}; }
-
-    const_reverse_iterator& operator+=(ssize_t offset)
-    { ptr_ -= offset; return *this; }
-
-    const_reverse_iterator operator+(ssize_t offset)
-    { return const_reverse_iterator{ptr_ - offset}; }
-
-    const_reverse_iterator& operator--()
-    { ++ptr_; return *this; }
-
-    const_reverse_iterator operator--(int)
-    { return const_reverse_iterator{ptr_++}; }
-
-    const_reverse_iterator operator-(ssize_t offset)
-    { return const_reverse_iterator{ptr_ + offset}; }
-
-private:
-    const int* ptr_;
-    explicit const_reverse_iterator(const int* p) : ptr_(p) {}
-
-    friend class Int_vector;
-};
-inline bool operator==(Int_vector::const_reverse_iterator a, Int_vector::const_reverse_iterator b) { return &*a == &*b; }
-
-inline bool
-operator!=(Int_vector::const_reverse_iterator a,
-           Int_vector::const_reverse_iterator b)
-{ return &*a != &*b; }
-
-inline bool
-operator<(Int_vector::const_reverse_iterator a,
-          Int_vector::const_reverse_iterator b)
-{ return &*a > &*b; }
-
-inline bool
-operator<=(Int_vector::const_reverse_iterator a,
-           Int_vector::const_reverse_iterator b)
-{ return &*a >= &*b; }
-
-inline bool
-operator>(Int_vector::const_reverse_iterator a,
-          Int_vector::const_reverse_iterator b)
-{ return &*a < &*b; }
-
-inline bool
-operator>=(Int_vector::const_reverse_iterator a,
-           Int_vector::const_reverse_iterator b)
-{ return &*a <= &*b; }
-
-inline Int_vector::const_reverse_iterator
-operator+(ssize_t offset, Int_vector::const_reverse_iterator iter)
-{ return iter + offset; }
-
-inline ssize_t
-operator-(Int_vector::const_reverse_iterator a,
-          Int_vector::const_reverse_iterator b)
-{
-    return &*b - &*a;
-}
