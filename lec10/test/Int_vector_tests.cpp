@@ -1,6 +1,7 @@
 #include "Int_vector.h"
 
 #include <UnitTest++/UnitTest++.h>
+
 #include <iostream>
 
 TEST(New_empty)
@@ -261,4 +262,22 @@ TEST(Comparisons)
     CHECK(w >= u);
     CHECK(w >= v);
     CHECK(w >= w);
+}
+
+TEST(Reverse_iterator) {
+    Int_vector v{1, 2, 3};
+
+    auto i = v.rbegin();
+    auto j = v.rend();
+
+    CHECK(i < j);
+    CHECK_EQUAL(3, *i);
+    CHECK_EQUAL(1, i[2]);
+    ++i;
+    CHECK_EQUAL(2, *i);
+    CHECK_EQUAL(3, i[-1]);
+    ++i;
+    CHECK_EQUAL(1, *i);
+    ++i;
+    CHECK(i == j);
 }

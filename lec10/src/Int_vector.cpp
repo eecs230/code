@@ -140,6 +140,36 @@ Int_vector::const_iterator Int_vector::cend() const
     return data_ + size_;
 }
 
+Int_vector::reverse_iterator Int_vector::rbegin()
+{
+    return reverse_iterator(end());
+}
+
+Int_vector::const_reverse_iterator Int_vector::rbegin() const
+{
+    return const_reverse_iterator(end());
+}
+
+Int_vector::const_reverse_iterator Int_vector::crbegin() const
+{
+    return const_reverse_iterator(end());
+}
+
+Int_vector::reverse_iterator Int_vector::rend()
+{
+    return reverse_iterator(begin());
+}
+
+Int_vector::const_reverse_iterator Int_vector::rend() const
+{
+    return const_reverse_iterator(begin());
+}
+
+Int_vector::const_reverse_iterator Int_vector::crend() const
+{
+    return const_reverse_iterator(begin());
+}
+
 void Int_vector::check_index_(size_t index) const
 {
     if (index >= size_) throw range_error{};
