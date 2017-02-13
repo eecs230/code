@@ -14,31 +14,36 @@ Int_vector::Int_vector()
         : Int_vector(default_initial_capacity)
 { }
 
-int Int_vector::at(size_t n) const
+Int_vector::Int_vector(std::initializer_list<int> elements)
+        : Int_vector(elements.size())
 {
-    check_index_(n);
-    return *(data_ + n);
+    for (int z : elements) push_back(z);
 }
 
-int& Int_vector::at(size_t n)
+Int_vector::Int_vector(const Int_vector& other)
+        : Int_vector(other.size())
 {
-    check_index_(n);
-    return *(data_ + n);
+    for (int z : other) push_back(z);
 }
 
-void Int_vector::check_index_(size_t index) const
+Int_vector& Int_vector::operator=(const Int_vector& other)
 {
-    if (index >= size_) throw range_error{};
+    ensure_capacity_(other.size());
+
+    clear();
+    for (int z : other) push_back(z);
+
+    return *this;
 }
 
-int Int_vector::operator[](size_t n) const
+Int_vector::~Int_vector()
 {
-    return *(data_ + n);
+    delete[] data_;
 }
 
-int& Int_vector::operator[](size_t n)
+bool Int_vector::empty() const
 {
-    return *(data_ + n);
+    return size_ == 0;
 }
 
 size_t Int_vector::size() const
@@ -51,6 +56,93 @@ void Int_vector::push_back(int i)
     ensure_capacity_(size_ + 1);
     *(data_ + size_) = i;
     ++size_;
+}
+
+void Int_vector::pop_back()
+{
+    --size_;
+}
+
+void Int_vector::clear()
+{
+    size_ = 0;
+}
+
+int Int_vector::front() const
+{
+    return *data_;
+}
+
+int& Int_vector::front()
+{
+    return *data_;
+}
+
+int Int_vector::back() const
+{
+    return *(data_ + size_ - 1);
+}
+
+int& Int_vector::back()
+{
+    return *(data_ + size_ - 1);
+}
+
+int Int_vector::operator[](size_t n) const
+{
+    return *(data_ + n);
+}
+
+int& Int_vector::operator[](size_t n)
+{
+    return *(data_ + n);
+}
+
+int Int_vector::at(size_t n) const
+{
+    check_index_(n);
+    return *(data_ + n);
+}
+
+int& Int_vector::at(size_t n)
+{
+    check_index_(n);
+    return *(data_ + n);
+}
+
+Int_vector::iterator Int_vector::begin()
+{
+    return data_;
+}
+
+Int_vector::const_iterator Int_vector::begin() const
+{
+    return data_;
+}
+
+Int_vector::const_iterator Int_vector::cbegin() const
+{
+    return data_;
+}
+
+Int_vector::iterator Int_vector::end()
+{
+    return data_ + size_;
+}
+
+Int_vector::const_iterator Int_vector::end() const
+{
+    return data_ + size_;
+}
+
+Int_vector::const_iterator Int_vector::cend() const
+{
+    return data_ + size_;
+}
+
+void Int_vector::check_index_(size_t index) const
+{
+    if (index >= size_) throw range_error{};
 }
 
 void Int_vector::ensure_capacity_(size_t req_capacity)
@@ -70,50 +162,6 @@ void Int_vector::ensure_capacity_(size_t req_capacity)
     capacity_ = new_capacity;
 }
 
-Int_vector::~Int_vector()
-{
-    delete[] data_;
-}
-
-Int_vector::Int_vector(const Int_vector& other)
-        : capacity_{other.capacity_}
-        , size_{other.size_}
-        , data_{new int[other.capacity_]}
-{
-    *this = other;
-}
-
-Int_vector& Int_vector::operator=(const Int_vector& other)
-{
-    ensure_capacity_(other.size());
-
-    for (size_t i = 0; i < other.size(); ++i) {
-        *(data_ + i) = *(other.data_ + i);
-    }
-
-    return *this;
-}
-
-Int_vector::iterator Int_vector::begin()
-{
-    return data_;
-}
-
-Int_vector::const_iterator Int_vector::begin() const
-{
-    return data_;
-}
-
-Int_vector::iterator Int_vector::end()
-{
-    return data_ + size_;
-}
-
-Int_vector::const_iterator Int_vector::end() const
-{
-    return data_ + size_;
-}
-
 bool operator==(const Int_vector& a, const Int_vector& b)
 {
     if (a.size() != b.size()) return false;
@@ -125,22 +173,34 @@ bool operator==(const Int_vector& a, const Int_vector& b)
     return true;
 }
 
-Int_vector::iterator begin(Int_vector& v)
+bool operator!=(const Int_vector& a, const Int_vector& b)
 {
-    return v.begin();
+    return !(a == b);
 }
 
-Int_vector::const_iterator begin(const Int_vector& v)
+bool operator<(const Int_vector& a, const Int_vector& b)
 {
-    return v.begin();
+    size_t limit = std::min(a.size(), b.size());
+
+    for (size_t i = 0; i < limit; ++i) {
+        if (a[i] < b[i]) return true;
+        if (a[i] > b[i]) return false;
+    }
+
+    return a.size() < b.size();
 }
 
-Int_vector::iterator end(Int_vector& v)
+bool operator<=(const Int_vector& a, const Int_vector& b)
 {
-    return v.end();
+    return !(b < a);
 }
 
-Int_vector::const_iterator end(const Int_vector& v)
+bool operator> (const Int_vector& a, const Int_vector& b)
 {
-    return v.end();
+    return b < a;
+}
+
+bool operator>=(const Int_vector& a, const Int_vector& b)
+{
+    return !(a < b);
 }

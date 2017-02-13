@@ -2,43 +2,61 @@
 
 #include <cstddef>
 #include <stdexcept>
+#include <initializer_list>
 
+// A vector of `int`s.
 class Int_vector
 {
     size_t capacity_;
     size_t size_;
     int* data_;
+    // Invariants:
+    //  - size_ <= capacity_
+    //  - capacity_ is the allocation size of data_
 
 public:
     Int_vector();
     Int_vector(size_t initial_capacity);
+    Int_vector(std::initializer_list<int> elements);
 
+    // Copy constructor initializing one vector by copying another
     Int_vector(const Int_vector&);
+
+    // Copy-assignment operator, for assigning one vector to another
+    Int_vector& operator=(const Int_vector&);
 
     // Destructor runs when we're done with a vector
     ~Int_vector();
 
-    // Copy-assignment operator
-    Int_vector& operator=(const Int_vector&);
-
+    bool empty() const;
     size_t size() const;
 
     void push_back(int);
+    void pop_back();
 
-    int at(size_t index) const;
-    int& at(size_t index);
+    void clear();
+
+    int front() const;
+    int& front();
+    int back() const;
+    int& back();
 
     int operator[](size_t index) const;
     int& operator[](size_t index);
+
+    int at(size_t index) const;
+    int& at(size_t index);
 
     using iterator       = int*;
     using const_iterator = const int*;
 
     iterator begin();
     const_iterator begin() const;
+    const_iterator cbegin() const;
 
     iterator end();
     const_iterator end() const;
+    const_iterator cend() const;
 
 private:
     // Throw if index is out of bounds
@@ -51,9 +69,8 @@ struct range_error : public std::exception
 { };
 
 bool operator==(const Int_vector&, const Int_vector&);
-
-Int_vector::iterator begin(Int_vector&);
-Int_vector::const_iterator begin(const Int_vector&);
-Int_vector::iterator end(Int_vector&);
-Int_vector::const_iterator end(const Int_vector&);
-
+bool operator!=(const Int_vector&, const Int_vector&);
+bool operator< (const Int_vector&, const Int_vector&);
+bool operator<=(const Int_vector&, const Int_vector&);
+bool operator> (const Int_vector&, const Int_vector&);
+bool operator>=(const Int_vector&, const Int_vector&);
