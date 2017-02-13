@@ -16,17 +16,22 @@ class Int_vector
     //  - capacity_ is the allocation size of data_
 
 public:
+    // Default constructor: reates a new, empty vector
     Int_vector();
-    Int_vector(size_t initial_capacity);
-    Int_vector(std::initializer_list<int> elements);
 
-    // Copy constructor initializing one vector by copying another
+    // Constructor: creates a vector with the given initial capacity allocated
+    explicit Int_vector(size_t initial_capacity);
+
+    // Constructor: creates a vector with the given elements
+    explicit Int_vector(std::initializer_list<int> elements);
+
+    // Copy constructor: initializes one vector by copying another
     Int_vector(const Int_vector&);
 
-    // Copy-assignment operator, for assigning one vector to another
+    // Copy-assignment operator: assigns one vector to another
     Int_vector& operator=(const Int_vector&);
 
-    // Destructor runs when we're done with a vector
+    // Destructor: runs when we're done with a vector to free its memory
     ~Int_vector();
 
     bool empty() const;
@@ -51,6 +56,7 @@ public:
 private:
     // Throw if index is out of bounds
     void check_index_(size_t index) const;
+
     // Make sure there's enough room for `size` elements
     void ensure_capacity_(size_t req_capacity);
 
