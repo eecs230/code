@@ -48,7 +48,7 @@ bool Int_vector::empty() const
 
 size_t Int_vector::size() const
 {
-
+    return size_;
 }
 
 void Int_vector::push_back(int i)
