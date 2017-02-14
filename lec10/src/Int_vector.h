@@ -23,7 +23,7 @@ public:
     explicit Int_vector(size_t initial_capacity);
 
     // Constructor: creates a vector with the given elements
-    explicit Int_vector(std::initializer_list<int> elements);
+    Int_vector(std::initializer_list<int> elements);
 
     // Copy constructor: initializes one vector by copying another
     Int_vector(const Int_vector&);
