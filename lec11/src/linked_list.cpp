@@ -2,7 +2,7 @@
 
 namespace linked_list {
 
-List_node::List_node(std::string first, link_t rest)
+List_node::List_node(const std::string& first, link_t rest)
     : first_{first}, rest_{rest}
 { }
 
@@ -16,50 +16,6 @@ List List_node::rest() const
     return rest_;
 }
 
-using iterator = List_node::iterator;
-
-iterator List_node::begin() const
-{
-    return iterator{this};
-}
-
-iterator List_node::end() const
-{
-    return iterator{nullptr};
-}
-
-iterator::iterator(const List_node* ptr)
-    : ptr_{ptr}
-{ }
-
-iterator& iterator::operator++()
-{
-    ptr_ = &*ptr_->rest();
-    return *this;
-}
-
-iterator iterator::operator++(int)
-{
-    iterator old = *this;
-    ++(*this);
-    return old;
-}
-
-const std::string& iterator::operator*() const
-{
-    return ptr_->first();
-}
-
-bool operator==(iterator a, iterator b)
-{
-    return a.ptr_ == b.ptr_;
-}
-
-bool operator!=(iterator a, iterator b)
-{
-    return !(a == b);
-}
-
 List cons(std::string first, List rest)
 {
     return std::make_shared<List_node>(first, rest);
@@ -67,22 +23,12 @@ List cons(std::string first, List rest)
 
 const std::string& first(List lst)
 {
-    return (*lst).first();
+    return lst->first();
 }
 
 List rest(List lst)
 {
     return lst->rest();
-}
-
-iterator begin(List lst)
-{
-    return lst->begin();
-}
-
-iterator end(List lst)
-{
-    return lst->end();
 }
 
 size_t length(List lst)
@@ -103,14 +49,6 @@ List append(List front, List back)
     else return cons(front->first(), append(front->rest(), back));
 }
 
-bool operator==(List a, List b)
-{
-    if (a == nullptr) return b == nullptr;
-    else if (b == nullptr) return false;
-
-    return a->first() == b->first() && a->rest() == b->rest();
-}
-
 List reverse(List lst)
 {
     List result = nullptr;
@@ -121,6 +59,63 @@ List reverse(List lst)
     }
 
     return result;
+}
+
+bool equals(List a, List b)
+{
+    if (a == nullptr) return b == nullptr;
+    if (b == nullptr) return false;
+
+    return first(a) == first(b) && equals(rest(a), rest(b));
+}
+
+using iterator = List_node::iterator;
+
+iterator::iterator(const List_node* ptr)
+        : ptr_{ptr}
+{ }
+
+iterator& iterator::operator++()
+{
+    ptr_ = &*ptr_->rest();
+    return *this;
+}
+
+iterator iterator::operator++(int)
+{
+    iterator old = *this;
+    ++(*this);
+    return old;
+}
+
+const std::string& iterator::operator*() const
+{
+    return ptr_->first();
+}
+
+const std::string* iterator::operator->() const
+{
+    return &operator*();
+}
+
+iterator begin(List lst)
+{
+    return iterator(&*lst);
+}
+
+iterator end(List lst)
+{
+    return iterator(nullptr);
+}
+
+bool operator==(iterator a, iterator b)
+{
+    return a.ptr_ == b.ptr_;
+}
+
+bool operator!=(iterator a, iterator b)
+{
+    return !(a == b);
 }
 
 } // end namespace cons_list

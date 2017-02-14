@@ -40,14 +40,14 @@ TEST(Sharing)
 
 TEST(Equality)
 {
-    CHECK_EQUAL(cons("a", cons("b", nullptr)),
-                cons("a", cons("b", nullptr)));
+    CHECK(equals(cons("a", cons("b", nullptr)),
+                 cons("a", cons("b", nullptr))));
 }
 
 TEST(Reverse)
 {
-    CHECK_EQUAL(cons("c", cons("b", cons("a", nullptr))),
-                reverse(cons("a", cons("b", cons("c", nullptr)))));
+    CHECK(equals(cons("c", cons("b", cons("a", nullptr))),
+                 reverse(cons("a", cons("b", cons("c", nullptr))))));
 }
 
 TEST(Iterator)
