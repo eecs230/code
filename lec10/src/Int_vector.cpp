@@ -28,9 +28,8 @@ Int_vector::Int_vector(const Int_vector& other)
 
 Int_vector& Int_vector::operator=(const Int_vector& other)
 {
-    ensure_capacity_(other.size());
-
     clear();
+    ensure_capacity_(other.size());
     for (int z : other) push_back(z);
 
     return *this;
@@ -48,7 +47,7 @@ bool Int_vector::empty() const
 
 size_t Int_vector::size() const
 {
-    return size_;
+
 }
 
 void Int_vector::push_back(int i)
