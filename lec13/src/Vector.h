@@ -110,13 +110,14 @@ Vector<Element>::Vector()
 
 template <typename Element>
 Vector<Element>::Vector(size_t initial_capacity)
-        : capacity_{initial_capacity}
-        , size_{0}
-        , data_{new Element[initial_capacity]}
+        : capacity_(initial_capacity)
+        , size_(0)
+        , data_(new Element[initial_capacity])
 { }
 
 template <typename Element>
 Vector<Element>::Vector(std::initializer_list<Element> elements)
+        : Vector(elements.size())
 {
     for (const Element& e : elements) push_back(e);
 }
@@ -125,9 +126,9 @@ Vector<Element>::Vector(std::initializer_list<Element> elements)
 // capacity equal to the other vector's size, and then assign it to this vector.
 template <typename Element>
 Vector<Element>::Vector(const Vector& other)
-        : capacity_{other.size_}
-        , size_{other.size_}
-        , data_{new Element[other.size_]}
+        : capacity_(other.size_)
+        , size_(other.size_)
+        , data_(new Element[other.size_])
 {
     *this = other;
 }
@@ -247,13 +248,13 @@ void Vector<Element>::ensure_capacity_(size_t req_capacity)
     Element* new_data       = new Element[new_capacity];
 
     for (int i = 0; i < size_; ++i) {
-
+        *(new_data + i) = *(data_ + i);
     }
 
     delete[] data_;
 
     data_     = new_data;
-
+    capacity_ = new_capacity;
 }
 
 template <typename Element>
@@ -310,37 +311,37 @@ typename Vector<Element>::const_iterator Vector<Element>::cend() const
 template <typename Element>
 auto Vector<Element>::rbegin() -> reverse_iterator
 {
-    return std::reverse_iterator<iterator>(end());
+    return reverse_iterator(end());
 }
 
 template <typename Element>
 auto Vector<Element>::rbegin() const -> const_reverse_iterator
 {
-    return std::reverse_iterator<const_iterator>(end());
+    return const_reverse_iterator(end());
 }
 
 template <typename Element>
 auto Vector<Element>::crbegin() const -> const_reverse_iterator
 {
-    return std::reverse_iterator<const_iterator>(end());
+    return const_reverse_iterator(end());
 }
 
 template <typename Element>
 auto Vector<Element>::rend() -> reverse_iterator
 {
-    return std::reverse_iterator<iterator>(begin());
+    return reverse_iterator(begin());
 }
 
 template <typename Element>
 auto Vector<Element>::rend() const -> const_reverse_iterator
 {
-    return std::reverse_iterator<const_iterator>(begin());
+    return const_reverse_iterator(begin());
 }
 
 template <typename Element>
 auto Vector<Element>::crend() const -> const_reverse_iterator
 {
-    return std::reverse_iterator<const_iterator>(begin());
+    return const_reverse_iterator(begin());
 }
 
 //
