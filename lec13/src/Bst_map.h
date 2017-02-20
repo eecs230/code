@@ -1,27 +1,38 @@
+// A map, also known as a dictionary, associates values with keys. In
+// particular, a Bst_map<K, V> will associate values of type V with keys of
+// type K. For example, a Bst_map<string, int> will map strings to ints.
+// You can think of this as a table with a string and an int in each row,
+// where you can efficiently find the row containing a given string.
 #pragma once
 
 #include <initializer_list>
 #include <iostream>
 #include <memory>
-#include <tuple>
 
 template <typename K, typename V>
 class Bst_map
 {
 public:
     Bst_map() = default;
-    Bst_map(std::initializer_list<std::tuple<K, V>>);
+    Bst_map(std::initializer_list<std::pair<K, V>>);
 
-    bool is_empty() const;
+    bool empty() const;
     size_t size() const;
 
     bool contains_key(const K&) const;
+
+    // Looks up a value by key, returning nullptr if not found.
     const V* find(const K&) const;
     V* find(const K&);
-    void insert(K, V);
+
+    void insert(const K&, const V&);
     void remove(const K&);
 
-    std::ostream& debug(std::ostream&);
+    // Looks up a key in the map, inserting the default value if the key
+    // isn't found. Then returns a reference to the value.
+    V& operator[](const K&);
+
+    void clear();
 
 private:
     struct Node;
@@ -29,7 +40,17 @@ private:
 
     link_t root_ = nullptr;
     size_t size_ = 0;
+
+    template <typename K0, typename V0>
+    friend std::ostream& operator<<(std::ostream&, const Bst_map<K0, V0>&);
 };
+
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream&, const Bst_map<K, V>&);
+
+//
+// IMPLEMENTATION
+//
 
 template <typename K, typename V>
 struct Bst_map<K, V>::Node
@@ -97,7 +118,14 @@ struct Bst_map<K, V>::Node
 };
 
 template <typename K, typename V>
-bool Bst_map<K, V>::is_empty() const
+Bst_map<K, V>::Bst_map(std::initializer_list<std::pair<K, V>> mappings)
+{
+    for (const std::pair<K, V>& each : mappings)
+        insert(each.first, each.second);
+};
+
+template <typename K, typename V>
+bool Bst_map<K, V>::empty() const
 {
     return root_ == nullptr;
 }
@@ -142,7 +170,7 @@ V* Bst_map<K, V>::find(const K& k)
 }
 
 template <typename K, typename V>
-void Bst_map<K, V>::insert(K k, V v)
+void Bst_map<K, V>::insert(const K& k, const V& v)
 {
     link_t* current = Node::find(&root_, k);
 
@@ -188,8 +216,29 @@ void Bst_map<K, V>::remove(const K& k)
 }
 
 template <typename K, typename V>
-std::ostream& Bst_map<K, V>::debug(std::ostream& o)
+V& Bst_map<K, V>::operator[](const K& k)
 {
-    return root_->debug(o);
+    link_t* current = Node::find(&root_, k);
+
+    if (*current == nullptr) {
+        *current = std::make_shared<Node>(k, V(), nullptr, nullptr);
+        ++size_;
+    }
+
+    return (*current)->val;
 }
+
+template <typename K, typename V>
+void Bst_map<K, V>::clear()
+{
+    root_ = nullptr;
+    size_ = 0;
+}
+
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream& o, const Bst_map<K, V>& map)
+{
+    return map.root_->debug(o);
+}
+
 

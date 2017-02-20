@@ -11,14 +11,14 @@ public:
     Bst_set() = default;
     Bst_set(std::initializer_list<Element>);
 
-    bool is_empty() const;
+    bool empty() const;
     size_t size() const;
 
     bool contains(const Element&) const;
     void insert(const Element&);
     void remove(const Element&);
 
-    std::ostream& debug(std::ostream&);
+    void clear();
 
 private:
     struct Node;
@@ -26,7 +26,17 @@ private:
 
     link_t root_ = nullptr;
     size_t size_ = 0;
+
+    template <typename T>
+    friend std::ostream& operator<<(std::ostream&, const Bst_set<T>&);
 };
+
+template <typename Element>
+std::ostream& operator<<(std::ostream&, const Bst_set<Element>&);
+
+//
+// IMPLEMENTATION
+//
 
 template <typename Element>
 struct Bst_set<Element>::Node
@@ -84,7 +94,7 @@ Bst_set<Element>::Bst_set(std::initializer_list<Element> elements)
 }
 
 template <typename Element>
-bool Bst_set<Element>::is_empty() const
+bool Bst_set<Element>::empty() const
 {
     return root_ == nullptr;
 }
@@ -151,16 +161,26 @@ void Bst_set<Element>::remove(const Element& n)
         // the right child, if any, of the minimum node:
         link_t old_right = (*min_node)->right;
 
+        // Replace current with min_node:
         (*min_node)->left  = (*current)->left;
         (*min_node)->right = (*current)->right;
         *current  = *min_node;
+
+        // Replace min_node with its old right node:
         *min_node = old_right;
     }
 }
 
 template <typename Element>
-std::ostream& Bst_set<Element>::debug(std::ostream& o)
+void Bst_set<Element>::clear()
 {
-    return root_->debug(o);
+    root_ = nullptr;
+    size_ = 0;
+}
+
+template <typename Element>
+std::ostream& operator<<(std::ostream& o, const Bst_set<Element>& set)
+{
+    return set.root_->debug(o);
 }
 

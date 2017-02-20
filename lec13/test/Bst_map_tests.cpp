@@ -13,7 +13,7 @@ TEST(Script)
     CHECK(!map.contains_key("hello"));
 
     map.insert("hello", 5);
-    map.insert("eecs230", 6);
+    map["eecs230"] = 6;
 
     CHECK_EQUAL(2, map.size());
     CHECK(map.contains_key("hello"));

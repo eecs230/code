@@ -7,7 +7,7 @@
 TEST(Empty)
 {
     Bst_set<int> set;
-    CHECK(set.is_empty());
+    CHECK(set.empty());
     CHECK_EQUAL(0, set.size());
 }
 
@@ -43,7 +43,7 @@ TEST(Debug1)
     set.insert(6);
 
     std::ostringstream o;
-    set.debug(o);
+    o << set;
     CHECK_EQUAL("((. 2 .) 4 (. 6 .))", o.str());
 }
 
@@ -55,7 +55,7 @@ TEST(Debug2)
     set.insert(6);
 
     std::ostringstream o;
-    set.debug(o);
+    o << set;
     CHECK_EQUAL("(. 2 (. 4 (. 6 .)))", o.str());
 }
 
