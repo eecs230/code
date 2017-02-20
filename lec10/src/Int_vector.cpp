@@ -6,9 +6,9 @@
 constexpr size_t default_initial_capacity = 8;
 
 Int_vector::Int_vector(size_t initial_capacity)
-        : capacity_{initial_capacity}
-        , size_{0}
-        , data_{new int[initial_capacity]}
+        : capacity_(initial_capacity)
+        , size_(0)
+        , data_(new int[initial_capacity])
 { }
 
 Int_vector::Int_vector()
