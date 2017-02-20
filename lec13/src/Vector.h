@@ -1,34 +1,47 @@
-// A generic vector class.
-
 #pragma once
 
 #include <algorithm>
-#include <cstddef>
-#include <iterator>
 #include <stdexcept>
+#include <initializer_list>
+#include <iterator>
 
+// A generic vector.
 template <typename Element>
 class Vector
 {
+    size_t capacity_;
+    size_t size_;
+    Element* data_;
+    // Invariants:
+    //  - size_ <= capacity_
+    //  - capacity_ is the allocation size of data_
+
 public:
+    // Default constructor: creates a new, empty vector
     Vector();
+
+    // Constructor: creates a vector with the given initial capacity allocated
     explicit Vector(size_t initial_capacity);
-    Vector(std::initializer_list<Element>);
+
+    // Constructor: creates a vector with the given elements
+    Vector(std::initializer_list<Element> elements);
+
+    // Copy constructor: initializes one vector by copying another
     Vector(const Vector&);
 
-    // Destructor runs when we're done with a vector
-    ~Vector();
-
-    // Copy-assignment operator
+    // Copy-assignment operator: assigns one vector to another
     Vector& operator=(const Vector&);
+
+    // Destructor: runs when we're done with a vector to free its memory
+    ~Vector();
 
     bool empty() const;
     size_t size() const;
 
-    void clear();
-
     void push_back(const Element&);
     void pop_back();
+
+    void clear();
 
     const Element& front() const;
     Element& front();
@@ -42,19 +55,16 @@ public:
     Element& at(size_t index);
 
 private:
-    size_t capacity_;
-    size_t size_;
-    Element* data_;
-
     static constexpr size_t default_initial_capacity = 8;
 
     // Throw if index is out of bounds
     void check_index_(size_t index) const;
 
-    // Make sure there's enough room for `size` elements
+    // Ensure we have enough space for the requested capacity.
     void ensure_capacity_(size_t req_capacity);
 
 public:
+    // Forward iterators are pointers to `int`:
     using iterator               = Element*;
     using const_iterator         = const Element*;
     using reverse_iterator       = std::reverse_iterator<iterator>;
@@ -77,177 +87,241 @@ public:
     const_reverse_iterator crend() const;
 };
 
-template <typename Element>
-bool operator==(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator==(const Vector<T>&, const Vector<T>&);
 
-template <typename Element>
-bool operator!=(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator!=(const Vector<T>&, const Vector<T>&);
 
-template <typename Element>
-bool operator<(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator< (const Vector<T>&, const Vector<T>&);
 
-template <typename Element>
-bool operator<=(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator<=(const Vector<T>&, const Vector<T>&);
 
-template <typename Element>
-bool operator>(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator> (const Vector<T>&, const Vector<T>&);
 
-template <typename Element>
-bool operator>=(const Vector<Element>&, const Vector<Element>&);
+template <typename T>
+bool operator>=(const Vector<T>&, const Vector<T>&);
 
-struct range_error : public std::exception
-{ };
+/////
+///// IMPLEMENTATION
+///// For templates, the implementation has to go in the header.
+/////
 
-//
-// IMPLEMENTATIONS
-// When using template, implementations have to go in the header!
-//
+template <typename T>
+Vector<T>::Vector(size_t initial_capacity)
+        : capacity_(initial_capacity)
+        , size_(0)
+        , data_(new T[initial_capacity])
+{ }
 
-template <typename Element>
-Vector<Element>::Vector()
+template <typename T>
+Vector<T>::Vector()
         : Vector(default_initial_capacity)
 { }
 
-template <typename Element>
-Vector<Element>::Vector(size_t initial_capacity)
-        : capacity_(initial_capacity)
-        , size_(0)
-        , data_(new Element[initial_capacity])
-{ }
-
-template <typename Element>
-Vector<Element>::Vector(std::initializer_list<Element> elements)
+template <typename T>
+Vector<T>::Vector(std::initializer_list<T> elements)
         : Vector(elements.size())
 {
-    for (const Element& e : elements) push_back(e);
+    for (const T& z : elements) push_back(z);
 }
 
-// To copy-construct a vector, we initialize the new vector to have a
-// capacity equal to the other vector's size, and then assign it to this vector.
-template <typename Element>
-Vector<Element>::Vector(const Vector& other)
-        : capacity_(other.size_)
-        , size_(other.size_)
-        , data_(new Element[other.size_])
+template <typename T>
+Vector<T>::Vector(const Vector& other)
+        : Vector(other.size())
 {
-    *this = other;
+    for (const T& z : other) push_back(z);
 }
 
-template <typename Element>
-Vector<Element>::~Vector()
-{
-    delete[] data_;
-}
-
-template <typename Element>
-Vector<Element>& Vector<Element>::operator=(const Vector<Element>& other)
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& other)
 {
     clear();
     ensure_capacity_(other.size());
-
-    for (size_t i = 0; i < other.size(); ++i)
-        push_back(other[i]);
+    for (const T& z : other) push_back(z);
 
     return *this;
 }
 
-template <typename Element>
-bool Vector<Element>::empty() const
+template <typename T>
+Vector<T>::~Vector()
+{
+    delete[] data_;
+}
+
+template <typename T>
+bool Vector<T>::empty() const
 {
     return size_ == 0;
 }
 
-template <typename Element>
-size_t Vector<Element>::size() const
+template <typename T>
+size_t Vector<T>::size() const
 {
     return size_;
 }
 
-template <typename Element>
-void Vector<Element>::clear()
-{
-    size_ = 0;
-}
-
-template <typename Element>
-void Vector<Element>::push_back(const Element& e)
+template <typename T>
+void Vector<T>::push_back(const T& i)
 {
     ensure_capacity_(size_ + 1);
-    *(data_ + size_) = e;
+    *(data_ + size_) = i;
     ++size_;
 }
 
-template <typename Element>
-void Vector<Element>::pop_back()
+template <typename T>
+void Vector<T>::pop_back()
 {
     --size_;
 }
 
-template <typename Element>
-const Element& Vector<Element>::front() const
+template <typename T>
+void Vector<T>::clear()
+{
+    size_ = 0;
+}
+
+template <typename T>
+const T& Vector<T>::front() const
 {
     return *data_;
 }
 
-template <typename Element>
-Element& Vector<Element>::front()
+template <typename T>
+T& Vector<T>::front()
 {
     return *data_;
 }
 
-template <typename Element>
-const Element& Vector<Element>::back() const
+template <typename T>
+const T& Vector<T>::back() const
 {
     return *(data_ + size_ - 1);
 }
 
-template <typename Element>
-Element& Vector<Element>::back()
+template <typename T>
+T& Vector<T>::back()
 {
     return *(data_ + size_ - 1);
 }
 
-template <typename Element>
-const Element& Vector<Element>::operator[](size_t n) const
+template <typename T>
+const T& Vector<T>::operator[](size_t n) const
 {
     return *(data_ + n);
 }
 
-template <typename Element>
-Element& Vector<Element>::operator[](size_t n)
+template <typename T>
+T& Vector<T>::operator[](size_t n)
 {
     return *(data_ + n);
 }
 
-template <typename Element>
-const Element& Vector<Element>::at(size_t n) const
+template <typename T>
+const T& Vector<T>::at(size_t n) const
 {
     check_index_(n);
     return *(data_ + n);
 }
 
-template <typename Element>
-Element& Vector<Element>::at(size_t n)
+template <typename T>
+T& Vector<T>::at(size_t n)
 {
     check_index_(n);
     return *(data_ + n);
 }
 
-template <typename Element>
-void Vector<Element>::check_index_(size_t index) const
+template <typename T>
+auto Vector<T>::begin() -> iterator
 {
-    if (index >= size_) throw range_error{};
+    return data_;
 }
 
-template <typename Element>
-void Vector<Element>::ensure_capacity_(size_t req_capacity)
+template <typename T>
+auto Vector<T>::begin() const -> const_iterator
+{
+    return data_;
+}
+
+template <typename T>
+auto Vector<T>::cbegin() const -> const_iterator
+{
+    return data_;
+}
+
+template <typename T>
+auto Vector<T>::end() -> iterator
+{
+    return data_ + size_;
+}
+
+template <typename T>
+auto Vector<T>::end() const -> const_iterator
+{
+    return data_ + size_;
+}
+
+template <typename T>
+auto Vector<T>::cend() const -> const_iterator
+{
+    return data_ + size_;
+}
+
+template <typename T>
+auto Vector<T>::rbegin() -> reverse_iterator
+{
+    return reverse_iterator(end());
+}
+
+template <typename T>
+auto Vector<T>::rbegin() const -> const_reverse_iterator
+{
+    return const_reverse_iterator(end());
+}
+
+template <typename T>
+auto Vector<T>::crbegin() const -> const_reverse_iterator
+{
+    return const_reverse_iterator(end());
+}
+
+template <typename T>
+auto Vector<T>::rend() -> reverse_iterator
+{
+    return reverse_iterator(begin());
+}
+
+template <typename T>
+auto Vector<T>::rend() const -> const_reverse_iterator
+{
+    return const_reverse_iterator(begin());
+}
+
+template <typename T>
+auto Vector<T>::crend() const -> const_reverse_iterator
+{
+    return const_reverse_iterator(begin());
+}
+
+template <typename T>
+void Vector<T>::check_index_(size_t index) const
+{
+    if (index >= size_)
+        throw std::range_error("Vector: index out of bounds");
+}
+
+template <typename T>
+void Vector<T>::ensure_capacity_(size_t req_capacity)
 {
     if (req_capacity <= capacity_) return;
 
     size_t new_capacity = std::max(req_capacity, 2 * capacity_);
-    Element* new_data       = new Element[new_capacity];
+    T* new_data       = new T[new_capacity];
 
-    for (int i = 0; i < size_; ++i) {
+    for (size_t i = 0; i < size_; ++i) {
         *(new_data + i) = *(data_ + i);
     }
 
@@ -257,99 +331,8 @@ void Vector<Element>::ensure_capacity_(size_t req_capacity)
     capacity_ = new_capacity;
 }
 
-template <typename Element>
-typename Vector<Element>::iterator Vector<Element>::begin()
-{
-    return data_;
-}
-
-template <typename Element>
-typename Vector<Element>::const_iterator Vector<Element>::begin() const
-{
-    return data_;
-}
-
-template <typename Element>
-typename Vector<Element>::const_iterator Vector<Element>::cbegin() const
-{
-    return begin();
-}
-
-template <typename Element>
-typename Vector<Element>::iterator Vector<Element>::end()
-{
-    return data_ + size_;
-}
-
-template <typename Element>
-typename Vector<Element>::const_iterator Vector<Element>::end() const
-{
-    return data_ + size_;
-}
-
-template <typename Element>
-typename Vector<Element>::const_iterator Vector<Element>::cend() const
-{
-    return end();
-}
-
-// The next several functions use trailing return type syntax. Instead of
-// writing:
-//
-//   int f() { ... }
-//
-// we can write:
-//
-//   auto f() -> int { ... }
-//
-// The difference is that the trailing return type is interpreted in the
-// context of the class that the function is a member of, rather than in
-// global scope. So for example, for this first function, we can write the
-// return type as just reverse_iterator instead of
-// Vector<Element>::reverse_iterator.
-
-template <typename Element>
-auto Vector<Element>::rbegin() -> reverse_iterator
-{
-    return reverse_iterator(end());
-}
-
-template <typename Element>
-auto Vector<Element>::rbegin() const -> const_reverse_iterator
-{
-    return const_reverse_iterator(end());
-}
-
-template <typename Element>
-auto Vector<Element>::crbegin() const -> const_reverse_iterator
-{
-    return const_reverse_iterator(end());
-}
-
-template <typename Element>
-auto Vector<Element>::rend() -> reverse_iterator
-{
-    return reverse_iterator(begin());
-}
-
-template <typename Element>
-auto Vector<Element>::rend() const -> const_reverse_iterator
-{
-    return const_reverse_iterator(begin());
-}
-
-template <typename Element>
-auto Vector<Element>::crend() const -> const_reverse_iterator
-{
-    return const_reverse_iterator(begin());
-}
-
-//
-// Implementations of free functions
-//
-
-template <typename Element>
-bool operator==(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator==(const Vector<T>& a, const Vector<T>& b)
 {
     if (a.size() != b.size()) return false;
 
@@ -360,19 +343,18 @@ bool operator==(const Vector<Element>& a, const Vector<Element>& b)
     return true;
 }
 
-template <typename Element>
-bool operator!=(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator!=(const Vector<T>& a, const Vector<T>& b)
 {
     return !(a == b);
 }
 
-template <typename Element>
-bool operator<(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator<(const Vector<T>& a, const Vector<T>& b)
 {
     size_t limit = std::min(a.size(), b.size());
 
-    for (size_t i = 0; i < limit; ++i)
-    {
+    for (size_t i = 0; i < limit; ++i) {
         if (a[i] < b[i]) return true;
         if (b[i] < a[i]) return false;
     }
@@ -380,21 +362,20 @@ bool operator<(const Vector<Element>& a, const Vector<Element>& b)
     return a.size() < b.size();
 }
 
-template <typename Element>
-bool operator<=(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator<=(const Vector<T>& a, const Vector<T>& b)
 {
     return !(b < a);
 }
 
-template <typename Element>
-bool operator>(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator> (const Vector<T>& a, const Vector<T>& b)
 {
     return b < a;
 }
 
-template <typename Element>
-bool operator>=(const Vector<Element>& a, const Vector<Element>& b)
+template <typename T>
+bool operator>=(const Vector<T>& a, const Vector<T>& b)
 {
-    return b <= a;
+    return !(a < b);
 }
-

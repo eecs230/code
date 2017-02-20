@@ -171,7 +171,7 @@ TEST(At_const)
     CHECK_EQUAL(1, v.at(0));
     CHECK_EQUAL(2, v.at(1));
     CHECK_EQUAL(3, v.at(2));
-    CHECK_THROW(v.at(3), range_error);
+    CHECK_THROW(v.at(3), std::range_error);
 }
 
 TEST(At_assign)
