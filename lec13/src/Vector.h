@@ -133,7 +133,8 @@ template <typename T>
 Vector<T>::Vector(const Vector& other)
         : Vector(other.size())
 {
-    for (const T& z : other) push_back(z);
+    for (size_t i = 0; i < other.size(); ++i)
+        push_back(other[i]);
 }
 
 template <typename T>
@@ -141,7 +142,8 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other)
 {
     clear();
     ensure_capacity_(other.size());
-    for (const T& z : other) push_back(z);
+    for (size_t i = 0; i < other.size(); ++i)
+        push_back(other[i]);
 
     return *this;
 }
