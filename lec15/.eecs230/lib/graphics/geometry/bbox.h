@@ -63,13 +63,6 @@ public:
             *this = *this + boundable.get_bbox();
     }
 
-    template <typename Collection>
-    constexpr bbox(const Collection& collection) : bbox()
-    {
-        for (const auto& each : collection)
-            *this = *this + each.get_bbox();
-    }
-
     constexpr const T& top()    const noexcept { return top_; }
     constexpr const T& right()  const noexcept { return right_; }
     constexpr const T& bottom() const noexcept { return bottom_; }

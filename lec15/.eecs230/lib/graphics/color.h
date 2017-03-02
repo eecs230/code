@@ -8,44 +8,55 @@
 namespace graphics
 {
 
-class color
+class Color
 {
 public:
-    color() noexcept; // transparent
-    color(sample red, sample green, sample blue, sample alpha = 1) noexcept;
+    Color() noexcept; // transparent
+    Color(sample red, sample green, sample blue,
+          sample alpha = sample::one) noexcept;
 
-    color(graphics::color32) noexcept;
+    static Color from_premixed_alpha(
+            sample alpha_red, sample alpha_green,
+            sample alpha_blue, sample alpha = sample::one) noexcept;
+
+    Color(graphics::color32) noexcept;
     operator graphics::color32() const noexcept;
 
-    static color const transparent;
-    static color const white;
-    static color const black;
+    static Color const transparent;
+    static Color const white;
+    static Color const black;
 
-    sample red()   const noexcept { return red_;   }
-    sample green() const noexcept { return green_; }
-    sample blue()  const noexcept { return blue_;  }
+    sample alpha_red() const noexcept { return a_red_; }
+    sample alpha_green() const noexcept { return a_green_; }
+    sample alpha_blue() const noexcept { return a_blue_; }
+
+    sample red()   const noexcept { return a_red_ / alpha_; }
+    sample green() const noexcept { return a_green_ / alpha_; }
+    sample blue()  const noexcept { return a_blue_ / alpha_;  }
     sample alpha() const noexcept { return alpha_; }
 
+    bool is_opaque() const noexcept { return alpha_ == sample::one; }
+    bool is_transparent() const noexcept { return alpha_ == sample::zero; }
+
 private:
-    sample red_, green_, blue_, alpha_;
+    sample a_red_, a_green_, a_blue_, alpha_;
 };
 
-color grayscale(const color&) noexcept;
-color overlay(const color& foreground, const color& background) noexcept;
-color interpolate(const color& a, sample weight, const color& b) noexcept;
+Color overlay(const Color& foreground, const Color& background) noexcept;
+Color interpolate(const Color& a, sample weight, const Color& b) noexcept;
 
 class Partial_blend
 {
-    Partial_blend(color left, sample weight);
+    Partial_blend(Color left, sample weight);
 
-    color  left_;
+    Color  left_;
     sample weight_;
 
-    friend Partial_blend operator<(const color&, sample);
-    friend color operator>(const Partial_blend&, const color&);
+    friend Partial_blend operator<(const Color&, sample);
+    friend Color operator>(const Partial_blend&, const Color&);
 };
 
-Partial_blend operator<(const color&, sample);
-color operator>(const Partial_blend&, const color&);
+Partial_blend operator<(const Color&, sample);
+Color operator>(const Partial_blend&, const Color&);
 
 } // namespace graphics
