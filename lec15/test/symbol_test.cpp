@@ -1,4 +1,4 @@
-#include "symbol.h"
+#include "../src/symbol.h"
 #include <UnitTest++/UnitTest++.h>
 
 TEST(Interning)

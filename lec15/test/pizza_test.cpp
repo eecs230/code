@@ -1,4 +1,4 @@
-#include "pizza.h"
+#include "../src/pizza.h"
 #include <UnitTest++/UnitTest++.h>
 
 TEST(Pizza_no_builder)

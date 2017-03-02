@@ -1,20 +1,35 @@
-#include "sampleable.h"
+#include "renderable.h"
 
 namespace sampleable {
 
 using namespace graphics;
 using namespace std;
 
-void Sampleable::simple_render(graphics::raster& raster)
+class Renderable::Impl
+{
+public:
+    Impl(const bbox& bbox) : bbox_(bbox) { }
+
+    const bbox& get_bbox() const { return bbox_; }
+
+    virtual Color sample(posn) const = 0;
+
+private:
+    bbox bbox_;
+};
+
+using impl_ptr = shared_ptr<const Renderable::Impl>;
+
+void Renderable::simple_render(graphics::raster& raster)
 {
     for (size_t y = 0; y < raster.height(); ++y) {
         for (size_t x = 0; x < raster.width(); ++x) {
-            raster.at(x, y) = sample({x + .5, y + .5});
+            raster.at(x, y) = pimpl_->sample({x + .5, y + .5});
         }
     }
 }
 
-void Sampleable::render(graphics::raster& raster, unsigned int antialias)
+void Renderable::render(graphics::raster& raster, unsigned int antialias)
 {
     for (size_t y = 0; y < raster.height(); ++y) {
         for (size_t x = 0; x < raster.width(); ++x) {
@@ -22,8 +37,8 @@ void Sampleable::render(graphics::raster& raster, unsigned int antialias)
 
             for (unsigned j = 0; j < antialias; ++j) {
                 for (unsigned i = 0; i < antialias; ++i) {
-                    cb << sample({x + (i + 0.5) / antialias,
-                                  y + (j + 0.5) / antialias});
+                    cb << pimpl_->sample({x + (i + 0.5) / antialias,
+                                          y + (j + 0.5) / antialias});
                 }
             }
 
@@ -32,11 +47,31 @@ void Sampleable::render(graphics::raster& raster, unsigned int antialias)
     }
 }
 
-class Paint : public Sampleable
+Renderable::Renderable(shared_ptr<const Renderable::Impl> pimpl)
+        : pimpl_(pimpl)
+{ }
+
+class Nothing : public Renderable::Impl
 {
 public:
-    Paint(const Color& color)
-            : Sampleable(bbox::everything()),
+    Nothing() : Impl(bbox::nothing())
+    { }
+
+    Color sample(posn) const override
+    {
+        return Color::transparent;
+    }
+};
+
+Renderable::Renderable()
+        : pimpl_{make_shared<Nothing>()}
+{ }
+
+class Everything : public Renderable::Impl
+{
+public:
+    Everything(const Color& color)
+            : Impl(bbox::everything()),
               color_(color)
     { }
 
@@ -49,37 +84,22 @@ private:
     Color color_;
 };
 
-sampleable_ptr paint(const Color& color)
+Renderable Renderable::everything(const Color& color)
 {
-    return make_shared<Paint>(color);
+    return {make_shared<Everything>(color)};
 }
 
-class Nothing : public Sampleable
-{
-public:
-    Nothing() : Sampleable(bbox::nothing())
-    { }
-
-    Color sample(posn) const override
-    {
-        return Color::transparent;
-    }
-};
-
-sampleable_ptr nothing()
-{
-    return make_shared<Nothing>();
-}
-
-class Abstract_shape : public Sampleable
+class Abstract_shape : public Renderable::Impl
 {
 public:
     Abstract_shape(const bbox& bbox, const Color& color)
-            : Sampleable(bbox), color_(color)
+            : Impl(bbox), color_(color)
     { }
 
     Color sample(posn p) const override
-    { return contains(p)? color_ : Color::transparent; }
+    {
+        return contains(p)? color_ : Color::transparent;
+    }
 
 protected:
     virtual bool contains(posn) const = 0;
@@ -112,16 +132,16 @@ private:
     }
 };
 
-sampleable_ptr circle(posn center, double radius, const Color& color)
+Renderable Renderable::circle(posn center, double radius, const Color& color)
 {
-    return make_shared<Circle>(center, radius, color);
+    return {make_shared<Circle>(center, radius, color)};
 }
 
-class Overlay : public Sampleable
+class Overlay : public Renderable::Impl
 {
 public:
-    Overlay(sampleable_ptr front, sampleable_ptr back)
-            : Sampleable(front->get_bbox() + back->get_bbox()),
+    Overlay(impl_ptr front, impl_ptr back)
+            : Impl(front->get_bbox() + back->get_bbox()),
               front_(front), back_(back)
     { }
 
@@ -143,20 +163,20 @@ public:
     }
 
 private:
-    sampleable_ptr front_, back_;
+    impl_ptr front_, back_;
 };
 
-sampleable_ptr overlay(sampleable_ptr front, sampleable_ptr back)
+Renderable Renderable::overlay(Renderable background) const
 {
-    return make_shared<Overlay>(front, back);
+    return {make_shared<Overlay>(pimpl_, background.pimpl_)};
 }
 
-sampleable_ptr overlay(initializer_list<sampleable_ptr> layers)
+Renderable overlay(initializer_list<Renderable> layers)
 {
-    sampleable_ptr result = nothing();
+    Renderable result;
 
-    for (sampleable_ptr each : layers)
-        result = overlay(result, each);
+    for (Renderable each : layers)
+        result = each.overlay(result);
 
     return result;
 }
@@ -174,28 +194,22 @@ public:
     }
 };
 
-sampleable_ptr rect_bbox(const bbox& bbox, const Color& color)
+Renderable Renderable::rectangle(const bbox& bbox, const Color& color)
 {
-    return make_shared<Rectangle>(bbox, color);
+    return {make_shared<Rectangle>(bbox, color)};
 }
 
-sampleable_ptr rect_trbl(double top, double right, double bottom, double left,
-                         const Color& color)
-{
-    return rect_bbox(bbox(top, right, bottom, left), color);
-}
-
-class Sampleable_decorator : public Sampleable
+class Impl_decorator : public Renderable::Impl
 {
 public:
-    using Dec = Sampleable_decorator;
+    using Dec = Impl_decorator;
 
-    Sampleable_decorator(sampleable_ptr base)
-            : Sampleable_decorator(base, base->get_bbox())
+    Impl_decorator(impl_ptr base)
+            : Impl_decorator(base, base->get_bbox())
     { }
 
-    Sampleable_decorator(sampleable_ptr base, const bbox& bbox)
-            : Sampleable(bbox), base_(base)
+    Impl_decorator(impl_ptr base, const bbox& bbox)
+            : Impl(bbox), base_(base)
     { }
 
     Color sample(posn p) const override
@@ -204,13 +218,13 @@ public:
     }
 
 protected:
-    const sampleable_ptr base_;
+    const impl_ptr base_;
 };
 
-class Opacity : public Sampleable_decorator
+class Opacity : public Impl_decorator
 {
 public:
-    Opacity(sampleable_ptr base, graphics::sample alpha)
+    Opacity(impl_ptr base, graphics::sample alpha)
             : Dec(base), alpha_(alpha)
     { }
 
@@ -229,15 +243,15 @@ private:
     graphics::sample alpha_;
 };
 
-sampleable_ptr opacity(sampleable_ptr base, sample alpha)
+Renderable Renderable::opacity(sample alpha) const
 {
-    return make_shared<Opacity>(base, alpha);
+    return {make_shared<Opacity>(pimpl_, alpha)};
 }
 
-class Transform : public Sampleable_decorator
+class Transform : public Impl_decorator
 {
 public:
-    Transform(sampleable_ptr base, const affinity& transform)
+    Transform(impl_ptr base, const affinity& transform)
             : Dec(base, transform(base->get_bbox())),
               inv_trans_(transform.inverse())
     { }
@@ -250,9 +264,31 @@ private:
     affinity inv_trans_;
 };
 
-sampleable_ptr transform(sampleable_ptr base, const affinity& transform)
+Renderable Renderable::transform(const affinity& transform) const
 {
-    return make_shared<Transform>(base, transform);
+    return {make_shared<Transform>(pimpl_, transform)};
 }
+
+Renderable Renderable::at(posn p) const
+{
+    return transform(affinity::translation(p.x, p.y));
+}
+
+class Fill : Impl_decorator
+{
+public:
+    Fill(impl_ptr base, const Color& color)
+            : Dec(base), color_(color)
+    { }
+
+private:
+    Color sample(posn p) const override
+    {
+        auto alpha = Dec::sample(p).;
+    }
+
+private:
+    Color color_;
+};
 
 }
