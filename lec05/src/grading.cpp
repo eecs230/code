@@ -7,7 +7,7 @@ vector<Weighted_grade> read_grades()
     vector<Weighted_grade> result;
     Weighted_grade wg;
 
-    while (cin >> wg.grade && cin >> wg.weight) {
+    while (cin >> wg.grade >> wg.weight) {
         result.push_back(wg);
     }
 
