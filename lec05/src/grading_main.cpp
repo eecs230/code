@@ -10,5 +10,6 @@ try {
 
 catch (average_undefined&) {
     cerr << "Average isn't defined for empty data set\n";
+    exit(1);
 }
 
