@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.3)
 project(lec05 CXX)
 include(.eecs230/CMakeLists.txt)
 
+add_program(grading0
+        src/grading0.cpp)
+
 add_program(grading
         src/grading_main.cpp
         src/grading.cpp)

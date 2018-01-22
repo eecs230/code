@@ -12,3 +12,4 @@ TEST(Weighted_sum)
     vector<Weighted_grade> v{{10, 2}, {12, 3}};
     CHECK_EQUAL(56, weighted_sum(v));
 }
+#includekkkkkkkkjk
