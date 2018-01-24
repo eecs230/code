@@ -10,17 +10,17 @@ class color_blender
 public:
     color_blender() noexcept;
 
-    color_blender& add(sample::repr, const Color&) noexcept;
-    Color get() const noexcept;
+    color_blender& add(double weight, const color&) noexcept;
+    color get() const noexcept;
 
 private:
-    sample::repr red_    = 0;
-    sample::repr green_  = 0;
-    sample::repr blue_   = 0;
-    sample::repr alpha_  = 0;
-    sample::repr weight_ = 0;
+    double red_    = 0;
+    double green_  = 0;
+    double blue_   = 0;
+    double alpha_  = 0;
+    double weight_ = 0;
 };
 
-color_blender& operator<<(color_blender&, const Color&) noexcept;
+color_blender& operator<<(color_blender&, const color&) noexcept;
 
 } // end namespace graphics

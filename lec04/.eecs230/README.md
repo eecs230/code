@@ -10,9 +10,5 @@ This directory contains files for configuring this EECS 230 project:
 
         eecs230.h - our version of the book’s header
 
-    lib/ - included libraries
-
-        unittest-cpp/ - testing framework
-
 You probably shouldn’t change anything here. Since the course staff
 might change it at will, you should be prepared for merge conflicts.
