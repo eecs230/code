@@ -63,8 +63,8 @@ bool operator!=(const Time_of_day& t1, const Time_of_day& t2)
 ostream& operator<<(ostream& os, const Time_of_day& t)
 {
     os << t.hours() << ':'
-    << setfill('0') << setw(2) << t.minutes() << ':'
-    << setfill('0') << setw(2) << t.seconds();
+       << setfill('0') << setw(2) << t.minutes() << ':'
+       << setfill('0') << setw(2) << t.seconds();
     return os;
 }
 
