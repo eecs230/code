@@ -25,7 +25,7 @@ Rational::Rational(long n) : num_(n), den_(1)
 
 Rational::Rational(long n, long d) {
     if (d == 0)
-        throw std::overflow_error{"Rational::Rational: divide by 0"};
+        throw overflow_error{"Rational::Rational: divide by 0"};
 
     long divisor = gcd(n, d);
     n /= divisor;
@@ -50,7 +50,7 @@ Rational Rational::operator-() const
 
 Rational Rational::reciprocal() const
 {
-    if (num_ == 0) throw std::overflow_error("Rational: reciprocal of 0");
+    if (num_ == 0) throw overflow_error("Rational: reciprocal of 0");
 
     Rational result;
     result.num_ = den_;
@@ -109,7 +109,7 @@ bool operator>=(Rational a, Rational b)
     return b <= a;
 }
 
-std::ostream& operator<<(std::ostream& o, Rational r)
+ostream& operator<<(ostream& o, Rational r)
 {
     if (r.denominator() == 1)
         return o << r.numerator();

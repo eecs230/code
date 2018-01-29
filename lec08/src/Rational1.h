@@ -1,7 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <stdexcept>
+#include <eecs230.h>
 
 namespace rational {
 
@@ -25,7 +24,7 @@ bool operator<=(Rational, Rational);
 bool operator>(Rational, Rational);
 bool operator>=(Rational, Rational);
 
-std::ostream& operator<<(std::ostream&, Rational);
+ostream& operator<<(ostream&, Rational);
 double to_double(Rational);
 
 Rational operator-(Rational);

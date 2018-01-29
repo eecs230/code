@@ -1,5 +1,4 @@
 #include "Rational2.h"
-#include <UnitTest++/UnitTest++.h>
 
 using rational::Rational;
 
@@ -37,7 +36,7 @@ TEST(Rational_n_m)
 }
 
 TEST(Rational_den0_throws) {
-    CHECK_THROW(Rational(5, 0), std::overflow_error);
+    CHECK_THROW(Rational(5, 0), overflow_error);
 }
 
 TEST(Rational_equals)
@@ -70,7 +69,7 @@ TEST(Format)
 {
     Rational r1(5);
     Rational r2(5, 6);
-    std::ostringstream fmt;
+    ostringstream fmt;
     fmt << r1 << ' ' << r2;
     CHECK_EQUAL("5 5/6", fmt.str());
 }
@@ -105,7 +104,7 @@ TEST(Reciprocal)
 TEST(Reciprocal_0_throws)
 {
     Rational r(0);
-    CHECK_THROW(r.reciprocal(), std::overflow_error);
+    CHECK_THROW(r.reciprocal(), overflow_error);
 }
 
 TEST(Rational_addition)

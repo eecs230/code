@@ -1,5 +1,5 @@
 #include "Rational1.h"
-#include <UnitTest++/UnitTest++.h>
+#include <eecs230.h>
 
 using rational::Rational;
 using rational::make_rational;
@@ -39,7 +39,7 @@ TEST(Rational_n_m)
 
 TEST(Make_rational_x_0_throws)
 {
-    CHECK_THROW(make_rational(1, 0), std::overflow_error);
+    CHECK_THROW(make_rational(1, 0), overflow_error);
 }
 
 TEST(Rational_equals)
@@ -72,7 +72,7 @@ TEST(Format)
 {
     Rational r1 = make_rational(5);
     Rational r2 = make_rational(5, 6);
-    std::ostringstream fmt;
+    ostringstream fmt;
     fmt << r1 << ' ' << r2;
     CHECK_EQUAL("5 5/6", fmt.str());
 }
@@ -107,7 +107,7 @@ TEST(Reciprocal)
 TEST(Reciprocal_0_throws)
 {
     Rational r{0, 1};
-    CHECK_THROW(reciprocal(r), std::overflow_error);
+    CHECK_THROW(reciprocal(r), overflow_error);
 }
 
 TEST(Rational_addition)

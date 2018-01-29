@@ -1,7 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <stdexcept>
+#include <eecs230.h>
 
 namespace rational {
 
@@ -16,7 +15,7 @@ public:
     Rational(long n);
 
     // Constructs the rational representing `n/d`; throws
-    // std::overflow_error if `d` is 0.
+    // overflow_error if `d` is 0.
     Rational(long n, long d);
 
     // Note: Only three arithmetic operations are members, and the rest
@@ -53,7 +52,7 @@ bool operator<=(Rational, Rational);
 bool operator>(Rational, Rational);
 bool operator>=(Rational, Rational);
 
-std::ostream& operator<<(std::ostream&, Rational);
+ostream& operator<<(ostream&, Rational);
 double to_double(Rational);
 
 Rational operator+(Rational, Rational);

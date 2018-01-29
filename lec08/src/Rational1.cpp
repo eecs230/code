@@ -30,7 +30,7 @@ Rational make_rational(long value)
 Rational make_rational(long n, long d)
 {
     if (d == 0)
-        throw std::overflow_error{"Rational::Rational: divide by 0"};
+        throw overflow_error{"Rational::Rational: divide by 0"};
 
     long divisor = gcd(n, d);
     n /= divisor;
@@ -73,7 +73,7 @@ bool operator>=(Rational a, Rational b)
     return b <= a;
 }
 
-std::ostream& operator<<(std::ostream& o, Rational r)
+ostream& operator<<(ostream& o, Rational r)
 {
     if (r.den == 1)
         return o << r.num;
