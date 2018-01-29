@@ -1,5 +1,5 @@
-#include <UnitTest++/UnitTest++.h>
 #include "Vending_machine.h"
+#include <eecs230.h>
 
 TEST(Get_balance)
 {
@@ -38,7 +38,7 @@ TEST(Get_price__unknown)
 TEST(Get_items)
 {
     Vending_machine machine;
-    std::vector<std::string> items = machine.get_items();
+    vector<string> items = machine.get_items();
 
     CHECK_EQUAL(2, items.size());
     // In what order?
