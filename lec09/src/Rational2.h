@@ -64,8 +64,11 @@ Rational& operator-=(Rational&, Rational);
 Rational& operator*=(Rational&, Rational);
 Rational& operator/=(Rational&, Rational);
 
+// Pre-increment and pre-decrement:
 Rational& operator++(Rational&);
 Rational& operator--(Rational&);
+
+// Post-increment and post-decrement:
 Rational operator++(Rational&, int);
 Rational operator--(Rational&, int);
 
