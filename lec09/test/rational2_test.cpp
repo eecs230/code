@@ -111,12 +111,12 @@ TEST(Rational_addition)
 {
     using R = Rational;
 
-    CHECK_EQUAL(R(11), R(5) + R(6));
-    CHECK_EQUAL(R(2,3), R(1,3) + R(1,3));
-    CHECK_EQUAL(R(7,12), R(1,3) + R(1,4));
-    CHECK_EQUAL(R(1), R(5,12) + R(7,12));
-    CHECK_EQUAL(R(35, 12), R(2, 3) + R(9, 4));
-    CHECK_EQUAL(R(3, 8), R(1, 8) + R(1, 4));
+    CHECK_EQUAL(11_r, 5_r + 6_r);
+    CHECK_EQUAL(2/3_r, 1/3_r + 1/3_r);
+    CHECK_EQUAL(7/12_r, 1/3_r + 1/4_r);
+    CHECK_EQUAL(1_r, 5/12_r + 7/12_r);
+    CHECK_EQUAL(35/12_r, 2/3_r + 9/4_r);
+    CHECK_EQUAL(3/8_r, 1/8_r + 1/4_r);
 }
 
 TEST(Rational_multiplication)

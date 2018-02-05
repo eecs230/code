@@ -22,6 +22,19 @@ sample::sample(repr_t value)
     : value_{saturate(value)}
 {}
 
+std::ostream& operator<<(std::ostream& os, sample x)
+{
+    return os << x.value();
+}
+
+std::istream& operator>>(std::istream& is, sample& x)
+{
+    double temp;
+    is >> temp;
+    x = sample(temp);
+    return is;
+}
+
 sample interpolate(sample a, sample weight, sample b)
 {
     return sample{(1 - weight.value()) * a.value() + weight.value() * b.value()};

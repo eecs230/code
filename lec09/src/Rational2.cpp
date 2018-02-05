@@ -195,3 +195,9 @@ Rational operator--(Rational& r, int)
 }
 
 }
+
+rational::Rational operator"" _r(unsigned long long n)
+{
+    return rational::Rational(static_cast<long>(n));
+}
+

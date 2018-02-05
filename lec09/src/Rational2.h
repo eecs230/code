@@ -70,3 +70,11 @@ Rational operator++(Rational&, int);
 Rational operator--(Rational&, int);
 
 }
+
+// This enables writing rational numbers as literals with the suffix "_r".
+// For example:
+//
+//  - 3_r
+//  - 3/5_r
+//
+rational::Rational operator"" _r(unsigned long long);
