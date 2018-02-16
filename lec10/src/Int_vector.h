@@ -41,6 +41,7 @@ public:
     void pop_back();
 
     void clear();
+    void swap(Int_vector&);
 
     int front() const;
     int& front();

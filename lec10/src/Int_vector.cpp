@@ -68,6 +68,13 @@ void Int_vector::clear()
     size_ = 0;
 }
 
+void Int_vector::swap(Int_vector& other)
+{
+    std::swap(data_, other.data_);
+    std::swap(size_, other.size_);
+    std::swap(capacity_, other.capacity_);
+}
+
 int Int_vector::front() const
 {
     return *data_;
