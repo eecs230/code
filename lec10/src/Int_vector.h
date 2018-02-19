@@ -88,6 +88,8 @@ public:
 struct range_error : public std::exception
 { };
 
+void swap(Int_vector&, Int_vector&) noexcept;
+
 bool operator==(const Int_vector&, const Int_vector&);
 bool operator!=(const Int_vector&, const Int_vector&);
 bool operator< (const Int_vector&, const Int_vector&);

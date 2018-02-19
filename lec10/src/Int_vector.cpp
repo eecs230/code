@@ -199,6 +199,11 @@ void Int_vector::ensure_capacity_(size_t req_capacity)
     capacity_ = new_capacity;
 }
 
+void swap(Int_vector& a, Int_vector& b) noexcept
+{
+    a.swap(b);
+}
+
 bool operator==(const Int_vector& a, const Int_vector& b)
 {
     if (a.size() != b.size()) return false;
