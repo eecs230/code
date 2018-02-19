@@ -2,33 +2,23 @@
 
 namespace linked_list {
 
-List_node::List_node(const std::string& first, link_t rest)
-    : first_{first}, rest_{rest}
+List_node::List_node(const std::string& f, link_t r)
+    : first{f}, rest{r}
 { }
-
-const std::string& List_node::first() const
-{
-    return first_;
-}
-
-List List_node::rest() const
-{
-    return rest_;
-}
 
 List cons(std::string first, List rest)
 {
     return std::make_shared<List_node>(first, rest);
 }
 
-const std::string& first(List lst)
+std::string& first(List lst)
 {
-    return lst->first();
+    return lst->first;
 }
 
-List rest(List lst)
+List& rest(List lst)
 {
-    return lst->rest();
+    return lst->rest;
 }
 
 size_t length(List lst)
@@ -37,7 +27,7 @@ size_t length(List lst)
 
     while (lst != nullptr) {
         ++result;
-        lst = lst->rest();
+        lst = lst->rest;
     }
 
     return result;
@@ -46,7 +36,7 @@ size_t length(List lst)
 List append(List front, List back)
 {
     if (front == nullptr) return back;
-    else return cons(front->first(), append(front->rest(), back));
+    else return cons(front->first, append(front->rest, back));
 }
 
 List reverse(List lst)
@@ -54,8 +44,8 @@ List reverse(List lst)
     List result = nullptr;
 
     while (lst != nullptr) {
-        result = cons(lst->first(), result);
-        lst    = lst->rest();
+        result = cons(lst->first, result);
+        lst    = lst->rest;
     }
 
     return result;
@@ -77,7 +67,7 @@ iterator::iterator(const List_node* ptr)
 
 iterator& iterator::operator++()
 {
-    ptr_ = &*ptr_->rest();
+    ptr_ = &*ptr_->rest;
     return *this;
 }
 
@@ -90,7 +80,7 @@ iterator iterator::operator++(int)
 
 const std::string& iterator::operator*() const
 {
-    return ptr_->first();
+    return ptr_->first;
 }
 
 const std::string* iterator::operator->() const

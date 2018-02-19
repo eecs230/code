@@ -8,27 +8,19 @@ namespace linked_list {
 // A linked list represented as a shared pointer to a List_node, which
 // contains two data members, one element and one shared pointer to the next
 // List_node.
-class List_node
+struct List_node
 {
-public:
     // A link is a shared pointer to a List_node.
     using link_t = std::shared_ptr<List_node>;
 
     // Constructs a list node from its element and rest pointer.
-    List_node(const std::string& first, link_t rest);
-
-    // Gets the element stored in this list node.
-    const std::string& first() const;
-
-    // Gets the pointer to the next list node (which may be nullptr).
-    link_t rest() const;
+    List_node(const std::string& f, link_t r);
 
     // For iterating over lists (defined below):
     class iterator;
 
-private:
-    std::string first_;
-    link_t      rest_;
+    std::string first;
+    link_t      rest;
 };
 
 // A type synonym: a List *is* a shared pointer to a list node.
@@ -44,11 +36,11 @@ List cons(std::string first, List rest);
 
 // Gets the first element of a list.
 // PRECONDITION: the List is not nullptr
-const std::string& first(List);
+std::string& first(List);
 
 // Gets the rest pointer of a list.
 // PRECONDITION: the List is not nullptr
-List rest(List);
+List& rest(List);
 
 // Computes the length of a list (the number of nodes).
 size_t length(List);
