@@ -5,8 +5,8 @@ TEST(Construct)
 {
     Int_double_pair p(4, 5.5);
 
-    CHECK_EQUAL(4, p.first());
-    CHECK_EQUAL(5.5, p.second());
+    CHECK_EQUAL(4, p.first);
+    CHECK_EQUAL(5.5, p.second);
 }
 
 TEST(Compare)
