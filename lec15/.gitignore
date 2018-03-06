@@ -1,0 +1,8 @@
+out.bmp
+# CMake build directories:
+build
+build.*
+cmake-build-*
+
+# CLion configuration
+.idea/
