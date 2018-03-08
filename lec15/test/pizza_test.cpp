@@ -1,4 +1,4 @@
-#include "../src/pizza.h"
+#include "pizza.h"
 #include <catch.h>
 
 TEST_CASE("Pizza_no_builder")

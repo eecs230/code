@@ -1,6 +1,8 @@
 # Turn on CTest
 enable_testing()
 
+include_directories(src)
+
 # Catch
 include_directories(.eecs230/lib/catch)
 

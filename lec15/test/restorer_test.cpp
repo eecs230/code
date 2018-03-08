@@ -1,4 +1,4 @@
-#include "../src/restorer.h"
+#include "restorer.h"
 #include <catch.h>
 
 TEST_CASE("Restorer")

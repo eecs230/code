@@ -1,4 +1,4 @@
-#include "../src/symbol.h"
+#include "symbol.h"
 #include <catch.h>
 
 TEST_CASE("Interning")

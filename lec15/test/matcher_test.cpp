@@ -1,4 +1,4 @@
-#include "../src/matcher.h"
+#include "matcher.h"
 #include <catch.h>
 
 using namespace matcher;

@@ -1,4 +1,4 @@
-#include "../src/bit_io.h"
+#include "bit_io.h"
 #include <catch.h>
 #include <memory>
 
