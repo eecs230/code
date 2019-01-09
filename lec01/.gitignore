@@ -1,10 +1,8 @@
-*.bmp
+# Compiled Python code
+__pycache__/
 
-# CMake build directories:
-build
-build.*
-cmake-build*
+# Mypy data
+.mypy_cache/
 
 # CLion configuration
-.idea/workspace.xml
 .idea/
