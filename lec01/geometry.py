@@ -1,5 +1,11 @@
+"""Some computational geometry
+
+Includes definitions for points and circles, and some operations
+thereupon.
+"""
+
+from math import pi, sqrt
 from typing import NamedTuple
-from math import sqrt, pi
 
 
 def sqr(x: float) -> float:

@@ -1,5 +1,6 @@
+from math import isclose, pi
+
 from geometry import *
-from math import pi, isclose
 
 
 def test_distance():
