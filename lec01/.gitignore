@@ -4,5 +4,8 @@ __pycache__/
 # Mypy data
 .mypy_cache/
 
+# Pytest data
+.pytest_cache/
+
 # CLion configuration
 .idea/
