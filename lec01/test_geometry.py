@@ -17,3 +17,9 @@ def test_manhattan_distance():
 def test_area():
     c = Circle(Position(3, 6), 2)
     assert isclose(c.area(), 4 * pi)
+
+
+def test_circumference():
+    c = Circle(Position(3, 6), 2)
+    assert isclose(c.circumference(), 4 * pi)
+

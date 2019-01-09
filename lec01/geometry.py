@@ -36,3 +36,7 @@ class Circle(NamedTuple):
         """Computes the area of this circle."""
         return pi * sqr(self.radius)
 
+    def circumference(self) -> float:
+        """Computes the circumference of this circle"""
+        return 2 * pi * self.radius
+
