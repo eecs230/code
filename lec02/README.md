@@ -27,8 +27,11 @@ installation, followed by the Python console *prompt*:
 This means that Python is waiting for you to type something for it to
 do. One thing you can ask it to do is arithmetic:
 
+```Python console
     >>> 2 + 3
     5
+```
 
-
+In the above, Python prints `>>>`. You type `2 + 3` and press enter. Python
+responds with `5`.
 
