@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 mypy = "==0.650"
+pytest = "==4.1.0"
 
 [packages]
 
