@@ -9,7 +9,13 @@ from typing import NamedTuple
 
 
 def sqr(x: float) -> float:
-    """Computes the square of the given number."""
+    """Computes the square of the given number.
+
+    >>> sqr(0)
+    0
+    >>> sqr(5)
+    25
+    """
     return x * x
 
 
@@ -24,6 +30,12 @@ def distance(p: Position, q: Position) -> float:
     dx = p.x - q.x
     dy = p.y - q.y
     return sqrt(sqr(dx) + sqr(dy))
+
+
+def test_distance():
+    a = Position(0, 0)
+    b = Position(3, 4)
+    assert distance(a, b) == 5
 
 
 def manhattan_distance(p: Position, q: Position) -> float:
