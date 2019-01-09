@@ -1,7 +1,7 @@
 """Some computational geometry
 
 Includes definitions for points and circles, and some operations
-thereupon.
+hereupon.
 """
 
 from math import pi, sqrt
