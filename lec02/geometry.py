@@ -1,7 +1,7 @@
-"""Some computational geometry
+"""Some computational geometry.
 
 Includes definitions for points and circles, and some operations
-hereupon.
+thereupon.
 """
 
 from math import pi, sqrt
@@ -26,20 +26,30 @@ class Position(NamedTuple):
 
 
 def distance(p: Position, q: Position) -> float:
-    """Computes the Euclidean distance between two positions."""
+    """Computes the Euclidean distance between two positions.
+
+    >>> a = Position(0, 0)
+    >>> b = Position(3, 4)
+    >>> distance(a, a)
+    0.0
+    >>> distance(a, b)
+    5.0
+    """
     dx = p.x - q.x
     dy = p.y - q.y
     return sqrt(sqr(dx) + sqr(dy))
 
 
-def test_distance():
-    a = Position(0, 0)
-    b = Position(3, 4)
-    assert distance(a, b) == 5
-
-
 def manhattan_distance(p: Position, q: Position) -> float:
-    """Computes the Manhattan distance between two positions."""
+    """Computes the Manhattan distance between two positions.
+
+    >>> a = Position(0, 0)
+    >>> b = Position(3, 4)
+    >>> manhattan_distance(a, a)
+    0
+    >>> manhattan_distance(a, b)
+    7
+    """
     dx = p.x - q.x
     dy = p.y - q.y
     return abs(dx) + abs(dy)
@@ -51,10 +61,22 @@ class Circle(NamedTuple):
     radius: float
 
     def area(self) -> float:
-        """Computes the area of this circle."""
+        """Computes the area of this circle.
+
+        >>> Circle(Position(2, 7), 1).area() - pi
+        0.0
+        >>> Circle(Position(2, 7), 3).area() - 9 * pi
+        0.0
+        """
         return pi * sqr(self.radius)
 
     def circumference(self) -> float:
-        """Computes the circumference of this circle"""
+        """Computes the circumference of this circle
+
+        >>> Circle(Position(2, 7), 1).circumference() - 2 * pi
+        0.0
+        >>> Circle(Position(2, 7), 3).circumference() - 6 * pi
+        0.0
+        """
         return 2 * pi * self.radius
 
