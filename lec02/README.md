@@ -175,6 +175,26 @@ written between matching quotation marks.
 >     string)
 > 
 >   - `\\` stands for a single backslash
+>
+> If you don't quite get this, try printing some strings:
+>
+> ```Python console
+> >>> print('hello')
+> hello
+> >>> print("hello")
+> hello
+> >>> print('hello\nworld')
+> hello
+> world
+> >>> print("Can't stop, won't stop.")
+> Can't stop, won't stop.
+> >>> print('"Cannot stop, will not stop," she said.')
+> "Cannot stop, will not stop," she said.
+> >>> print('"Can\'t stop, won\'t stop," she said.')
+> "Can't stop, won't stop," she said.
+> >>> print("\"Can't stop, won't stop,\" she said.")
+> "Can't stop, won't stop," she said.
+> ```
 
 Like numbers and Booleans, strings support a variety of operations:
 
@@ -332,10 +352,6 @@ That is to say, the number of inches in some length is always equal
 to 12 (the number of inches in a foot) times the number of feet in the
 same length.
 
-
-
-Suppose you wanted to convert a distance from feet to inches. You could
-do that 
 
 
 
