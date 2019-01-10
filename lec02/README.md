@@ -342,7 +342,7 @@ We'll deal with 1 now and put off 2 for a while.
 So, why is it useful for a variable to stand for many possible values?
 What does that even mean? Well, variables allow us to express rules,
 such as relationships between values. For example, in Python notation
-(but not actually Python code),
+(but not actually useful Python code),
 
 ```python
         inches == FT_TO_IN * feet
@@ -352,7 +352,88 @@ That is to say, the number of inches in some length is always equal
 to 12 (the number of inches in a foot) times the number of feet in the
 same length.
 
+The most common type of rule want to write down in Python (and most
+programming language) is a *function*, which specifies the rule
+for computing some result that is related to some inputs in some useful
+way. For example, we might write the rule for how to convert a length
+in feet to a length in inches. How to do that conversion may seem to
+you to follow directly from the equation above, but in most programming
+languages, you need to be more explicit about the “direction” of the
+computation.
 
+Here's how you might write the function in traditional mathematical
+notation: *i*(*f*) = 12*f*. This says that *i* (the number of inches)
+is a function of one parameter *f* (the number of feet), and the result
+is 12 times *f*.
 
+Here's how you could define and then use the same function in Python:
 
+```Python_console
+>>> def ft_to_in(ft): return FT_TO_IN * ft
+...
 
+>>> ft_to_in(3)
+36
+>>> ft_to_in(10)
+120
+```
+
+The point where we start writing functions, though, is the point where
+we should advance beyond the Python console. Definitions typed in the
+console are ephemeral—they go away when the console is closed. When we
+want to write code that we can use multiple times, or even edit multiple
+times while figuring it out, it's time to write it in a file.
+
+## The Design Recipe
+
+See `first.py` for our first example of a Python source file. It contains
+definitions of the constant `FT_TO_IN` and the function `ft_to_in`. You may
+notice that `ft_to_in` has grown quite a bit in length. The reason for this
+is that when we design a function, we will actually go through a very specific
+process along the way. The process (for now) has 4 steps:
+
+ 1. Header (name, signature, purpose): In this portion of the function
+    (in this case, the first two lines), we specify:
+     
+       - the name of the function (`ft_to_in`);
+       
+       - its signature, which tells us the classes of its parameter(s)
+         and result (`(ft: float) -> float`, because in Python, `float`
+         includes `int`); and
+         
+       - a purpose statement, describing succinctly what the function is
+         for (not how it works!).
+         
+    Note that the purpose statement is actually just the first part of
+    a special string called a *docstring*.
+ 
+ 2. Functional examples: In the remainder of the docstring, we write
+    a hypothetical console interaction with our function. This shows
+    someone reading our code how to use the function and what to
+    expect.
+ 
+ 3. Body: Here is where you fill in the part of the function that does
+    the actual computation. For now, this will be a return statement
+    consisting of the keyword `return` followed by an expression to
+    compute the function's result.
+ 
+ 4. Testing: The console interaction that you wrote for your examples
+    is actually an *automated test* that Python can run and check for
+    you. However, first you will need to set up PyCharm to run it for you.
+    
+    From the configuration drop-down (in the toolbar, just to the left of
+    the run button), choose either “Add Configuration…” or “Edit
+    Configurations…” (whichever is available). In the window that opens,
+    click the + sign in the upper left, find the “Python Tests” submenu,
+    and select the “pytest” option. It's possible to configuration is to
+    change the Target to “Custom.” Leave all the blank fields blank, and
+    click OK. Now, the configuration you just created (probably named
+    “pytest”) show appear in the configuration drop-down. Select and run
+    it. If all goes well, you will see a summary of the passed tests,
+    but if a test fails, pytest will print more information about what
+    went wrong. Try modifying the examples in `ft_to_in` to see what
+    a failing test looks like.
+    
+    
+[1] This is not true. If the variable is already defined, then something
+else happens that we'll talk about later.
