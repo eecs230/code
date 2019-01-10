@@ -29,7 +29,7 @@ installation, followed by the Python console *prompt*:
 This means that Python is waiting for you to type something for it to
 do.
 
-### The arithmetic of number
+### The arithmetic of numbers
 
 One thing you can ask it to do is arithmetic:
 
@@ -100,7 +100,7 @@ has those too:
 ### The arithmetic of Booleans
 
 That said, programming is not only about numbers. There are other
-kinds of data as well. One very simple kind is the Boolean—`bool` in
+classes of data as well. One very simple kind is the Boolean—`bool` in
 Python parlance—which is used to represent truth values. In Python,
 these are written as `True` and `False`, and there are a variety
 of logical operations for combining them:
@@ -155,14 +155,36 @@ False
 Booleans are important but pretty unexciting. How about something more
 exciting, then: text! In most programming languages, a value that stores
 text is known as a *string* (`str` in Python).  In Python, strings are
-written between matching quotation marks. We'll discuss the details of
-string *literal* syntax later.
+written between matching quotation marks.
+
+> String *literals* (meaning, literal text written in your program) in
+> Python are enclosed in either single (`'`) or double (`"`) quotation marks.
+> Between the matching quotation marks, most characters stand for themselves,
+> but the backslash character (`\`) is an *escape* character, which means
+> that instead of standing for itself, it gives special meaning to something
+> that comes after it. For example:
+> 
+>   - `\n` stands for a newline character
+>   
+>   - `\'` stands for a single quotation mark character (which can be
+>     used to include a single quotation mark within a single-quoted
+>     string)
+> 
+>   - `\"` stands for a double quotation mark character (which can be
+>     used to include a double quotation mark within a double-quoted
+>     string)
+> 
+>   - `\\` stands for a single backslash
 
 Like numbers and Booleans, strings support a variety of operations:
 
 ```Python console
 >>> 'hello' + 'world'
 'helloworld'
+>>> 'a' + 'b' + 'c'
+'abc'
+>>> len('helloworld')
+10
 >>> 'helloworld'[0]     # indexing, 0-based
 'h'
 >>> 'helloworld'[1]
@@ -171,8 +193,6 @@ Like numbers and Booleans, strings support a variety of operations:
 'low'
 >>> ('hello' + 'world')[3:6]
 'low'
->>> len('helloworld')
-10
 >>> 'hello'.startswith('he')
 True
 >>> 'hello'.endswith('he')
@@ -187,29 +207,136 @@ True
 True
 >>> 'arc' < 'aardvark'
 False
+>>> 3 * 'ab'
+'ababab'
 ```
 
+One thing you may have started to notice above is that the syntax for
+string operations is fairly irregular. It includes:
 
-### Details of string literals
-
-String *literals* (meaning, literal text written in your program) in
-Python are enclosed in either single (`'`) or double (`"`) quotation marks.
-Between the matching quotation marks, most characters stand for themselves,
-but the backslash character (`\`) is an *escape* character, which means
-that instead of standing for itself, it gives special meaning to something
-that comes after it. For example:
-
-  - `\n` stands for a newline character
+  - Infix operators: `• + •`, `• * •`, `• < •`, `• in •`, etc.
   
-  - `\'` stands for a single quotation mark character (which can be
-    used to include a single quotation mark within a single-quoted
-    string)
-
-  - `\"` stands for a double quotation mark character (which can be
-    used to include a double quotation mark within a double-quoted
-    string)
-
-  - `\\` stands for a single backslash
+  - Prefix function call syntax: `len(•)`
   
+  - Postfix indexing syntax: `•[•]`
+  
+  - “Mix-fix” slicing syntax: `•[•:•]`
+  
+  - *Method call* syntax: `•.startswith(•)`, `•.endswith(•)`.
+
+There are languages with syntax that is more regular than Python's (like,
+say, only one way to notation applying an operation to operands). Keeping
+track of which syntax you need in which case may make Python a bit harder
+to learn, but its designer believes that varied syntax makes it easier
+to read. You'll get used to it.
+
+Another thing you might have noticed is that we used the same operator,
+`+`, both to add numbers and to concatenate strings. These are not at
+all the same operation! But the designer of Python (as well as many other)
+languages thought that `+` for string concatenation would make sense to
+people, and indeed it does. When the same operation applies to different
+classes of data, and does different things for each, this is known as
+*overloading*. Python offers some overloading, but not every operation
+applies to every class of data:
+
+```Python console
+>>> 3 + 5
+8
+>>> '3' + '5'
+'35'
+>>> '3' + 5
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+```
+
+When you try to apply an operation to a class of data for which it
+doesn't make sense, this is often known as a *type error*. We know
+what `+` means for numbers—add them. And we know what `+` means means
+for strings—concatenate them. But Python does not define what `+`
+means when given one string and one number; when such a computation is
+attempted, Python stops your program and reports a type error.
+
+Later, we will learn some techniques to avoid type errors in our
+programs.
+
+## Named values and reusable calculations
+
+Now that we've seen how Python does elementary school arithmetic, let's
+move on to middle school algebra. A central idea of algebra is that
+we can make generic statements about potentially large categories of
+things, rather than limiting our statements to talking about individual
+things.
+
+The key *mechanism* of algebra is that we can use names to to refer to
+the things we really care about: values (*e.g.,* numbers, Booleans,
+strings, etc.).
+
+The easiest kind of named value is a *defined constant*. This happens
+when there is a particular value that you frequently care about, but
+the value itself is inconvenient. This includes mathematical constants
+such as π and Euler's number *e*; dimensionless physical constants
+such as Avogadro's number and the fine structure constant α; and
+physical constants that requires units, such as Newton's gravitational
+constant, the charge of an electron, the speed of light, and many more.
+
+We can define constants in Python as well, and once defined, we can use
+them in place of their values:
+
+```Python console
+>>> FT_TO_IN = 12
+>>> 3 * FT_TO_IN
+36
+>>> PI = 3.14159265359
+>>> PI
+3.14159265359
+>>> 4 * PI
+12.56637061436
+```
+
+(Note that you do not need to define π in Python, but we aren't quite
+ready to learn how to access the definition that Python provides.)
+
+> This is a good place to mention that in Python, `==` means equality,
+> whereas `=` means *definition* (and something else we'll see later).
+> The Python phrase `a == b` is an *expression*, which computes a value,
+> whereas the Python phrase `a = b` is a *statement*, which tells Python
+> to do something. The expression `a == b` *evalutes* to a Boolean telling
+> us whether `a` is equal to `b`. (They both must be defined already.)
+> The statement `a = b` *defines* a new variable `a`, giving it the same
+> value as `b`. (Variable `b` must already be defined, and variable `a`
+> must not already be defined [1].)
+
+The other kind of named value that we see in algebra class is the
+*variable*. Variables are a bit more complicated than defined constants,
+for a couple reasons:
+
+ 1. Instead of standing for one value, a variable usually stands for
+    many possible values.
+    
+ 2. Most programming languages' notions of “variable,” including
+    Python’s, are quite different from what happens in mathematics.
+
+We'll deal with 1 now and put off 2 for a while.
+
+So, why is it useful for a variable to stand for many possible values?
+What does that even mean? Well, variables allow us to express rules,
+such as relationships between values. For example, in Python notation
+(but not actually Python code),
+
+```python
+        inches == FT_TO_IN * feet
+```
+
+That is to say, the number of inches in some length is always equal
+to 12 (the number of inches in a foot) times the number of feet in the
+same length.
+
+
+
+Suppose you wanted to convert a distance from feet to inches. You could
+do that 
+
+
 
 
