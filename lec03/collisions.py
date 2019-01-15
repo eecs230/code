@@ -16,19 +16,19 @@ def input_position(prompt: str) -> Position:
 
 def input_circle() -> Circle:
     """Reads a Circle from the standard input."""
-    center = input_position('Enter the target circle’s center: ')
-    radius = float(input('Enter the target circle’s radius: '))
+    center = input_position("Enter the circle's center: ")
+    radius = float(input("Enter the circle's radius: "))
     return Circle(center, radius)
 
 
 def main():
     target = input_circle()
     while True:
-        candidate = input_position('Enter a candidate position: ')
+        candidate = input_position("Enter a candidate position: ")
         if target.contains(candidate):
-            print('Hit!')
+            print("Hit!")
         else:
-            print('Miss!')
+            print("Miss!")
 
 
 # This tells Python to call our main function when someone runs this
