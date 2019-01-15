@@ -24,14 +24,6 @@ class Position(NamedTuple):
     x: float
     y: float
 
-    def __format__(self, format: str) -> str:
-        """Formats a Position object for printing
-
-        >>> print(format(Position(3, 4)))
-        Position(3, 4)
-        """
-        return 'Position({}, {})'.format(self.x, self.y)
-
 
 def distance(p: Position, q: Position) -> float:
     """Computes the Euclidean distance between two positions.
@@ -98,12 +90,4 @@ class Circle(NamedTuple):
         False
         """
         return distance(self.center, p) < self.radius
-
-    def __format__(self, format: str) -> str:
-        """Formats a Circle object for printing
-
-        >>> print(format(Circle(Position(3, 4), 5)))
-        Circle(Position(3, 4), 5)
-        """
-        return 'Circle({}, {})'.format(self.center, self.radius)
 
