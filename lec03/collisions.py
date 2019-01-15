@@ -28,13 +28,7 @@ def input_circle() -> Circle:
 
 
 def main():
-    target = input_circle()
-    while True:
-        candidate = input_position("Enter a candidate position: ")
-        if target.contains(candidate):
-            print("Hit!")
-        else:
-            print("Miss!")
+    pass  # TODO
 
 
 # This tells Python to call our main function when someone runs this
