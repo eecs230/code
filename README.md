@@ -6,3 +6,6 @@ PyCharm project. Rather, each subdirectory is intended to be opened in
 PyCharm. You can do this by choosing *Open Project* from the startup
 screen or *File > Open...* if you have a file open. Then navigate to and
 select the intended directory.
+
+Unfinished lecture starter code, in case you want to follow along, may
+be in the `starter` branch.
