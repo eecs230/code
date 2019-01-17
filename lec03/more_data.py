@@ -1,9 +1,11 @@
-"""More examples of data definitions.
+"""More examples of data definitions (classes).
 
 Two kinds:
 
   - Structs (named tuples)
   - Enums
+
+Each class should have a purpose statement, and maybe some doctests.
 """
 
 
