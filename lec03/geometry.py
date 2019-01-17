@@ -63,10 +63,10 @@ class Circle(NamedTuple):
     def area(self) -> float:
         """Computes the area of this circle.
 
-        >>> Circle(Position(2, 7), 1).area() - pi
-        0.0
-        >>> Circle(Position(2, 7), 3).area() - 9 * pi
-        0.0
+        >>> pi == Circle(Position(2, 7), 1).area()
+        True
+        >>> 9 * pi == Circle(Position(2, 7), 3).area()
+        True
         """
         return pi * sqr(self.radius)
 
