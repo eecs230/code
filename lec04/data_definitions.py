@@ -47,66 +47,10 @@ class CardinalDirection(Enum):
     WEST = auto()
 
 
-# Example 3: flower plants
+# Example 3: flowering plants
 
-
-class SunPreference(Enum):
-    SHADE = auto()
-    PARTIAL = auto()
-    FULL = auto()
-
-
-@record
-class FloweringPlant:
-    common_name:    str
-    max_height:     float
-    sun_preference: SunPreference
 
 
 # Example 4: electronic medical records
-
-
-@record
-class BloodLipids:
-    hdl_cholesterol: float
-    ldl_cholesterol: float
-    triglycerides:   float
-
-
-@record
-class BloodPressure:
-    systolic:        float
-    diastolic:       float
-
-
-@record
-class Vitals:
-    blood_pressure:  BloodPressure
-    body_tempature:  float
-    heart_rate:      int
-    breath_rate:     int
-
-
-class Sex(Enum):
-    FEMALE = auto()
-    MALE = auto()
-    INTER = auto()
-
-
-@record
-class Biometrics:
-    height:         float
-    weight:         float
-    age:            float
-    sex:            Sex
-
-
-@record
-class MedicalRecord:
-    id:             int
-    name:           str
-    biometrics:     Biometrics
-    vitals:         Vitals
-    blood_lipids:   Optional[BloodLipids]
 
 
