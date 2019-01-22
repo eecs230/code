@@ -19,10 +19,9 @@ from typing import NamedTuple, Optional
 # Example 2: cardinal directions
 
 
-# Example 3: flower plants
-
-
-# Example 4: electronic medical records
-
-
+class CardinalDirection(Enum):
+    NORTH = auto()
+    SOUTH = auto()
+    EAST = auto()
+    WEST = auto()
 
