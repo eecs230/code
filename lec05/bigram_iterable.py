@@ -25,11 +25,28 @@ def _bigrams_in(corpus: Iterable[str]) -> Iterable[_Bigram]:
         previous = current
 
 
-@record
+# The `init=False` option to @record tells it not to define
+# method __init__ for us, so we can define it ourselves. Method
+# __init__ is called every time we create an object, so customizing
+# lets us customize our construction behavior. In this case, the
+# default would be to take `_all_bigrams` as an (optional) argument,
+# but by defining our own __init__ we can choose to take no arguments
+# instead.
+
+@record(init=False)
 class BigramModel:
     """A Markov model as a collection of bigrams."""
 
-    _all_bigrams: List[_Bigram] = Factory(list)
+    _all_bigrams: List[_Bigram]
+
+    def __init__(self) -> None:
+        """Constructs a new, empty bigram model.
+
+        >>> m = BigramModel()
+        >>> len(m)
+        0
+        """
+        self._all_bigrams = []
 
     def __len__(self) -> int:
         """Returns the number of bigrams (counting repeats) that this model
