@@ -7,7 +7,10 @@ from typing import List, Tuple, Iterable
 from lib230 import record, Factory
 
 
-def _bigrams_in(corpus: Iterable[str]) -> Iterable[Tuple[str, str]]:
+_Bigram = Tuple[str, str]
+
+
+def _bigrams_in(corpus: Iterable[str]) -> Iterable[_Bigram]:
     """Turns a source of strings into a source of its bigrams. In particular,
     apply this to an iterable that produces the words in a corpus, and the
     resulting iterable produces the bigrams in the corpus.
@@ -26,9 +29,7 @@ def _bigrams_in(corpus: Iterable[str]) -> Iterable[Tuple[str, str]]:
 class BigramModel:
     """A Markov model as a collection of bigrams."""
 
-    Bigram = Tuple[str, str]
-
-    _all_bigrams: List[Bigram] = Factory(list)
+    _all_bigrams: List[_Bigram] = Factory(list)
 
     def __len__(self) -> int:
         """Returns the number of bigrams (counting repeats) that this model
@@ -116,4 +117,20 @@ class BigramModel:
         """
         options = [w2 for w1, w2 in self._all_bigrams if w1 == fst]
         return random.choice(options)
+
+    def babble(self, n: int, start: str = '', stop: str = '') -> Iterable[str]:
+        """Produces a sequence of words randomly from the model.
+
+        >>> m = BigramModel()
+        >>> m.train(['', 'a', 'b', 'c', ''])
+        >>> list(m.babble(6))
+        ['', 'a', 'b', 'c', '', 'a', 'b', 'c', '']
+        """
+        state = start
+        yield state
+        count = 1
+        while state != stop or count < n:
+            state = self.next(state)
+            yield state
+            count += 1
 
