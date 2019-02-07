@@ -12,42 +12,8 @@ def extract_ints(lines: Iterable[str]) -> List[int]:
     >>> extract_ints(["hello,6"])
     [6]
     """
-    class State(Enum):
-        START = auto()
-        IN_WORD = auto()
-        IN_NUMBER = auto()
-
-    result = []
-    token = ''
-    state = State.START
-
-    for line in lines:
-        for c in line:
-            if state is State.START:
-                if c.isalpha():
-                    state = State.IN_WORD
-                elif c.isdigit():
-                    token = c
-                    state = State.IN_NUMBER
-                else:
-                    pass  # stays in START state
-            elif state is State.IN_WORD:
-                if c.isalnum():
-                    pass  # stays in IN_WORD state
-                else:
-                    state = State.START
-            else:
-                if c.isalpha():
-                    state = State.IN_WORD
-                elif c.isdigit():
-                    token += c
-                    # stays in IN_NUMBER state
-                else:
-                    result.append(int(token))
-                    state = State.START
-        if state is State.IN_NUMBER:
-            result.append(int(token))
-        state = State.START
+    result: List[int] = []
+    pass  # TODO: in lecture
     return result
 
 
