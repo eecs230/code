@@ -32,15 +32,15 @@ class IntPair:
     >>> f3 = IntPair(4, 5)
     >>> f4 = f1
     >>> f1 is f1
-    True
+    ???
     >>> f2 is f2
-    True
+    ???
     >>> f1 is f4
-    True
+    ???
     >>> f1 is f2
-    False
+    ???
     >>> f1 == f2
-    True
+    ???
     """
     a: int
     b: int
