@@ -19,14 +19,14 @@ def extract_ints(lines: Iterable[str]) -> List[int]:
 
 TURING_QUOTE = '''Mathematical reasoning may be regarded rather
                   schematically as the exercise of a combination of two
-                  facilities, which we may call intuition and ingenuity.
+                  facilities , which we may call intuition and ingenuity .
                   The activity of the intuition consists in making
                   spontaneous judgements which are not the result of
-                  conscious trains of reasoning.
- 
-                  The exercise of ingenuity in mathematics consists in
+                  conscious trains of reasoning .'''.split() \
+               + [''] + \
+               '''The exercise of ingenuity in mathematics consists in
                   aiding the intuition through suitable arrangements of
-                  propositions, and perhaps geometrical figures or drawings.
+                  propositions , and perhaps geometrical figures or drawings .
                '''.split()
 
 
@@ -46,7 +46,7 @@ def wrap_text(tokens: Iterable[str], width: int = 72) -> List[str]:
     return result
 
 
-def print_text(lines: List[str], width: int = 72) -> None:
+def print_text(words: List[str], width: int = 72) -> None:
     """Prints a list of strings, one per line.
 
     >>> print_text(wrap_text(TURING_QUOTE, 40))
@@ -75,15 +75,15 @@ def print_text(lines: List[str], width: int = 72) -> None:
     the intuition through suitable arrangements of propositions,
     and perhaps geometrical figures or drawings.
     """
-    for line in wrap_text(lines, width):
+    for line in wrap_text(words, width):
         print(line)
 
 
 def tokenize_text(lines: List[str]) -> List[str]:
-    """Tokenizes text into words, individual punctuation marks,
-    and paragraph separators (represented as ''). The result always
-    starts and ends with a paragraph separator, and there is never more
-    than one paragraph separator in a row.
+    """Given a list of lines, tokenizes the text into words, individual
+    punctuation marks, and paragraph separators (represented as ''). The
+    result always starts and ends with a paragraph separator, and there
+    is never more than one paragraph separator in a row.
 
     >>> tokenize_text(['Mathematical reasoning may be regarded'])
     ['', 'Mathematical', 'reasoning', 'may', 'be', 'regarded', '']
