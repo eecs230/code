@@ -81,30 +81,30 @@ def wrap_text(tokens: Iterable[str], width: int = 72) -> List[str]:
 
 
 def print_text(words: List[str], width: int = 72) -> None:
-    """Prints a list of strings, one per line.
+    """Line-wraps the given list of tokens and prints it.
 
-    >>> print_text(wrap_text(TURING_QUOTE, 40))
+    >>> print_text(TURING_QUOTE, 40)
     Mathematical reasoning may be regarded
     rather schematically as the exercise of
     a combination of two facilities, which
-    we may call intuition and ingenuity.
-    The activity of the intuition consists
-    in making spontaneous judgements which
-    are not the result of conscious trains
-    of reasoning.
-
+    we may call intuition and ingenuity. The
+    activity of the intuition consists in
+    making spontaneous judgements which are
+    not the result of conscious trains of
+    reasoning.
+    <BLANKLINE>
     The exercise of ingenuity in mathematics
     consists in aiding the intuition through
     suitable arrangements of propositions,
     and perhaps geometrical figures or
     drawings.
-    >>> print_text(wrap_text(TURING_QUOTE, 60))
+    >>> print_text(TURING_QUOTE, 60)
     Mathematical reasoning may be regarded rather schematically
-    as the exercise of a combination of two facilities, which
-    we may call intuition and ingenuity. The activity of the
+    as the exercise of a combination of two facilities, which we
+    may call intuition and ingenuity. The activity of the
     intuition consists in making spontaneous judgements which
     are not the result of conscious trains of reasoning.
-
+    <BLANKLINE>
     The exercise of ingenuity in mathematics consists in aiding
     the intuition through suitable arrangements of propositions,
     and perhaps geometrical figures or drawings.
@@ -122,7 +122,7 @@ def tokenize_text(lines: List[str]) -> List[str]:
     >>> tokenize_text(['Mathematical reasoning may be regarded'])
     ['', 'Mathematical', 'reasoning', 'may', 'be', 'regarded', '']
     >>> tokenize_text(['two facilities, which we may call'])
-    ['', 'two', 'facilities', ',' 'which', 'we', 'may', 'call', '']
+    ['', 'two', 'facilities', ',', 'which', 'we', 'may', 'call', '']
     >>> tokenize_text(['graf one', '', 'graf two'])
     ['', 'graf', 'one', '', 'graf', 'two', '']
     >>> tokenize_text(['', 'a', '', '', 'b', ''])
