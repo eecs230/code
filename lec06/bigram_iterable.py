@@ -131,8 +131,20 @@ class BigramModel:
         >>> m.next('two')
         'three'
         """
-        options = [w2 for w1, w2 in self._all_bigrams if w1 == fst]
-        return random.choice(options)
+        return random.choice(self._possibilities(fst))
+
+    def _possibilities(self, state: str) -> List[str]:
+        """Returns a list of all possible next words at
+        the appropriate frequencies.
+
+        >>> m = BigramModel()
+        >>> m.train('a bee a bee a bee a cow'.split())
+        >>> list(m._possibilities('a'))
+        ['bee', 'bee', 'bee', 'cow']
+        >>> list(m._possibilities('cow'))
+        []
+        """
+        return [snd for fst, snd in self._all_bigrams if fst == state]
 
     def babble(self, n: int, start: str = '', stop: str = '') -> Iterable[str]:
         """Produces a sequence of words randomly from the model.
@@ -149,4 +161,3 @@ class BigramModel:
             state = self.next(state)
             yield state
             count += 1
-
