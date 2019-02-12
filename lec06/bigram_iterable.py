@@ -1,7 +1,7 @@
 """Bigrams are pairs of adjacent words."""
 
 import random
-from typing import List, Tuple, Iterable
+from typing import List, Tuple
 
 from lib230 import record
 
@@ -9,7 +9,7 @@ from lib230 import record
 _Bigram = Tuple[str, str]
 
 
-def _bigrams_in(corpus: Iterable[str]) -> Iterable[_Bigram]:
+def _bigrams_in(corpus: List[str]) -> List[_Bigram]:
     """Turns a source of strings into a source of its bigrams. In particular,
     apply this to an iterable that produces the words in a corpus, and the
     resulting iterable produces the bigrams in the corpus.
@@ -17,11 +17,13 @@ def _bigrams_in(corpus: Iterable[str]) -> Iterable[_Bigram]:
     >>> list(_bigrams_in(['a', 'b', 'c', 'd']))
     [('a', 'b'), ('b', 'c'), ('c', 'd')]
     """
+    result: List[_Bigram] = []
     previous = None
     for current in corpus:
         if previous is not None:
-            yield previous, current
+            result.append((previous, current))
         previous = current
+    return result
 
 
 # The `init=False` option to @record tells it not to define
@@ -73,7 +75,7 @@ class BigramModel:
         """
         self._all_bigrams.append((fst, snd))
 
-    def train(self, corpus: Iterable[str]) -> None:
+    def train(self, corpus: List[str]) -> None:
         """Trains the model using all bigrams in the given corpus.
 
         >>> m = BigramModel()
@@ -101,7 +103,7 @@ class BigramModel:
         """
         return (fst, snd) in self._all_bigrams
 
-    def check(self, text: Iterable[str]) -> bool:
+    def check(self, text: List[str]) -> bool:
         """Checks whether the given text could be produced by this model.
 
         >>> m = BigramModel()
@@ -146,7 +148,7 @@ class BigramModel:
         """
         return [snd for fst, snd in self._all_bigrams if fst == state]
 
-    def babble(self, n: int, start: str = '', stop: str = '') -> Iterable[str]:
+    def babble(self, n: int, start: str = '', stop: str = '') -> List[str]:
         """Produces a sequence of words randomly from the model.
 
         >>> m = BigramModel()
@@ -155,9 +157,8 @@ class BigramModel:
         ['', 'a', 'b', 'c', '', 'a', 'b', 'c', '']
         """
         state = start
-        yield state
-        count = 1
-        while state != stop or count < n:
+        result = [state]
+        while state != stop or len(result) < n:
             state = self.next(state)
-            yield state
-            count += 1
+            result.append(state)
+        return result

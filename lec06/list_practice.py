@@ -65,10 +65,7 @@ class EmployeeRoll:
         >>> roll.find_by_id(4)
         Bob(4)
         """
-        for e in self._employees:
-            if e.id == id:
-                return e
-        return None
+        pass  # TODO
 
     def find_by_mgr_id(self, mgr_id: int) -> List[Employee]:
         """Finds all employees with the given manager id.
@@ -84,7 +81,7 @@ class EmployeeRoll:
         >>> roll.find_by_mgr_id(3)
         []
         """
-        return [e for e in self._employees if e.mgr_id == mgr_id]
+        pass  # TODO
 
     def all_names(self) -> List[str]:
         """Returns a list of all employees' names.
@@ -96,7 +93,7 @@ class EmployeeRoll:
         >>> roll.all_names()
         ['Alice', 'Bob', 'Carol']
         """
-        return [e.name for e in self._employees]
+        pass  # TODO
 
     def all_mgr_ids(self) -> List[int]:
         """Finds the IDs of all managers (not repeated).
@@ -114,7 +111,7 @@ class EmployeeRoll:
         for e in self._employees:
             if e.mgr_id is not None and e.mgr_id not in result:
                 result.append(e.mgr_id)
-        return result
+        pass  # TODO
 
     def total_payroll(self) -> int:
         """Returns the sum of all employees' wages.
@@ -128,7 +125,7 @@ class EmployeeRoll:
         >>> roll.total_payroll()
         6000
         """
-        return sum(e.wage for e in self._employees)
+        pass  # TODO
 
     def raise_all(self, factor: float) -> None:
         """Multiplies everyone's wage by the given factor.
@@ -145,8 +142,7 @@ class EmployeeRoll:
         >>> roll.find_by_id(6).wage
         3600
         """
-        for e in self._employees:
-            e.wage = round(factor * e.wage)
+        pass  # TODO
 
     def raise_by_mgr_id(self, mgr_id: int, factor: float) -> None:
         """Multiplies the wage of employees whose manager is mgr_id by
@@ -163,8 +159,7 @@ class EmployeeRoll:
         >>> [employee.wage for employee in roll]
         [1500, 2400, 3600]
         """
-        for e in self.find_by_mgr_id(mgr_id):
-            e.wage = round(factor * e.wage)
+        pass  # TODO
 
     def raise_if(self, pred: Callable[[Employee], bool], factor: float) -> None:
         """Multiplies the wage of employees satisfying the predicate by
@@ -181,9 +176,7 @@ class EmployeeRoll:
         >>> [employee.wage for employee in roll]
         [3000, 2400, 3600]
         """
-        for e in self._employees:
-            if pred(e):
-                e.wage = round(factor * e.wage)
+        pass  # TODO
 
     def find_root_mgr(self, id: int) -> Optional[Employee]:
         """Finds the uppermost manager reachable from the given employee id.
@@ -203,11 +196,5 @@ class EmployeeRoll:
         >>> roll.find_root_mgr(4)
         Alice(1)
         """
-        manager = None
-        employee = self.find_by_id(id)
-        while employee is not None:
-            manager = employee
-            if employee.mgr_id is None: break
-            employee = self.find_by_id(employee.mgr_id)
-        return manager
+        pass  # TODO
 
