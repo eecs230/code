@@ -16,13 +16,12 @@ We want to model the village (given n) to answer questions like:
  - ...?
 """
 
-from enum import Enum, auto
-from typing import Any, List, Iterator
-import random as r
+from typing import Any, Iterator
 
-from lib230 import record, Factory
+from lib230 import record
 
 
+@record(init=False)
 class Village:
     """Models a village."""
 
