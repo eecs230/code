@@ -17,7 +17,7 @@ We want to model the village (given n) to answer questions like:
 """
 
 from enum import Enum, auto
-from typing import List, Iterator
+from typing import Any, List, Iterator
 import random as r
 
 from lib230 import record, Factory
@@ -33,13 +33,13 @@ class Village:
         pass
 
     def __len__(self) -> int:
-        pass
+        return 0  # TODO: in class
 
-    def __iter__(self) -> Iterator[Family]:
-        pass
+    def __iter__(self) -> Iterator[Any]:
+        return [].__iter__()  # TODO: in class
 
     def __str__(self) -> str:
-        pass
+        return ''.join(str(family) + '\n' for family in self)
 
 
 if __name__ == '__main__':
