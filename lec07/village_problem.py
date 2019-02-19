@@ -9,10 +9,10 @@ no family may have more than one boy-child.
 
 We want to model the village (given n) to answer questions like:
 
- - What is the average number of children per family?
- - What is the average number of boy children per family?
- - What is the average number of girl children per family?
+ - What is the total number of children, boys, girls?
+ - What is the average number of children / boys / girls per family?
  - What percentage of families with children end with a girl child?
+ - What is the ratio of one-boy families to one-girl families?
  - ...?
 """
 
