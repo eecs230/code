@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 """
-In a particular village (of n families), each family has a 50% chance of
+In a particular village (of n families), each family has a 75% chance of
 wanting children, and when a family has one or more children, they have
-a 75% chance of wanting another. Additionally, children are sorted into
+a 25% chance of wanting another. Additionally, children are sorted into
 boy-children and girl-children, and according to the village's rules,
 no family may have more than one boy-child.
 
@@ -92,7 +92,7 @@ class Village:
 
     _families: List[Family]
 
-    def __init__(self, n: int = 100, pfirst: float = 0.5, pmore: float = 0.75) -> None:
+    def __init__(self, n: int = 100, pfirst: float = 0.75, pmore: float = 0.25) -> None:
         """Constructs a new, random village of the given size and with the given
         reproduction probabilities.
         """
