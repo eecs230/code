@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import abstractmethod
-from typing import Generic, Optional, TypeVar
+from typing import Generic, Iterable, Iterator, Optional, Tuple, TypeVar
 
 
 from lib230 import record
@@ -270,4 +270,11 @@ class Bst(Generic[T]):
     def __delitem__(self, key: str) -> None:
         raise KeyError(key)  # TODO
 
+    def __iter__(self) -> Iterator[Tuple[str, T]]:
+        def helper(node: Optional[_Node[T]]) -> Iterable[Tuple[str, T]]:
+            if node is not None:
+                yield from helper(node.left)
+                yield (node.key, node.value)
+                yield from helper(node.right)
+        yield from helper(self._root)
 
